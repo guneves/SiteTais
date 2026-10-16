@@ -19,6 +19,8 @@ A "now" card at the top shows the current (or next) block of today, based on the
 
 The schedule is editable in the page itself ("Mais" menu → "Editar cronograma"): days, blocks, exams, subjects and notes. Edits are saved in `localStorage` under `cronograma-provas-dados`; the `DAYS` array is only the default schedule used when nothing is saved. "Criar com IA" shows a prompt for an LLM and imports the JSON it returns (schema in `aiPrompt()`); "Exportar/Importar backup" moves data between devices.
 
+The "Revisões espaçadas" section schedules reviews per topic: D0 class → D1 questions → D7 questions → D15 make flashcards → D30 questions → D60 questions or flashcards depending on how the student rates their performance (`STEPS` in the script). Each step falls due counting from the day the previous one was actually done, so a late review shifts the next ones. Due reviews also appear as chips on the matching day card (overdue ones on today). Topics and their log (date, % correct) are saved in `localStorage` under `cronograma-provas-revisoes` and included in the backup.
+
 ## Deployment task
 
 1. Ask the user for their GitHub username and the repository name they want (suggest `cronograma-provas`). The repository must be **public** if they are on a free GitHub plan.
