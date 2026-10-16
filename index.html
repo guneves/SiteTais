@@ -504,6 +504,50 @@ dialog.dlg::backdrop{background:rgba(18,20,28,.55)}
 .toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:700;box-shadow:var(--shadow-lg);z-index:40;transition:opacity .2s,transform .2s;max-width:calc(100vw - 32px);text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast.yay{background:var(--ok);color:#fff}
+/* calendário e navegação de datas */
+.datebtn{border-radius:999px;min-height:42px;gap:8px}
+.datebtn .chd{width:14px;height:14px;color:var(--muted)}
+.datebtn[aria-expanded="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.tobtn{background:var(--accent-bg)!important;color:var(--accent-ink)!important;border-color:transparent!important}
+.calback{position:fixed;inset:0;z-index:39}
+.calpop{position:absolute;z-index:40;width:320px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.22);padding:12px;display:grid;gap:8px}
+.calpop.sheet{position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;border-radius:20px 20px 0 0;padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px));animation:sheet .2s ease-out}
+@keyframes sheet{from{transform:translateY(30px);opacity:0}}
+@media (max-width:640px){.calback{background:rgba(18,20,28,.45)}}
+.cp-h{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.cp-h b,.cp-t{font-family:var(--font-display);font-weight:800;font-size:16px}
+.cp-t{border:0;background:none;cursor:pointer;display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:10px;color:var(--ink)}
+.cp-t:hover{background:var(--surface-2)}
+.cp-t svg{width:14px;height:14px;color:var(--muted)}
+.cp-wd,.cp-g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.cp-wd span{font-size:11.5px;font-weight:800;color:var(--muted);padding:2px 0}
+.cp-g button,.cp-mg button{position:relative;border:0;background:none;cursor:pointer;border-radius:10px;font-weight:700;font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums}
+.cp-g button{aspect-ratio:1;min-height:38px}
+.cp-g button:hover,.cp-mg button:hover{background:var(--surface-2)}
+.cp-g .out{color:var(--muted);opacity:.55}
+.cp-g .full{color:var(--ok)}
+.cp-g .today,.cp-mg .today{box-shadow:inset 0 0 0 2px var(--accent);color:var(--accent-ink)}
+.cp-g .sel,.cp-mg .sel{background:var(--accent)!important;color:var(--on-accent)!important}
+.cp-g.wk .sel{border-radius:0}
+.cp-g.wk .ws{border-radius:10px 0 0 10px}
+.cp-g.wk .we{border-radius:0 10px 10px 0}
+.cp-mg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.cp-mg button{min-height:48px}
+.calpop .dot{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--prova)}
+.cp-mg .dot{bottom:7px}
+.calpop .sel .dot{background:var(--on-accent)}
+.cp-f{display:flex;align-items:center;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.cp-leg{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);font-weight:700}
+.cp-leg .dot{position:static;transform:none}
+.jumps{display:none}
+@media (max-width:979px){
+  .jumps{display:flex;gap:6px;overflow-x:auto;margin:14px -16px 0;padding:2px 16px 4px;scrollbar-width:none}
+  .jumps::-webkit-scrollbar{display:none}
+  .jumps .chip{--k:var(--accent);flex:none}
+}
+.pcard{scroll-margin-top:80px}
+.fld .hint{font-size:12.5px;color:var(--muted);font-weight:600;line-height:1.4}
+@media (pointer:coarse){.blk .tools .ib,.scard h2 .ib,.ntgrid .note .ib{width:38px;height:38px}}
 /* criar com IA */
 .nav a.ai-tab svg,.tabbar a.ai-tab svg{color:var(--accent)}
 @media (max-width:420px){.tabbar svg{padding:4px 11px}}
@@ -563,6 +607,7 @@ dialog.dlg::backdrop{background:rgba(18,20,28,.55)}
   .vnav{align-items:stretch}
   .vc{width:100%}
   .vc .btn{flex:1}
+  .vc .tobtn{flex:none}
   .wd .n{font-size:18px}
   .wd{padding:7px 1px}
   .blk .row{grid-template-columns:24px 78px minmax(0,1fr);gap:10px;padding-inline:10px}
@@ -604,7 +649,7 @@ dialog.dlg::backdrop{background:rgba(18,20,28,.55)}
       <label class="fld"><span>Usuário</span><input name="user" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="ex.: tais" maxlength="32" required></label>
       <label class="fld"><span>Senha</span><span class="pw"><input name="pw" type="password" autocomplete="current-password" required><button type="button" class="ib" data-act="pw-eye" aria-label="Mostrar senha"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1.5 8s2.5-4.5 6.5-4.5S14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg></button></span></label>
       <label class="fld" data-up hidden><span>Confirme a senha</span><input name="pw2" type="password" autocomplete="new-password"></label>
-      <label class="fld" data-up hidden><span>Começar com</span><select name="start" id="auth-start"></select></label>
+      <label class="fld" data-up hidden><span>Começar com</span><select name="start" id="auth-start"></select><small class="hint" id="auth-start-hint"></small></label>
       <label class="check"><input type="checkbox" name="remember" checked> Manter conectado neste aparelho</label>
       <p class="err" id="auth-err" role="alert" hidden></p>
       <button class="btn primary" type="submit" id="auth-go">Entrar</button>
@@ -840,6 +885,7 @@ function relLabel(date){
 
 const IC={
   chevL:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>',
+  chevD:'<svg class="chd" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>',
   chevR:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>',
   cal:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 7h12M5.5 1.5v3M10.5 1.5v3"/></svg>',
   edit:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 2.5l3 3L6 13H3v-3z"/></svg>',
@@ -1223,7 +1269,7 @@ function render(fresh){
   else if(r.v==="planejar")html=viewPlan();
   else if(r.v==="ia")html=viewAI(r.task);
   else html=viewDay(r.date);
-  viewEl.innerHTML=html;
+  closeCal(); viewEl.innerHTML=html;
   document.querySelectorAll("#nav a,#tabbar a").forEach(a=>{if(a.dataset.v===r.v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
   const names={dia:r.date===TODAY?"Hoje":cap(longDate(r.date)),semana:"Semana",mes:"Mês",revisoes:"Revisões",planejar:"Planejar",ia:r.task?AI_TASKS[r.task].title:"Criar com IA"};
   document.title=names[r.v]+" · Cronograma";
@@ -1242,11 +1288,94 @@ function vnav(o){
     <div class="vt">${o.rel?`<span class="rel">${esc(o.rel)}</span>`:""}<h1>${esc(o.title)}</h1>${o.sub?`<span class="vs">${o.sub}</span>`:""}</div>
     <div class="vc">
       <button class="ib lg" type="button" data-act="nav" data-dir="-1" data-fk="nav-1" aria-label="${o.prev}" title="${o.prev} (←)">${IC.chevL}</button>
-      <button class="btn" type="button" data-act="nav" data-dir="0" data-fk="nav0"${o.atToday?" disabled":""}>${o.todayL}</button>
+      <button class="btn datebtn" type="button" data-act="cal-open" data-fk="cal-open" aria-haspopup="dialog" aria-expanded="false" title="Abrir o calendário">${IC.cal}<span>${o.pickL}</span>${IC.chevD}</button>
       <button class="ib lg" type="button" data-act="nav" data-dir="1" data-fk="nav1" aria-label="${o.next}" title="${o.next} (→)">${IC.chevR}</button>
-      <span class="ib lg pickwrap" title="Ir para uma data">${IC.cal}<input type="date" data-pick="1" aria-label="Ir para uma data" value="${o.date}"></span>
+      ${o.atToday?"":`<button class="btn tobtn" type="button" data-act="nav" data-dir="0" data-fk="nav0" title="Voltar para ${o.todayL.toLowerCase()} (H)">${o.todayL}</button>`}
     </div></div>`;
 }
+
+/* ---------- calendário (escolher data) ---------- */
+const calEl=document.createElement("div");
+calEl.className="calpop"; calEl.id="calpop"; calEl.hidden=true;
+calEl.setAttribute("role","dialog"); calEl.setAttribute("aria-label","Calendário");
+document.body.appendChild(calEl);
+const calBack=document.createElement("div"); calBack.className="calback"; calBack.hidden=true; document.body.appendChild(calBack);
+let cal={y:0,m:0,mode:"d",btn:null};
+function openCal(btn){
+  const d=parseDate(route.date);
+  cal={y:d.getFullYear(),m:d.getMonth(),mode:route.v==="mes"?"m":"d",btn};
+  calEl.hidden=false; calBack.hidden=false; btn.setAttribute("aria-expanded","true");
+  renderCal(); placeCal();
+  const f=calEl.querySelector(".sel")||calEl.querySelector(".today")||calEl.querySelector("button");
+  if(f)f.focus({preventScroll:true});
+}
+function closeCal(back){
+  if(calEl.hidden)return;
+  calEl.hidden=true; calBack.hidden=true;
+  if(cal.btn){cal.btn.setAttribute("aria-expanded","false");if(back&&document.contains(cal.btn))cal.btn.focus({preventScroll:true})}
+}
+function placeCal(){
+  if(matchMedia("(max-width:640px)").matches){calEl.style.left=calEl.style.top="";calEl.classList.add("sheet");return}
+  calEl.classList.remove("sheet");
+  const r=cal.btn.getBoundingClientRect(), w=calEl.offsetWidth;
+  calEl.style.left=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2))+"px";
+  calEl.style.top=(r.bottom+window.scrollY+8)+"px";
+}
+function renderCal(){
+  const sel=route.date, v=route.v, mm=cal.m, yy=cal.y;
+  let h;
+  if(cal.mode==="m"){
+    const curM=sel.slice(0,7);
+    h=`<div class="cp-h"><button class="ib" type="button" data-cp="y-1" aria-label="Ano anterior">${IC.chevL}</button><b>${yy}</b><button class="ib" type="button" data-cp="y1" aria-label="Próximo ano">${IC.chevR}</button></div>
+    <div class="cp-mg">${MONTHS.map((n,i)=>{const k=`${yy}-${String(i+1).padStart(2,"0")}`, ex=doc.exams.some(e=>e.date.startsWith(k));
+      return`<button type="button" data-cpm="${i}" class="${k===curM&&v==="mes"?"sel":""}${k===TODAY.slice(0,7)?" today":""}">${cap(n.slice(0,3))}${ex?`<i class="dot" title="Tem prova"></i>`:""}</button>`}).join("")}</div>`;
+  }else{
+    const first=iso(new Date(yy,mm,1)), last=iso(new Date(yy,mm+1,0)), gs=weekStart(first), ge=addDays(weekStart(last),6);
+    const selW=v==="semana"?weekStart(sel):null;
+    let g="";
+    for(let d=gs;d<=ge;d=addDays(d,1)){
+      const inM=d>=first&&d<=last, ex=examsOn(d).length, st=stats(d);
+      const c=[]; if(!inM)c.push("out"); if(d===TODAY)c.push("today");
+      if(selW?weekStart(d)===selW:d===sel)c.push("sel");
+      if(selW&&weekStart(d)===selW){if(d===selW)c.push("ws");if(d===addDays(selW,6))c.push("we")}
+      if(st.n&&st.k===st.n)c.push("full");
+      g+=`<button type="button" data-cpd="${d}" class="${c.join(" ")}" aria-label="${esc(cap(longDate(d)))}${ex?", prova":""}"${d===sel?' aria-current="date"':""}>${parseDate(d).getDate()}${ex?`<i class="dot"></i>`:""}</button>`;
+    }
+    h=`<div class="cp-h"><button class="ib" type="button" data-cp="m-1" aria-label="Mês anterior">${IC.chevL}</button><button class="cp-t" type="button" data-cp="mode" title="Escolher mês e ano">${cap(MONTHS[mm])} ${yy}${IC.chevD}</button><button class="ib" type="button" data-cp="m1" aria-label="Próximo mês">${IC.chevR}</button></div>
+    <div class="cp-wd" aria-hidden="true">${ORDER.map(i=>`<span>${WD[i]}</span>`).join("")}</div><div class="cp-g${selW?" wk":""}">${g}</div>`;
+  }
+  h+=`<div class="cp-f"><span class="cp-leg"><i class="dot"></i>prova</span><span class="spacer"></span><button class="btn sm" type="button" data-cp="today">Hoje</button><button class="btn sm" type="button" data-cp="close">Fechar</button></div>`;
+  calEl.innerHTML=h;
+}
+calEl.addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  if(b.dataset.cpd){closeCal();return go(route.v==="semana"?"semana":"dia",b.dataset.cpd,true)}
+  if(b.dataset.cpm!=null){
+    const m=+b.dataset.cpm;
+    if(route.v==="mes"){closeCal();return go("mes",iso(new Date(cal.y,m,1)),true)}
+    cal.m=m; cal.mode="d"; return renderCal();
+  }
+  const a=b.dataset.cp;
+  if(a==="close")return closeCal(true);
+  if(a==="today"){closeCal();return step(0)}
+  if(a==="mode"){cal.mode="m";return renderCal()}
+  if(a==="y-1"||a==="y1"){cal.y+=a==="y1"?1:-1;return renderCal()}
+  if(a==="m-1"||a==="m1"){const d=new Date(cal.y,cal.m+(a==="m1"?1:-1),1);cal.y=d.getFullYear();cal.m=d.getMonth();return renderCal()}
+});
+calEl.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){e.stopPropagation();return closeCal(true)}
+  const b=e.target.closest("[data-cpd]");
+  const mv={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[e.key];
+  if(b&&mv){
+    e.preventDefault();
+    const nd=addDays(b.dataset.cpd,mv), d=parseDate(nd);
+    if(d.getMonth()!==cal.m||d.getFullYear()!==cal.y){cal.y=d.getFullYear();cal.m=d.getMonth();renderCal()}
+    const t=calEl.querySelector(`[data-cpd="${nd}"]`); if(t)t.focus();
+  }
+});
+calBack.addEventListener("click",()=>closeCal());
+window.addEventListener("resize",()=>{if(!calEl.hidden)placeCal()});
+window.addEventListener("hashchange",()=>closeCal());
 
 /* ---------- vista: dia ---------- */
 function viewDay(date){
@@ -1255,7 +1384,7 @@ function viewDay(date){
   const day=dayOf(date), y=parseDate(date).getFullYear();
   const sub=[String(y)];
   if(day.custom)sub.push("dia personalizado");else if(day.period)sub.push("rotina: "+esc(day.period.name));
-  let h=vnav({title:cap(longDate(date)),rel:relLabel(date),sub:sub.join(" · "),date,prev:"Dia anterior",next:"Próximo dia",todayL:"Hoje",atToday:isT});
+  let h=vnav({title:cap(longDate(date)),rel:relLabel(date),sub:sub.join(" · "),date,prev:"Dia anterior",next:"Próximo dia",todayL:"Hoje",pickL:"Escolher dia",atToday:isT});
   if(isEmptyPlan())h+=`<a class="ai-promo card" href="#/ia/tudo"><span class="ai-ic">${IC.spark}</span><span class="tx"><b>Seu cronograma está vazio</b><small>Monte o ano inteiro em poucos minutos com uma IA: ela faz perguntas e o app importa a resposta.</small></span><span class="btn accent sm">Começar</span></a>`;
   h+=strip(date);
   h+=`<div class="dgrid${isT?"":" nonow"}">`;
@@ -1394,7 +1523,7 @@ function viewWeek(date){
   const rel=cur?"Esta semana":dw===1?"Próxima semana":dw===-1?"Semana passada":dw>0?`Daqui a ${dw} semanas`:`Há ${-dw} semanas`;
   let n=0,k=0,nex=0;
   ds.forEach(d=>{const s=stats(d);n+=s.n;k+=s.k;nex+=examsOn(d).length});
-  let h=vnav({title,rel,sub:String(b.getFullYear()),date:ws,prev:"Semana anterior",next:"Próxima semana",todayL:"Esta semana",atToday:cur});
+  let h=vnav({title,rel,sub:String(b.getFullYear()),date:ws,prev:"Semana anterior",next:"Próxima semana",pickL:"Escolher semana",todayL:"Esta semana",atToday:cur});
   h+=`<div class="wsum"><span class="pillk"><b>${n?Math.round(k/n*100):0}%</b> concluído</span><span class="pillk"><b>${k}</b> de ${n} blocos</span>${nex?`<span class="pillk exam"><b>${nex}</b> prova${nex>1?"s":""}</span>`:""}</div>`;
   h+=`<div class="wgrid">${ds.map(weekCol).join("")}</div>`;
   return h;
@@ -1436,7 +1565,7 @@ function viewMonth(date){
     const lab=`${cap(longDate(d))}${ex.length?", "+ex.map(e=>e.l).join(", "):""}${s.n?`, ${s.k} de ${s.n} blocos`:""}`;
     cells+=`<a class="${cls.join(" ")}" href="${hashFor("dia",d)}" aria-label="${esc(lab)}" data-fk="m${d}"><span class="n">${dd}</span>${ex.map(e=>`<span class="ex">${esc(e.l)}${subj(e.k)?" · "+esc(subj(e.k).n):""}</span>`).join("")}${!ex.length&&s.day.tag?`<span class="tg">${esc(s.day.tag)}</span>`:""}${revN[d]&&d>=TODAY?`<span class="rv">${revN[d]} revis${revN[d]>1?"ões":"ão"}</span>`:""}${s.n?`<span class="pb"><i style="width:${s.pct}%"></i></span>`:""}</a>`;
   }
-  let h=vnav({title:cap(MONTHS[m]),rel:cur?"Este mês":"",sub:String(y),date:first,prev:"Mês anterior",next:"Próximo mês",todayL:"Este mês",atToday:cur});
+  let h=vnav({title:cap(MONTHS[m]),rel:cur?"Este mês":"",sub:String(y),date:first,prev:"Mês anterior",next:"Próximo mês",pickL:"Escolher mês",todayL:"Este mês",atToday:cur});
   h+=`<div class="wsum"><span class="pillk"><b>${n?Math.round(k/n*100):0}%</b> concluído ${cur?"até hoje":first>TODAY?"(mês futuro)":"no mês"}</span><span class="pillk"><b>${k}</b> de ${n} blocos</span>${exs.length?`<span class="pillk exam"><b>${exs.length}</b> prova${exs.length>1?"s":""}</span>`:""}</div>`;
   h+=`<section class="card mwrap" aria-label="Calendário de ${MONTHS[m]}"><div class="mhd" aria-hidden="true">${ORDER.map(i=>`<span>${WD[i]}</span>`).join("")}</div><div class="mgrid">${cells}</div>
     <div class="mleg"><span><i style="background:var(--ok)"></i>Dia completo</span><span><i style="background:var(--accent)"></i>Em andamento</span><span><i style="background:var(--warn)"></i>Com pendências</span><span><i style="background:var(--prova);width:8px;height:8px;border-radius:50%"></i>Prova</span></div></section>`;
@@ -1551,6 +1680,7 @@ function viewPlan(){
     <div class="row2"><a class="btn" href="#/ia">${IC.spark}Criar com IA</a><button class="btn" type="button" data-act="export">${IC.dl}Exportar backup</button><button class="btn" type="button" data-act="import">${IC.up2}Importar backup</button></div>
     <p class="fine">O backup é um arquivo .json sem criptografia: guarde-o em lugar seguro.</p></section>`;
   return`<div class="vnav"><div class="vt"><span class="rel">Planejamento</span><h1>Planejar o ano</h1><span class="vs">Rotina semanal por período + dias personalizados + provas.</span></div><div class="vc"><a class="btn accent" href="#/ia">${IC.spark}Criar ou ajustar com IA</a></div></div>
+    <nav class="jumps" aria-label="Ir para a seção">${[["ph-rot","Rotina"],["ph-cd","Dias personalizados"],["ph-ex","Provas"],["ph-sub","Matérias"],["ph-nt","Anotações"],["ph-io","Backup"]].map(([id,l])=>`<button class="btn chip" type="button" data-act="jump" data-to="${id}">${l}</button>`).join("")}</nav>
     <div class="pgrid"><div>${rot}${cdays}</div><div>${exams}${subs}${notes}${tools}</div></div>`;
 }
 
@@ -2471,6 +2601,8 @@ document.addEventListener("click",e=>{
   if(act.startsWith("ai-"))return aiAct(act,el);
   switch(act){
     case"nav":return step(+el.dataset.dir);
+    case"cal-open":return calEl.hidden?openCal(el):closeCal(true);
+    case"jump":{const t=document.getElementById(el.dataset.to);if(t)t.closest("section").scrollIntoView({behavior:"smooth",block:"start"});return}
     case"now-done":{
       if(!nowBlock)return;
       doc.done[TODAY+"|"+nowBlock.id]=1; persist(); render();
@@ -2540,7 +2672,7 @@ document.addEventListener("click",e=>{
 /* teclado: ← → navegam, H volta para hoje */
 document.addEventListener("keydown",e=>{
   if(!doc||e.defaultPrevented||e.altKey||e.ctrlKey||e.metaKey)return;
-  if(document.querySelector("dialog[open]")||!pop.hidden)return;
+  if(document.querySelector("dialog[open]")||!pop.hidden||!calEl.hidden)return;
   if(e.target.closest("input,textarea,select,[contenteditable]"))return;
   if(!["dia","semana","mes"].includes(route.v))return;
   if(e.key==="ArrowLeft"){e.preventDefault();step(-1)}
@@ -2601,11 +2733,11 @@ function setAuthMode(m){
   showErr("auth-err","");
   const sel=$("auth-start"); sel.textContent="";
   const legacy=hasLegacy(), done=store.get(LEGACY_FLAG);
-  if(legacy)sel.add(new Option("Meu cronograma salvo neste navegador (com o progresso)","legacy"));
-  sel.add(new Option("Criar o meu com ajuda de uma IA (passo a passo)","ai"));
-  sel.add(new Option("Cronograma de exemplo (rotina semanal + semana de provas)","sample"));
+  if(legacy)sel.add(new Option("Meu cronograma salvo neste navegador","legacy"));
+  sel.add(new Option("Criar com a IA (recomendado)","ai"));
+  sel.add(new Option("Usar o cronograma de exemplo","sample"));
   sel.add(new Option("Começar em branco","blank"));
-  sel.value=legacy&&!done?"legacy":"ai";
+  sel.value=legacy&&!done?"legacy":"ai"; startHint();
   const accs=accounts(), box=$("auth-accs");
   box.hidden=m!=="in"||!accs.length; box.textContent="";
   if(accs.length){
@@ -2618,6 +2750,9 @@ function setAuthMode(m){
     });
   }
 }
+const START_HINT={ai:"Depois de entrar, o app mostra um passo a passo: uma IA faz perguntas sobre sua rotina e monta o ano para você.",sample:"Uma rotina pronta de estudante de Medicina, com uma semana de provas, para conhecer o app e editar.",blank:"Tudo vazio: você monta a rotina à mão em Planejar (ou com a IA, quando quiser).",legacy:"Traz o cronograma e o progresso que você já tinha salvo neste navegador."};
+function startHint(){$("auth-start-hint").textContent=START_HINT[$("auth-start").value]||""}
+$("auth-start").addEventListener("change",startHint);
 document.querySelectorAll("[data-auth]").forEach(b=>b.addEventListener("click",()=>setAuthMode(b.dataset.auth)));
 authForm.addEventListener("click",e=>{
   const eye=e.target.closest('[data-act="pw-eye"]'); if(!eye)return;
