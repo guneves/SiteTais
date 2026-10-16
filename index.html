@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cronograma Semana de Provas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0}
+img{max-width:100%}
+/* Layout: faixa-linha do tempo até as provas, legenda, depois cartões diários em grade com blocos marcáveis */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --ink:#18232f; --muted:#5b6876; --line:#d9e0e7;
+  --onco:#8a3f74; --onco-bg:#f6e9f2;
+  --morfo:#1f7a7a; --morfo-bg:#e3f3f2;
+  --clin:#b46a12; --clin-bg:#fbefdc;
+  --fixo:#4a5a6b; --fixo-bg:#e9edf2;
+  --pesq:#3c7a3a; --pesq-bg:#e6f2e4;
+  --prova:#c0392b; --prova-bg:#fbe5e2;
+  --font-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --font-body:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11171d; --surface:#18212a; --ink:#e6ecf1; --muted:#9aa8b5; --line:#2a3642;
+  --onco:#d58bbf; --onco-bg:#33202d; --morfo:#5cc2c0; --morfo-bg:#16302f;
+  --clin:#e7a656; --clin-bg:#352712; --fixo:#a9b6c3; --fixo-bg:#232d37;
+  --pesq:#86c983; --pesq-bg:#1c2f1b; --prova:#f0796b; --prova-bg:#3a1e1b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11171d; --surface:#18212a; --ink:#e6ecf1; --muted:#9aa8b5; --line:#2a3642;
+  --onco:#d58bbf; --onco-bg:#33202d; --morfo:#5cc2c0; --morfo-bg:#16302f;
+  --clin:#e7a656; --clin-bg:#352712; --fixo:#a9b6c3; --fixo-bg:#232d37;
+  --pesq:#86c983; --pesq-bg:#1c2f1b; --prova:#f0796b; --prova-bg:#3a1e1b; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:24px}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,4.4vw,42px);line-height:1.08;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:6px 0 0;max-width:70ch}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+/* linha do tempo */
+.timeline{overflow-x:auto}
+.tl{display:grid;grid-template-columns:repeat(13,minmax(58px,1fr));gap:4px;min-width:720px}
+.tl a{display:grid;gap:2px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 6px;text-align:center;font-variant-numeric:tabular-nums}
+.tl a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.tl .dw{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-transform:uppercase}
+.tl .dn{font-family:var(--font-display);font-size:20px;font-weight:700}
+.tl .bar{height:5px;border-radius:3px;display:flex;overflow:hidden;gap:1px}
+.tl .bar span{flex:1}
+.tl a.exam{background:var(--prova-bg);border-color:var(--prova)}
+.tl a.exam .dn{color:var(--prova)}
+.tl .pc{font-size:11px;color:var(--muted)}
+/* legenda e notas */
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.note{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.note h3{font-family:var(--font-display);font-size:16px;margin:0 0 4px}
+.note p,.note ul{margin:0;color:var(--muted);font-size:14px}
+.note ul{padding-left:18px}
+/* dias */
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+@media (max-width:420px){.days{grid-template-columns:1fr}}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0;display:flex;flex-direction:column}
+.day.examday{border-color:var(--prova)}
+.dh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:14px 16px 10px;border-bottom:1px solid var(--line)}
+.dh h2{font-family:var(--font-display);font-size:20px;margin:0}
+.dh .tag{font-family:var(--font-mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.day.examday .dh{background:var(--prova-bg)}
+.day.examday .dh .tag{color:var(--prova)}
+ul.blocks{list-style:none;margin:0;padding:6px 0}
+.blk{display:grid;grid-template-columns:22px 92px 1fr;gap:8px;align-items:start;padding:7px 16px}
+.blk input{margin:3px 0 0;width:16px;height:16px;accent-color:var(--ink)}
+.blk .t{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding-top:2px;font-variant-numeric:tabular-nums}
+.blk .c{min-width:0;border-left:3px solid var(--k);padding-left:10px}
+.blk .lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--k)}
+.blk .d{font-size:14px}
+.blk.done .d{text-decoration:line-through;color:var(--muted)}
+.blk.pause{grid-template-columns:22px 92px 1fr;opacity:.75}
+.blk.pause .c{border-left-color:transparent;color:var(--muted);font-size:13px}
+.k-onco{--k:var(--onco)} .k-morfo{--k:var(--morfo)} .k-clin{--k:var(--clin)} .k-fixo{--k:var(--fixo)} .k-pesq{--k:var(--pesq)} .k-prova{--k:var(--prova)}
+.progress{margin-top:auto;padding:10px 16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;gap:10px;align-items:center}
+.progress .track{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.progress .fill{display:block;height:100%;background:var(--ink);width:0}
+.refs{font-size:13px;color:var(--muted)}
+.refs ol{padding-left:18px;margin:6px 0 0}
+@media (prefers-reduced-motion:no-preference){.progress .fill{transition:width .25s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">17 a 29 de outubro de 2026</div>
+    <h1>Cronograma da semana de provas</h1>
+    <p class="sub">Manhã e tarde com almoço, flashcards e questões todos os dias, simulados antes de cada prova e a noite reservada para a pesquisa. Marque cada bloco quando concluir; o progresso fica salvo neste navegador.</p>
+  </header>
+
+  <nav class="timeline" aria-label="Linha do tempo"><div class="tl" id="tl"></div></nav>
+
+  <div class="legend">
+    <span><i class="sw" style="background:var(--onco)"></i>Oncologia (prova 26/10)</span>
+    <span><i class="sw" style="background:var(--morfo)"></i>Anatomia · Histologia · Laboratórios (27/10)</span>
+    <span><i class="sw" style="background:var(--clin)"></i>Urologia · Ginecologia · OSCE (29/10)</span>
+    <span><i class="sw" style="background:var(--fixo)"></i>Flashcards e questões</span>
+    <span><i class="sw" style="background:var(--pesq)"></i>Pesquisa e artigos</span>
+  </div>
+
+  <section class="notes">
+    <div class="note"><h3>Estrutura de um dia cheio</h3>
+      <ul><li>08:00–08:40 flashcards (revisões do Anki)</li><li>08:40–12:00 bloco da manhã</li><li>12:00–13:30 almoço</li><li>13:30–16:30 bloco da tarde</li><li>16:45–18:00 questões das matérias do dia</li><li>19:30–21:00 pesquisa + artigo</li></ul></div>
+    <div class="note"><h3>Como usar cada bloco de conteúdo</h3>
+      <p>Videoaula em 1,5× → resumo próprio → 10 a 15 flashcards novos do que errou ou achou difícil. Nos tipos de câncer, padronize o resumo: epidemiologia, fatores de risco, rastreamento, histologia, estadiamento e tratamento.</p></div>
+    <div class="note"><h3>Sinergias</h3>
+      <p>Próstata, rim, bexiga e testículo (21/10) já adiantam Urologia; colo do útero, endométrio, ovário e mama já adiantam Ginecologia. Guarde esses resumos para revisar no dia 28.</p></div>
+  </section>
+
+  <section class="days" id="days"></section>
+
+  <section class="note refs">
+    <h3>Por que questões, flashcards e simulados todo dia</h3>
+    <p>O cronograma combina prática de recuperação (questões e simulados) com repetição espaçada (flashcards diários) e intercalação de matérias, as estratégias com maior utilidade demonstrada na literatura de aprendizagem.</p>
+    <ol>
+      <li>Dunlosky J, Rawson KA, Marsh EJ, Nathan MJ, Willingham DT. Improving students' learning with effective learning techniques. Psychol Sci Public Interest. 2013;14(1):4-58.</li>
+      <li>Roediger HL, Karpicke JD. Test-enhanced learning: taking memory tests improves long-term retention. Psychol Sci. 2006;17(3):249-55.</li>
+      <li>Cepeda NJ, Pashler H, Vul E, Wixted JT, Rohrer D. Distributed practice in verbal recall tasks: a review and quantitative synthesis. Psychol Bull. 2006;132(3):354-80.</li>
+      <li>Larsen DP, Butler AC, Roediger HL. Test-enhanced learning in medical education. Med Educ. 2008;42(10):959-66.</li>
+    </ol>
+  </section>
+</div>
+
+<script>
+const F = (t,d)=>({t,k:"fixo",l:"Flashcards",d});
+const Q = (t,d)=>({t,k:"fixo",l:"Questões",d});
+const P = (t,d)=>({t,k:"pesq",l:"Pesquisa",d:d||"Tarefas do curso de pesquisa + leitura diária de artigo"});
+const A = (t)=>({t,pause:true,d:"Almoço"});
+const DAYS = [
+ {id:"d17",dw:"Sáb",dn:17,tag:"9 dias para Onco",b:[
+  F("08:00–08:40","Revisões do Anki de todas as matérias"),
+  {t:"08:40–12:00",k:"onco",l:"Oncologia básica I",d:"Carcinogênese, hallmarks do câncer, oncogenes e genes supressores, nomenclatura, graduação e diferenciação tumoral"},
+  A("12:00–13:30"),
+  {t:"13:30–16:30",k:"morfo",l:"Anatomia I",d:"Primeiro terço do conteúdo da prova"},
+  Q("16:45–18:00","Oncologia básica + Anatomia I"),
+  P("19:30–21:00")]},
+ {id:"d18",dw:"Dom",dn:18,tag:"8 dias para Onco",b:[
+  F("08:00–08:40","Revisões + cards novos de ontem"),
+  {t:"08:40–12:00",k:"onco",l:"Oncologia básica II",d:"Estadiamento TNM, marcadores tumorais, princípios de quimioterapia, radioterapia e imunoterapia, síndromes paraneoplásicas, emergências oncológicas"},
+  A("12:00–13:30"),
+  {t:"13:30–16:30",k:"morfo",l:"Histologia I",d:"Primeiro terço do conteúdo da prova"},
+  Q("16:45–18:00","Oncologia básica + Histologia I"),
+  P("19:30–21:00")]},
+ {id:"d19",dw:"Seg",dn:19,tag:"Aula pela manhã",b:[
+  {t:"Manhã",pause:true,d:"Aula da faculdade"},
+  F("13:30–14:10","Revisões do Anki"),
+  {t:"14:10–16:30",k:"onco",l:"Tipos de câncer I",d:"Mama e pulmão: videoaula + resumo"},
+  Q("16:45–18:00","Oncologia: mama, pulmão e básica"),
+  P("19:30–21:00")]},
+ {id:"d20",dw:"Ter",dn:20,tag:"6 dias para Onco",b:[
+  F("08:00–08:40","Revisões do Anki"),
+  {t:"08:40–12:00",k:"onco",l:"Tipos de câncer II",d:"Colorretal, estômago e esôfago, fígado e pâncreas: videoaula + resumo"},
+  A("12:00–13:30"),
+  {t:"13:30–16:30",k:"morfo",l:"Laboratórios I",d:"Primeira metade do conteúdo dos laboratórios"},
+  Q("16:45–18:00","Onco gastrointestinal + Laboratórios I"),
+  P("19:30–21:00")]},
+ {id:"d21",dw:"Qua",dn:21,tag:"5 dias para Onco",b:[
+  F("08:00–08:40","Revisões do Anki"),
+  {t:"08:40–12:00",k:"onco",l:"Tipos de câncer III",d:"Próstata, rim, bexiga, testículo; colo do útero, endométrio e ovário: videoaula + resumo"},
+  A("12:00–13:30"),
+  {t:"13:30–16:30",k:"morfo",l:"Anatomia II",d:"Segundo terço do conteúdo"},
+  Q("16:45–18:00","Onco urológica e ginecológica + Anatomia"),
+  P("19:30–21:00")]},
+ {id:"d22",dw:"Qui",dn:22,tag:"4 dias para Onco",b:[
+  F("08:00–08:40","Revisões do Anki"),
+  {t:"08:40–12:00",k:"onco",l:"Tipos de câncer IV",d:"Leucemias, linfomas, mieloma; cabeça e pescoço, tireoide; pele (melanoma, CBC, CEC); SNC. Ajuste à lista do seu programa"},
+  A("12:00–13:30"),
+  {t:"13:30–16:30",k:"morfo",l:"Histologia II",d:"Segundo terço do conteúdo"},
+  Q("16:45–18:00","Onco hematológica e demais tipos + Histologia"),
+  P("19:30–21:00")]},
+ {id:"d23",dw:"Sex",dn:23,tag:"Simulado Onco 1",b:[
+  F("08:00–08:40","Revisões do Anki"),
+  {t:"08:40–10:40",k:"onco",l:"Simulado Onco 1",d:"Prova completa cronometrada, sem consulta"},
+  {t:"10:40–12:00",k:"onco",l:"Correção",d:"Corrija e anote os temas errados em lista de revisão; vire flashcards"},
+  A("12:00–13:30"),
+  {t:"13:30–16:30",k:"morfo",l:"Laboratórios II",d:"Segunda metade do conteúdo dos laboratórios"},
+  Q("16:45–18:00","Anatomia, Histologia e Laboratórios intercalados"),
+  P("19:30–21:00")]},
+ {id:"d24",dw:"Sáb",dn:24,tag:"2 dias para Onco",b:[
+  F("08:00–08:40","Revisões do Anki, com prioridade para Onco"),
+  {t:"08:40–10:20",k:"morfo",l:"Anatomia III",d:"Fechamento do conteúdo restante"},
+  {t:"10:30–12:00",k:"morfo",l:"Histologia III",d:"Fechamento do conteúdo restante"},
+  A("12:00–13:30"),
+  {t:"13:30–16:30",k:"clin",l:"Urologia I",d:"Conteúdo não oncológico do programa (ex.: HPB, litíase, ITU); aproveite os resumos de onco urológica"},
+  Q("16:45–18:00","Erros do Simulado Onco 1 + questões de Onco"),
+  P("19:30–21:00")]},
+ {id:"d25",dw:"Dom",dn:25,tag:"Véspera de Onco",b:[
+  F("08:00–08:40","Revisões do Anki de Onco"),
+  {t:"08:40–12:00",k:"onco",l:"Revisão dirigida Onco",d:"Lista de erros do simulado 1 e resumos dos tipos de câncer"},
+  A("12:00–13:30"),
+  {t:"13:30–15:30",k:"onco",l:"Simulado Onco 2",d:"Prova completa cronometrada"},
+  {t:"15:45–17:00",k:"onco",l:"Correção",d:"Correção e revisão leve. Pare até as 17h"},
+  P("19:30–20:30","Leitura de artigo (versão curta) e dormir cedo")]},
+ {id:"d26",dw:"Seg",dn:26,exam:true,tag:"Prova de Oncologia",b:[
+  {t:"Manhã",k:"prova",l:"Prova",d:"Oncologia"},
+  A("12:00–13:30"),
+  {t:"14:00–16:00",k:"morfo",l:"Simulado Anat/Histo/Lab",d:"Simulado misto cronometrado + correção"},
+  {t:"16:15–18:00",k:"morfo",l:"Laboratórios III",d:"Revisão dos pontos fracos do simulado"},
+  P("19:30–20:30","Leitura de artigo (versão curta) e dormir cedo")]},
+ {id:"d27",dw:"Ter",dn:27,exam:true,tag:"3 provas",b:[
+  {t:"Dia",k:"prova",l:"Provas",d:"Anatomia, Histologia e Laboratórios"},
+  {t:"Fim da tarde",k:"clin",l:"OSCE (opcional)",d:"Se houver energia, 1 h lendo os checklists das estações"},
+  P("19:30–20:30","Tarefas do curso de pesquisa + leitura de artigo (versão curta)")]},
+ {id:"d28",dw:"Qua",dn:28,tag:"Véspera de Uro/Gine",b:[
+  F("08:00–08:40","Revisões do Anki de Uro e Gine"),
+  {t:"08:40–12:00",k:"clin",l:"Ginecologia",d:"Conteúdo do programa + resumos de onco ginecológica e mama"},
+  A("12:00–13:30"),
+  {t:"13:30–15:00",k:"clin",l:"Simulado Uro + Gine",d:"Simulado curto com correção imediata"},
+  {t:"15:00–18:00",k:"clin",l:"Prática de OSCE",d:"Estações de 7 a 10 min cronometradas, de preferência com colega: anamnese, exame físico urológico e ginecológico, comunicação e orientação"},
+  P("19:30–20:30","Leitura de artigo (versão curta) e dormir cedo")]},
+ {id:"d29",dw:"Qui",dn:29,exam:true,tag:"Prova final",b:[
+  {t:"Dia",k:"prova",l:"Provas",d:"Urologia, Ginecologia e OSCE"}]}
+];
+const KEY="cronograma-provas-2026";
+let state={}; try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}};
+const colors={onco:"var(--onco)",morfo:"var(--morfo)",clin:"var(--clin)",fixo:"var(--fixo)",pesq:"var(--pesq)",prova:"var(--prova)"};
+const daysEl=document.getElementById("days"), tlEl=document.getElementById("tl");
+function render(){
+  daysEl.innerHTML=""; tlEl.innerHTML="";
+  DAYS.forEach(day=>{
+    const tasks=day.b.filter(b=>!b.pause);
+    const done=tasks.filter((b,i)=>state[day.id+"-"+day.b.indexOf(b)]).length;
+    const pct=tasks.length?Math.round(done/tasks.length*100):0;
+    const a=document.createElement("a"); a.href="#"+day.id; if(day.exam)a.className="exam";
+    const kinds=[...new Set(tasks.map(b=>b.k).filter(k=>k!=="fixo"&&k!=="pesq"))];
+    a.innerHTML=`<span class="dw">${day.dw}</span><span class="dn">${day.dn}</span><span class="bar">${kinds.map(k=>`<span style="background:${colors[k]}"></span>`).join("")}</span><span class="pc">${pct}%</span>`;
+    tlEl.appendChild(a);
+    const card=document.createElement("article"); card.className="day"+(day.exam?" examday":""); card.id=day.id;
+    card.innerHTML=`<div class="dh"><h2>${day.dw} ${day.dn}/10</h2><span class="tag">${day.tag}</span></div>`;
+    const ul=document.createElement("ul"); ul.className="blocks";
+    day.b.forEach((b,i)=>{
+      const li=document.createElement("li"); const id=day.id+"-"+i;
+      if(b.pause){li.className="blk pause";li.innerHTML=`<span></span><span class="t">${b.t}</span><span class="c">${b.d}</span>`;}
+      else{
+        li.className="blk k-"+b.k+(state[id]?" done":"");
+        li.innerHTML=`<input type="checkbox" id="${id}" ${state[id]?"checked":""} aria-label="${b.l}, ${b.t}"><label class="t" for="${id}">${b.t}</label><span class="c"><span class="lbl">${b.l}</span><div class="d">${b.d}</div></span>`;
+        li.querySelector("input").addEventListener("change",e=>{state[id]=e.target.checked;save();render();});
+      }
+      ul.appendChild(li);
+    });
+    card.appendChild(ul);
+    const pr=document.createElement("div"); pr.className="progress";
+    pr.innerHTML=`<span>${done}/${tasks.length} blocos</span><span class="track"><span class="fill" style="width:${pct}%"></span></span>`;
+    card.appendChild(pr);
+    daysEl.appendChild(card);
+  });
+}
+render();
+</script>
+</body>
+</html>
