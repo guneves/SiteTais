@@ -1,6 +1,6 @@
 # Exam Week Schedule: Stack and GitHub Pages Deployment
 
-This guide explains how to host the exam-week study schedule (17–29 Oct 2026) as a static website on GitHub Pages.
+This guide explains how to host the year-round study planner (local accounts, weekly routine, exams and spaced reviews) as a static website on GitHub Pages.
 
 ## Recommended stack
 
@@ -12,14 +12,16 @@ Keep it as **plain static HTML**. The page needs no framework and no build step.
 | Styling | Inline CSS with CSS custom properties | Light and dark themes via `prefers-color-scheme`; nothing to compile |
 | Fonts | Google Fonts (Nunito, Nunito Sans) | Loaded by a `<link>` tag, with system-font fallbacks if offline |
 | Logic | Vanilla JavaScript (inline `<script>`) | Renders the day cards from a `DAYS` array |
-| Persistence | `localStorage` | Saves which blocks you ticked, per browser and per device |
+| Persistence | `localStorage`, encrypted per account (Web Crypto: PBKDF2 + AES-GCM) | Each user logs in and sees only their own progress, per browser and per device |
 | Hosting | GitHub Pages, "Deploy from a branch" | Free, HTTPS by default, no CI configuration needed |
 
 What you do **not** need: Node.js, npm, React, Vite, Jekyll themes or GitHub Actions workflows. Adding any of these would only add maintenance.
 
 ### Limitation to know about
 
-Progress is stored in `localStorage`, so ticks made on your phone do not appear on your laptop, and clearing browser data erases them. If you later want progress synced across devices, you would need a backend (for example Supabase or Firebase). For a two-week schedule this is usually not worth it.
+Accounts are local: they live in the browser where they were created, encrypted with the account password. Ticks made on your phone do not appear on your laptop unless you export a backup (account menu → "Exportar backup") and import it on the other device. Clearing browser data erases the accounts, and a forgotten password cannot be recovered. Real cross-device sync would need a backend (for example Supabase or Firebase).
+
+The login needs the Web Crypto API, which browsers only offer on `https://` pages or `http://localhost`. GitHub Pages is served over HTTPS, so it works there; opening `index.html` straight from disk may not.
 
 ## Step 1: Make the file standalone
 
@@ -87,17 +89,15 @@ https://<your-username>.github.io/cronograma-provas/
 
 The **Actions** tab shows a "pages build and deployment" run; when it turns green, the site is live.
 
-## Step 5: Update the schedule later
+## Step 5: Update the planner later
 
-Edit the `DAYS` array inside the `<script>` block (times, labels, descriptions), then commit again, either with **Edit (pencil icon) → Commit changes** on GitHub or with `git add`, `git commit` and `git push`. Pages redeploys automatically on every commit to `main`.
-
-Note that ticks are saved by position in each day (`d17-0`, `d17-1` …). If you insert or remove blocks inside a day, ticks for that day can shift to the wrong rows; untick and re-tick as needed.
+Each user plans their year inside the site (Planejar tab: periods with a weekly routine, custom days, exams). To change the sample that new accounts can start from, edit the `DAYS` and `ROUTINE` constants inside the `<script>` block and commit again; Pages redeploys automatically on every commit to `main`. Existing accounts keep their own saved data.
 
 ## Optional extras
 
 - **Add to home screen.** On your phone, open the URL and choose "Add to Home Screen" (iOS Safari) or "Install app / Add to home screen" (Android Chrome) to open it like an app.
 - **Custom domain.** In **Settings → Pages → Custom domain** you can point your own domain at the site.
-- **Privacy.** Anyone with the URL can see a public Pages site. The schedule has no personal data beyond study topics, but keep that in mind if you add anything private.
+- **Privacy.** Anyone with the URL can see a public Pages site. The page code is public; each user's data stays in their own browser, encrypted with their password. Exported backups are plain JSON, so store them carefully.
 
 ## Troubleshooting
 
@@ -107,7 +107,8 @@ Note that ticks are saved by position in each day (`d17-0`, `d17-1` …). If you
 | Page shows but has no styles | The `<style>` block was left out when wrapping; paste it inside `<head>` |
 | Layout is wider than the phone screen | The `viewport` meta tag is missing from `<head>` |
 | Fonts look different | Google Fonts is blocked on that network; the system fallback fonts are being used, and the page still works |
-| Ticks disappeared | Browser data was cleared, or you are on a different device or browser |
+| Ticks disappeared | Browser data was cleared, or you are on a different device or browser; import a backup |
+| "Este navegador não oferece criptografia" on the login screen | The page was opened over plain `http://` or from disk; use the `https://` Pages URL |
 
 ## References
 
