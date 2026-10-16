@@ -15,7 +15,9 @@ You are receiving a finished static website. Your job is to publish it on GitHub
 
 A day-by-day study schedule (17 to 29 Oct 2026) for a medical student's exam week, written in Brazilian Portuguese. Each study block has a checkbox; ticks are saved in `localStorage` under the key `cronograma-provas-2026`. There is no backend, build step or dependency to install.
 
-The schedule is editable in the page itself ("Editar" button): days, blocks, exams, subjects and notes. Edits are saved in `localStorage` under `cronograma-provas-dados`; the `DAYS` array is only the default schedule used when nothing is saved. "Criar com IA" shows a prompt for an LLM and imports the JSON it returns (schema in `aiPrompt()`); "Exportar/Importar backup" moves data between devices.
+A "now" card at the top shows the current (or next) block of today, based on the block times; `?hoje=AAAA-MM-DD&hora=HH:MM` simulates a date and time for checking the layout.
+
+The schedule is editable in the page itself ("Mais" menu → "Editar cronograma"): days, blocks, exams, subjects and notes. Edits are saved in `localStorage` under `cronograma-provas-dados`; the `DAYS` array is only the default schedule used when nothing is saved. "Criar com IA" shows a prompt for an LLM and imports the JSON it returns (schema in `aiPrompt()`); "Exportar/Importar backup" moves data between devices.
 
 ## Deployment task
 

@@ -10,7 +10,7 @@ Keep it as **plain static HTML**. The page needs no framework and no build step.
 |---|---|---|
 | Markup | One `index.html` file | The whole app (schedule data, rendering, checkboxes) already lives in a single file |
 | Styling | Inline CSS with CSS custom properties | Light and dark themes via `prefers-color-scheme`; nothing to compile |
-| Fonts | Google Fonts (Bricolage Grotesque, Source Sans 3, JetBrains Mono) | Loaded by a `<link>` tag, with system-font fallbacks if offline |
+| Fonts | Google Fonts (Nunito, Nunito Sans) | Loaded by a `<link>` tag, with system-font fallbacks if offline |
 | Logic | Vanilla JavaScript (inline `<script>`) | Renders the day cards from a `DAYS` array |
 | Persistence | `localStorage` | Saves which blocks you ticked, per browser and per device |
 | Hosting | GitHub Pages, "Deploy from a branch" | Free, HTTPS by default, no CI configuration needed |
