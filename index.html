@@ -492,7 +492,6 @@ dialog.dlg::backdrop{background:rgba(18,20,28,.55)}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 20px 4px;overflow:auto}
 .dlg-err{color:var(--prova);font-size:14px;font-weight:700;margin:6px 20px 0}
 .dlg-act{display:flex;gap:8px;padding:12px 20px 18px;border-top:1px solid var(--line);margin-top:10px;flex-wrap:wrap;align-items:center}
-.ai-body{padding:4px 20px 4px;overflow:auto;display:grid;gap:16px}
 .ai-step{display:grid;gap:8px}
 .ai-step h3{font-family:var(--font-display);font-weight:800;font-size:16px;margin:0;display:flex;gap:10px;align-items:center}
 .ai-step h3 b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:13px;flex:none}
@@ -505,6 +504,58 @@ dialog.dlg::backdrop{background:rgba(18,20,28,.55)}
 .toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:700;box-shadow:var(--shadow-lg);z-index:40;transition:opacity .2s,transform .2s;max-width:calc(100vw - 32px);text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast.yay{background:var(--ok);color:#fff}
+/* criar com IA */
+.nav a.ai-tab svg,.tabbar a.ai-tab svg{color:var(--accent)}
+@media (max-width:420px){.tabbar svg{padding:4px 11px}}
+.pcard.ai-step{gap:12px}
+.ai-step h3 small{font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--muted)}
+.ai-step textarea.plain{font-family:inherit;font-size:15px;line-height:1.45}
+.ai-step select{font-size:14px}
+.ai-ctx{align-items:flex-start;font-weight:600;color:var(--muted);font-size:13.5px}
+.ai-ctx input{margin-top:2px}
+.ai-see summary{cursor:pointer;font-size:13px;font-weight:800;color:var(--muted)}
+.ai-see textarea{margin-top:8px}
+.ai-back{text-decoration:none}
+.ai-back:hover{text-decoration:underline}
+.ai-hero{padding:18px;display:grid;gap:12px;margin-top:18px;background:linear-gradient(135deg,var(--accent-bg),var(--surface) 70%)}
+.ai-hero p{margin:0;color:var(--muted);font-size:14.5px;max-width:75ch}
+.ai-how{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.ai-how li{display:flex;gap:10px;align-items:flex-start;font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:10px 12px}
+.ai-how li b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:13px;flex:none}
+.ai-groups{display:grid;gap:18px;margin-top:22px}
+.ai-gh{font-size:16px;margin-bottom:10px}
+.ai-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.ai-tk,.ai-promo{display:flex;gap:12px;align-items:flex-start;padding:14px;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s;min-width:0}
+.ai-tk:hover,.ai-promo:hover{border-color:var(--accent)}
+.ai-tk .tx,.ai-promo .tx{flex:1;min-width:0;display:grid;gap:3px;line-height:1.35}
+.ai-tk .tx b,.ai-promo .tx b{font-family:var(--font-display);font-size:16px}
+.ai-tk .tx small,.ai-promo .tx small{color:var(--muted);font-size:13.5px}
+.ai-ic{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--accent-bg);color:var(--accent-ink)}
+.ai-ic svg{width:19px;height:19px}
+.ai-paste{margin-top:18px;border-style:dashed}
+.ai-promo{align-items:center;margin:14px 0 4px;background:linear-gradient(135deg,var(--accent-bg),var(--surface) 75%)}
+.ai-faq{margin-top:18px}
+.ai-faq details{border-top:1px solid var(--line);padding-top:10px}
+.ai-faq summary{cursor:pointer;font-weight:800;font-size:14.5px}
+.ai-faq p{margin:8px 0 0;color:var(--muted);font-size:14px;max-width:80ch}
+.ai-faq .refs{margin:8px 0 0;padding-left:20px;font-size:12.5px;color:var(--muted);display:grid;gap:4px;overflow-wrap:anywhere}
+.ai-undo{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;margin-top:14px;border-color:var(--accent);background:var(--accent-bg);font-size:14px}
+.ai-page{margin-top:18px}
+.ai-info h3{font-family:var(--font-display);font-size:14.5px;font-weight:800;margin:0 0 4px}
+.ai-info p,.ai-info ul{margin:0;color:var(--muted);font-size:14px}
+.ai-info ul{padding-left:18px}
+.ai-ok,.ai-bad{border-radius:var(--r-md);padding:12px 14px;font-size:14px;display:grid;gap:6px}
+.ai-ok{background:var(--ok-bg);color:var(--ink)}
+.ai-ok b{color:var(--ok)}
+.ai-ok ul{margin:0;padding-left:18px;color:var(--muted);display:grid;gap:2px}
+.ai-ok ul b{color:var(--ink)}
+.ai-bad{background:color-mix(in srgb,var(--prova) 12%,var(--surface));}
+.ai-bad b{color:var(--prova)}
+.ai-bad p{margin:0;color:var(--muted)}
+.ai-warn{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.ai-sw{--k:var(--muted);display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--k);margin-right:4px}
+#ai-prev:empty{display:none}
+@media (max-width:979px){.ai-page>div:last-child{order:-1}}
 @media (max-width:899px){.app-on .toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
 
 @media (max-width:640px){
@@ -595,6 +646,7 @@ dialog.dlg::backdrop{background:rgba(18,20,28,.55)}
 </div>
 
 <input type="file" id="file-import" accept="application/json,.json,.txt" hidden>
+<input type="file" id="ai-file" accept="application/json,.json,.txt" hidden>
 
 <dialog class="dlg" id="dlg" aria-labelledby="dlg-title">
   <form id="dlg-form" novalidate>
@@ -612,30 +664,6 @@ dialog.dlg::backdrop{background:rgba(18,20,28,.55)}
   </form>
 </dialog>
 
-<dialog class="dlg" id="dlg-ai" aria-labelledby="ai-title">
-  <div class="dlg-in">
-    <h2 id="ai-title">Criar cronograma com IA</h2>
-    <div class="ai-body">
-      <div class="ai-step"><h3><b>1</b>Copie o prompt</h3>
-        <p>Cole no ChatGPT, Claude, Gemini ou outra IA. Ela vai perguntar o período, as provas, as matérias, seus horários e preferências antes de montar a rotina do ano.</p>
-        <textarea id="ai-prompt" rows="6" readonly aria-label="Prompt para a IA"></textarea>
-        <div class="row2"><button class="btn primary" id="ai-copy" type="button">Copiar prompt</button></div></div>
-      <div class="ai-step"><h3><b>2</b>Responda às perguntas da IA</h3>
-        <p>No final ela entrega um bloco de código JSON. Copie esse bloco inteiro ou baixe o arquivo <code>.json</code>.</p></div>
-      <div class="ai-step"><h3><b>3</b>Cole a resposta ou envie o arquivo</h3>
-        <textarea id="ai-json" rows="6" placeholder="Cole aqui o JSON que a IA gerou" aria-label="Resposta da IA (JSON)"></textarea>
-        <div class="row2"><button class="btn" id="ai-file-btn" type="button">Escolher arquivo .json</button><input type="file" id="ai-file" accept="application/json,.json,.txt" hidden>
-          <label class="lbl2" for="ai-mode">Ao importar:</label>
-          <select id="ai-mode"><option value="replace">Substituir o planejamento atual</option><option value="merge">Adicionar ao planejamento atual</option></select></div>
-        <p class="dlg-err" id="ai-err" role="alert" hidden style="margin:0"></p></div>
-    </div>
-    <div class="dlg-act">
-      <span class="spacer"></span>
-      <button type="button" class="btn" id="ai-close">Fechar</button>
-      <button type="button" class="btn primary" id="ai-import"><span id="ai-import-lab">Importar</span></button>
-    </div>
-  </div>
-</dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -890,6 +918,7 @@ async function signUp(f){
   const id=uid("u");
   let d;
   if(f.start==="legacy"){d=legacyDoc()||sampleDoc();store.set(LEGACY_FLAG,"1")}
+  else if(f.start==="ai"){d=blankDoc();history.replaceState(null,"","#/ia/tudo")}
   else d=f.start==="blank"?blankDoc():sampleDoc();
   d.profile={name:f.name};
   const a={id,user:f.user,name:f.name,salt:b64(salt),iter:PBKDF2_ITER,ver:await seal(k,"ok"),created:new Date().toISOString()};
@@ -1145,13 +1174,14 @@ function revOn(date){
 }
 
 /* ===================== roteamento ===================== */
-const NAV=[["dia","Hoje",IC.sun],["semana","Semana",IC.week],["mes","Mês",IC.month],["revisoes","Revisões",IC.rev],["planejar","Planejar",IC.plan]];
+const NAV=[["dia","Hoje",IC.sun],["ia","IA",IC.spark,"Criar com IA"],["semana","Semana",IC.week],["mes","Mês",IC.month],["revisoes","Revisões",IC.rev],["planejar","Planejar",IC.plan]];
 let route={v:"dia",date:TODAY};
 function parseRoute(){
   const h=location.hash.replace(/^#\/?/,"").split("/"), v=h[0];
   if(v==="semana")return{v,date:validDate(h[1])?h[1]:TODAY};
   if(v==="mes")return{v,date:/^\d{4}-\d{2}$/.test(h[1]||"")&&validDate(h[1]+"-01")?h[1]+"-01":TODAY.slice(0,8)+"01"};
   if(v==="revisoes"||v==="planejar")return{v,date:TODAY};
+  if(v==="ia")return{v,date:TODAY,task:AI_TASKS[h[1]]?h[1]:null};
   return{v:"dia",date:validDate(h[1])?h[1]:TODAY};
 }
 function hashFor(v,date){
@@ -1178,8 +1208,8 @@ function step(dir){
 const viewEl=$("view");
 let dayEditing=null, nowBlock=null, curBlockId=null, lastNow="", revTab="hoje", planPid=null, planWd=null;
 function buildNav(){
-  const html=NAV.map(([v,l,ic])=>`<a href="#/${v}" data-v="${v}">${ic}<span>${l}</span></a>`).join("");
-  $("nav").innerHTML=html; $("tabbar").innerHTML=html;
+  const html=long=>NAV.map(([v,l,ic,ll])=>`<a href="#/${v}" data-v="${v}"${v==="ia"?' class="ai-tab"':""}>${ic}<span>${long&&ll||l}</span></a>`).join("");
+  $("nav").innerHTML=html(true); $("tabbar").innerHTML=html(false);
   document.querySelectorAll(".mi[data-ic]").forEach(b=>b.insertAdjacentHTML("afterbegin",IC[b.dataset.ic]||""));
 }
 function render(fresh){
@@ -1191,10 +1221,11 @@ function render(fresh){
   else if(r.v==="mes")html=viewMonth(r.date);
   else if(r.v==="revisoes")html=viewRevs();
   else if(r.v==="planejar")html=viewPlan();
+  else if(r.v==="ia")html=viewAI(r.task);
   else html=viewDay(r.date);
   viewEl.innerHTML=html;
   document.querySelectorAll("#nav a,#tabbar a").forEach(a=>{if(a.dataset.v===r.v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
-  const names={dia:r.date===TODAY?"Hoje":cap(longDate(r.date)),semana:"Semana",mes:"Mês",revisoes:"Revisões",planejar:"Planejar"};
+  const names={dia:r.date===TODAY?"Hoje":cap(longDate(r.date)),semana:"Semana",mes:"Mês",revisoes:"Revisões",planejar:"Planejar",ia:r.task?AI_TASKS[r.task].title:"Criar com IA"};
   document.title=names[r.v]+" · Cronograma";
   if(fresh){
     window.scrollTo({top:0,behavior:"instant"});
@@ -1225,6 +1256,7 @@ function viewDay(date){
   const sub=[String(y)];
   if(day.custom)sub.push("dia personalizado");else if(day.period)sub.push("rotina: "+esc(day.period.name));
   let h=vnav({title:cap(longDate(date)),rel:relLabel(date),sub:sub.join(" · "),date,prev:"Dia anterior",next:"Próximo dia",todayL:"Hoje",atToday:isT});
+  if(isEmptyPlan())h+=`<a class="ai-promo card" href="#/ia/tudo"><span class="ai-ic">${IC.spark}</span><span class="tx"><b>Seu cronograma está vazio</b><small>Monte o ano inteiro em poucos minutos com uma IA: ela faz perguntas e o app importa a resposta.</small></span><span class="btn accent sm">Começar</span></a>`;
   h+=strip(date);
   h+=`<div class="dgrid${isT?"":" nonow"}">`;
   if(isT)h+=`<div class="g-now">${now}</div>`;
@@ -1295,7 +1327,7 @@ function dayCard(date,day){
     h+=`<div class="exb"><span class="exi">${IC.flag}</span><div class="ext"><b>${esc(e.l)}${s?" · "+esc(s.n):""}</b>${e.t||e.d?`<span>${esc([e.t,e.d].filter(Boolean).join(" · "))}</span>`:""}</div><button class="ib" type="button" data-act="exam-edit" data-id="${e.id}" aria-label="Editar prova">${IC.edit}</button></div>`;
   });
   if(day.b.length)h+=`<ul class="blocks">${day.b.map((b,i)=>blockLI(b,i,day.b.length,{date,ed,pre:"blk",cur:date===TODAY?curBlockId:null})).join("")}</ul>`;
-  else if(!ed)h+=`<div class="dempty"><p><b>${ex.length?"Nenhum bloco de estudo neste dia.":"Nada planejado para este dia."}</b> ${day.period?`A rotina das ${WDP[wdOf(date)]} está vazia.`:"Nenhum período de rotina cobre esta data."}</p><div class="row2"><button class="btn sm" type="button" data-act="blk-add">${IC.plus}Bloco só neste dia</button><a class="btn sm" href="#/planejar">${IC.plan}Editar rotina</a></div></div>`;
+  else if(!ed)h+=`<div class="dempty"><p><b>${ex.length?"Nenhum bloco de estudo neste dia.":"Nada planejado para este dia."}</b> ${day.period?`A rotina das ${WDP[wdOf(date)]} está vazia.`:"Nenhum período de rotina cobre esta data."}</p><div class="row2"><button class="btn sm" type="button" data-act="blk-add">${IC.plus}Bloco só neste dia</button><a class="btn sm" href="#/planejar">${IC.plan}Editar rotina</a><a class="btn sm accent" href="#/ia">${IC.spark}Criar com IA</a></div></div>`;
   if(ed)h+=`<button class="addblk" type="button" data-act="blk-add" data-fk="blk-add">+ Adicionar bloco</button>`;
   const rv=revOn(date);
   if(rv.length)h+=`<div class="revday"><span class="lbl2">Revisões:</span>${rv.map(x=>x.done
@@ -1516,9 +1548,9 @@ function viewPlan(){
   const notes=`<section class="card pcard" aria-labelledby="ph-nt"><header><h2 class="sec-h" id="ph-nt">Como estudar · anotações</h2><button class="btn sm" type="button" data-act="note-add" data-fk="note-add">${IC.plus}Anotação</button></header>
     ${doc.notes.length?`<div class="ntgrid">${doc.notes.map(n=>`<div class="note"><h3>${esc(n.h)}</h3>${noteBody(n.t)}<button class="ib" type="button" data-act="note-edit" data-id="${n.id}" data-fk="ne${n.id}" aria-label="Editar anotação">${IC.edit}</button></div>`).join("")}</div>`:`<p class="lbl2" style="margin:0">Dicas que aparecem no cartão “Como estudar” da tela Hoje.</p>`}</section>`;
   const tools=`<section class="card pcard" aria-labelledby="ph-io"><header><div><h2 class="sec-h" id="ph-io">Importar e exportar</h2><p>Gere o planejamento do semestre com uma IA, ou leve seus dados para outro aparelho com um backup.</p></div></header>
-    <div class="row2"><button class="btn" type="button" data-act="ai">${IC.spark}Criar com IA</button><button class="btn" type="button" data-act="export">${IC.dl}Exportar backup</button><button class="btn" type="button" data-act="import">${IC.up2}Importar backup</button></div>
+    <div class="row2"><a class="btn" href="#/ia">${IC.spark}Criar com IA</a><button class="btn" type="button" data-act="export">${IC.dl}Exportar backup</button><button class="btn" type="button" data-act="import">${IC.up2}Importar backup</button></div>
     <p class="fine">O backup é um arquivo .json sem criptografia: guarde-o em lugar seguro.</p></section>`;
-  return`<div class="vnav"><div class="vt"><span class="rel">Planejamento</span><h1>Planejar o ano</h1><span class="vs">Rotina semanal por período + dias personalizados + provas.</span></div></div>
+  return`<div class="vnav"><div class="vt"><span class="rel">Planejamento</span><h1>Planejar o ano</h1><span class="vs">Rotina semanal por período + dias personalizados + provas.</span></div><div class="vc"><a class="btn accent" href="#/ia">${IC.spark}Criar ou ajustar com IA</a></div></div>
     <div class="pgrid"><div>${rot}${cdays}</div><div>${exams}${subs}${notes}${tools}</div></div>`;
 }
 
@@ -1846,6 +1878,8 @@ function parseLoose(text){
   throw new Error("json");
 }
 const hasPlan=d=>d.periods.length||Object.keys(d.days).length||d.exams.length;
+/* nada planejado de fato (conta nova em branco) */
+const isEmptyPlan=()=>!doc.exams.length&&!Object.keys(doc.days).length&&doc.periods.every(p=>p.week.every(l=>!l.length));
 function mergeInto(d){
   d.subjects.forEach(s=>{if(!subj(s.k))doc.subjects.push(s)});
   doc.periods.push(...d.periods);
@@ -1889,100 +1923,507 @@ $("file-import").addEventListener("change",async e=>{
   });
 });
 
-/* ===================== criar com IA ===================== */
-function aiPrompt(){
-  const colors=COLORS.map(c=>`"${c[0]}" (${c[1].toLowerCase()})`).join(", ");
-  return[
-"Você vai me ajudar a montar o planejamento de estudos do meu ano (ou semestre), que será importado em um aplicativo de cronograma. Hoje é "+TODAY+".",
-"",
-"ETAPA 1 — PERGUNTAS. Antes de gerar qualquer coisa, me faça as perguntas abaixo em uma única mensagem, numeradas, e espere minhas respostas. Se algo ficar vago, pergunte de novo antes de gerar.",
-"1. Que período o planejamento deve cobrir (datas de início e fim) e se a rotina muda em partes dele (semestre letivo, férias, internato, semanas de prova).",
-"2. Minha rotina fixa por dia da semana: aulas, estágio, plantões, trabalho, academia, deslocamento.",
-"3. Quais provas tenho: data, matéria, horário e o conteúdo de cada uma (inclusive provas práticas, como OSCE).",
-"4. Matérias que estou cursando e quais são meus pontos fracos.",
-"5. Que horas começo e termino de estudar, quantas horas por dia consigo estudar com qualidade e quais dias ou períodos são de descanso.",
-"6. Métodos que uso ou quero usar: flashcards/Anki, banco de questões, simulados, videoaulas, resumos, leitura.",
-"7. Atividades recorrentes que precisam entrar (pesquisa, monitoria, liga acadêmica, TCC, leitura de artigos).",
-"8. Duração preferida dos blocos e das pausas, e horário de almoço.",
-"9. Qualquer outra preferência (ex.: matérias mais pesadas de manhã, véspera de prova mais leve).",
-"",
-"ETAPA 2 — PLANEJAMENTO. Depois das minhas respostas, monte: (a) uma rotina semanal para cada fase do período; (b) dias personalizados só para as datas que fogem da rotina, principalmente os dias antes de cada prova; (c) a lista de provas. Aplique boas práticas: prática de recuperação (questões e simulados cronometrados), repetição espaçada (flashcards diários), intercalação de matérias, simulado com correção antes de cada prova, revisão leve na véspera e sono adequado.",
-"",
-"FORMATO DE SAÍDA (obrigatório). Responda com uma frase curta de resumo e, em seguida, UM ÚNICO bloco de código json com JSON válido (aspas duplas, sem comentários, sem vírgulas sobrando), seguindo exatamente este esquema:",
-"",
-"{",
-"  \"subjects\": [",
-"    { \"k\": \"cardio\", \"n\": \"Cardiologia\", \"c\": \"azul\" },",
-"    { \"k\": \"revisao\", \"n\": \"Flashcards e questões\", \"c\": \"fixo\" }",
-"  ],",
-"  \"periods\": [",
-"    { \"name\": \"1º semestre\", \"start\": \"2027-02-01\", \"end\": \"2027-06-30\", \"week\": {",
-"      \"seg\": [",
-"        { \"type\": \"pausa\", \"t\": \"07:30–12:00\", \"d\": \"Aulas\" },",
-"        { \"type\": \"estudo\", \"k\": \"revisao\", \"t\": \"14:00–14:40\", \"l\": \"Flashcards\", \"d\": \"Revisões do Anki\" },",
-"        { \"type\": \"estudo\", \"k\": \"cardio\", \"t\": \"14:40–16:30\", \"l\": \"Cardiologia\", \"d\": \"Revisar a aula + resumo\" }",
-"      ],",
-"      \"ter\": [], \"qua\": [], \"qui\": [], \"sex\": [], \"sab\": [], \"dom\": []",
-"    }}",
-"  ],",
-"  \"days\": [",
-"    { \"date\": \"2027-03-10\", \"tag\": \"Véspera de Cardio\", \"b\": [",
-"      { \"type\": \"estudo\", \"k\": \"cardio\", \"t\": \"08:00–10:00\", \"l\": \"Simulado Cardio\", \"d\": \"Prova completa cronometrada + correção\" }",
-"    ]}",
-"  ],",
-"  \"exams\": [",
-"    { \"date\": \"2027-03-11\", \"t\": \"08:00\", \"k\": \"cardio\", \"l\": \"Prova\", \"d\": \"Insuficiência cardíaca, valvopatias, arritmias\" }",
-"  ],",
-"  \"notes\": [",
-"    { \"h\": \"Como usar cada bloco\", \"t\": \"- Videoaula em 1,5×\\n- Resumo próprio\\n- Flashcards do que errar\" }",
-"  ]",
-"}",
-"",
-"Regras do esquema:",
-"- subjects: as matérias (e categorias como revisão ou pesquisa). \"k\" é um identificador curto em minúsculas, sem espaços nem acentos (letras, números, - ou _). \"n\" é o nome exibido. \"c\" é a cor e deve ser exatamente um destes valores: "+colors+". Use cores diferentes para matérias diferentes e não use \"prova\".",
-"- periods: cada fase com rotina própria. \"start\" e \"end\" no formato AAAA-MM-DD (\"end\" pode ser \"\" para sem fim). \"week\" tem as chaves seg, ter, qua, qui, sex, sab e dom, cada uma com a lista de blocos que se repete toda semana nesse dia. Se dois períodos se sobrepõem, vale o que começa depois.",
-"- days: SÓ para datas que fogem da rotina. Um dia listado aqui SUBSTITUI a rotina daquela data por completo; para um dia livre, use \"b\": []. \"tag\" é uma legenda curta (ex.: \"3 dias para Cardio\"); pode ser \"\".",
-"- exams: cada prova, com \"date\", \"t\" (horário em texto), \"k\" (matéria existente em subjects), \"l\" (ex.: \"Prova\", \"P2\", \"OSCE\") e \"d\" (conteúdo). Não coloque provas dentro de days.",
-"- Blocos: \"type\" é \"estudo\" (tarefa com caixa de marcar) ou \"pausa\" (aula, almoço, compromisso; sem caixa). \"t\" é o horário em texto, como \"08:00–12:00\", \"Manhã\" ou \"Dia\". Em \"estudo\", \"k\" é obrigatório e precisa existir em subjects, \"l\" é o título curto e \"d\" detalha o que fazer. Em \"pausa\", use só \"t\" e \"d\". Liste os blocos na ordem do dia.",
-"- notes é opcional: dicas gerais; em \"t\", linhas começando com \"- \" viram lista (use \\n para quebrar linha).",
-"- Não invente campos novos. Se o JSON ficar grande demais para uma resposta, avise e entregue em partes, cada parte sendo um JSON completo no mesmo esquema.",
-"",
-"Depois de gerar, eu vou colar o JSON no aplicativo (opção \"Criar com IA\")."
-  ].join("\n");
+/* ===================== criar com IA =====================
+   Cada tarefa gera um pedido (prompt) próprio para colar numa IA de conversa.
+   A IA entrevista a pessoa e devolve um JSON só com as seções da tarefa, que o
+   app confere (pré-visualização) e aplica. A última aplicação pode ser desfeita. */
+const AI_LINKS=[["ChatGPT","https://chatgpt.com/"],["Claude","https://claude.ai/new"],["Gemini","https://gemini.google.com/app"]];
+const WDK=["dom","seg","ter","qua","qui","sex","sab"];
+const AI_EVID="Use estratégias de estudo com boa evidência científica: prática de recuperação, isto é, questões e simulados em vez de só reler (Roediger & Karpicke, 2006, Psychol Sci 17:249–255); prática distribuída/repetição espaçada, como flashcards diários e revisões espaçadas (Cepeda et al., 2006, Psychol Bull 132:354–380); intercalação de assuntos parecidos (Rohrer & Taylor, 2007, Instr Sci 35:481–498); e evite releitura e grifo como método principal, que têm baixa utilidade (Dunlosky et al., 2013, Psychol Sci Public Interest 14:4–58). Preserve o sono, porque ele consolida a memória (Walker & Stickgold, 2004, Neuron 44:121–133): nada de madrugadas antes de prova.";
+const AI_REFS=[
+  ["Dunlosky J, Rawson KA, Marsh EJ, Nathan MJ, Willingham DT. Improving students’ learning with effective learning techniques: promising directions from cognitive and educational psychology. Psychol Sci Public Interest. 2013;14(1):4–58.","https://doi.org/10.1177/1529100612453266"],
+  ["Roediger HL, Karpicke JD. Test-enhanced learning: taking memory tests improves long-term retention. Psychol Sci. 2006;17(3):249–255.","https://doi.org/10.1111/j.1467-9280.2006.01693.x"],
+  ["Cepeda NJ, Pashler H, Vul E, Wixted JT, Rohrer D. Distributed practice in verbal recall tasks: a review and quantitative synthesis. Psychol Bull. 2006;132(3):354–380.","https://doi.org/10.1037/0033-2909.132.3.354"],
+  ["Rohrer D, Taylor K. The shuffling of mathematics problems improves learning. Instr Sci. 2007;35(6):481–498.","https://doi.org/10.1007/s11251-007-9015-8"],
+  ["Walker MP, Stickgold R. Sleep-dependent learning and memory consolidation. Neuron. 2004;44(1):121–133.","https://doi.org/10.1016/j.neuron.2004.08.031"]
+];
+/* seções do JSON: rótulo para a pessoa e exemplo/regra para a IA */
+const AI_SEC={
+  subjects:{one:"matéria",many:"matérias"},
+  periods:{one:"rotina semanal (período)",many:"rotinas semanais (períodos)"},
+  days:{one:"dia especial",many:"dias especiais"},
+  days_reset:{one:"dia de volta à rotina",many:"dias de volta à rotina"},
+  exams:{one:"prova",many:"provas"},
+  reviews:{one:"tema de revisão",many:"temas de revisão"},
+  notes:{one:"dica",many:"dicas"}
+};
+const AI_ORDER=["subjects","periods","days","days_reset","exams","reviews","notes"];
+function aiExample(keys){
+  const x=n=>addDays(TODAY,n);
+  const ex={
+    subjects:`  "subjects": [
+    { "k": "cardio", "n": "Cardiologia", "c": "azul" },
+    { "k": "revisao", "n": "Flashcards e questões", "c": "fixo" }
+  ]`,
+    periods:`  "periods": [
+    { "name": "2º semestre", "start": "${x(3)}", "end": "${x(120)}", "week": {
+      "seg": [
+        { "type": "pausa", "t": "07:30–12:00", "d": "Aulas" },
+        { "type": "estudo", "k": "revisao", "t": "14:00–14:40", "l": "Flashcards", "d": "Revisões do Anki" },
+        { "type": "estudo", "k": "cardio", "t": "14:40–16:30", "l": "Cardiologia", "d": "Revisar a aula + 20 questões" }
+      ],
+      "ter": [], "qua": [], "qui": [], "sex": [], "sab": [], "dom": []
+    }}
+  ]`,
+    days:`  "days": [
+    { "date": "${x(20)}", "tag": "Véspera da prova de Cardio", "b": [
+      { "type": "estudo", "k": "cardio", "t": "08:00–10:00", "l": "Simulado de Cardio", "d": "Prova completa cronometrada + correção dos erros" },
+      { "type": "pausa", "t": "22:30", "d": "Dormir cedo" }
+    ]}
+  ]`,
+    days_reset:`  "days_reset": [ "${x(25)}" ]`,
+    exams:`  "exams": [
+    { "date": "${x(21)}", "t": "08:00", "k": "cardio", "l": "P1", "d": "Insuficiência cardíaca, valvopatias, arritmias" }
+  ]`,
+    reviews:`  "reviews": [
+    { "n": "Insuficiência cardíaca", "k": "cardio", "d0": "${x(-8)}", "log": [ { "date": "${x(-7)}", "pct": 80 } ] },
+    { "n": "Valvopatias", "k": "cardio", "d0": "${x(-1)}", "log": [] }
+  ]`,
+    notes:`  "notes": [
+    { "h": "Como usar cada bloco", "t": "- Videoaula em 1,5×\\n- Resumo próprio\\n- Flashcards do que errar" }
+  ]`
+  };
+  return"{\n"+AI_ORDER.filter(k=>keys.includes(k)).map(k=>ex[k]).join(",\n")+"\n}";
 }
-const aiDlg=$("dlg-ai");
-function openAI(){$("ai-prompt").value=aiPrompt();showErr("ai-err","");disarmImport();aiDlg.showModal()}
-$("ai-close").addEventListener("click",()=>aiDlg.close());
-aiDlg.addEventListener("click",e=>{if(e.target===aiDlg)aiDlg.close()});
-$("ai-copy").addEventListener("click",async()=>{
-  const ta=$("ai-prompt");
-  try{await navigator.clipboard.writeText(ta.value)}catch(e){ta.focus();ta.select();try{document.execCommand("copy")}catch(e2){}}
-  toast("Prompt copiado. Cole na IA");
-});
-$("ai-file-btn").addEventListener("click",()=>$("ai-file").click());
-$("ai-file").addEventListener("change",async e=>{
-  const f=e.target.files[0]; e.target.value=""; if(!f)return;
-  $("ai-json").value=await f.text(); showErr("ai-err",""); toast("Arquivo carregado. Clique em Importar");
-});
-function doAIImport(){
-  const text=$("ai-json").value.trim();
-  if(!text)return showErr("ai-err","Cole a resposta da IA ou escolha um arquivo .json.");
-  let o; try{o=parseLoose(text)}catch(e){return showErr("ai-err","Não consegui ler o JSON. Copie o bloco de código inteiro, do primeiro { ao último }.")}
-  const r=importObject(o,$("ai-mode").value);
-  if(r)return showErr("ai-err",r);
-  $("ai-json").value=""; aiDlg.close();
+function aiRules(keys){
+  const colors=COLORS.filter(c=>c[0]!=="prova").map(c=>`"${c[0]}" (${c[1].toLowerCase()})`).join(", ");
+  const r=[];
+  if(keys.includes("subjects"))r.push("- subjects: matérias e categorias (ex.: revisão, pesquisa). \"k\" é um identificador curto em minúsculas, sem espaços nem acentos (letras, números, - ou _). \"n\" é o nome exibido. \"c\" é a cor, exatamente um destes valores: "+colors+". Use cores diferentes para matérias diferentes.");
+  if(keys.includes("periods"))r.push("- periods: cada fase com rotina própria (semestre, férias, internato). \"start\" e \"end\" no formato AAAA-MM-DD (\"end\" pode ser \"\" para sem fim). \"week\" tem as chaves seg, ter, qua, qui, sex, sab e dom, cada uma com a lista de blocos que se repete toda semana nesse dia (lista vazia = dia livre). Se dois períodos se sobrepõem, vale o que começa depois.");
+  if(keys.includes("days"))r.push("- days: SÓ para datas que fogem da rotina. Um dia listado aqui SUBSTITUI a rotina daquela data por completo (inclua todos os blocos do dia, também almoço e aulas). Para um dia livre, use \"b\": []. \"tag\" é uma legenda curta (ex.: \"3 dias para Cardio\") e pode ser \"\".");
+  if(keys.includes("days_reset"))r.push("- days_reset: lista de datas (AAAA-MM-DD) que devem deixar de ser especiais e voltar a seguir a rotina normal. Use [] se nenhuma.");
+  if(keys.includes("exams"))r.push("- exams: cada prova ou avaliação, com \"date\" (AAAA-MM-DD), \"t\" (horário em texto, ou \"\"), \"k\" (matéria existente), \"l\" (ex.: \"Prova\", \"P2\", \"OSCE\", \"Seminário\") e \"d\" (conteúdo cobrado). Provas NUNCA vão dentro de days.");
+  if(keys.includes("reviews"))r.push("- reviews: temas que já estudei, para o app agendar revisões espaçadas em D1, D7, D15, D30 e D60 depois do estudo. \"n\" é o nome do tema (específico, ex.: \"Insuficiência cardíaca\", não \"Cardio\"), \"k\" a matéria, \"d0\" a data em que estudei o tema pela primeira vez. \"log\" lista as revisões que eu JÁ fiz, em ordem, com \"date\" e, se eu souber, \"pct\" (% de acerto nas questões, 0 a 100); use [] se ainda não revisei. O app calcula sozinho as próximas datas: não invente revisões futuras.");
+  if(keys.includes("notes"))r.push("- notes: dicas que aparecem no cartão \"Como estudar\". \"h\" é o título e \"t\" o texto; linhas começando com \"- \" viram lista (use \\n para quebrar linha).");
+  if(keys.includes("periods")||keys.includes("days"))r.push("- Blocos: \"type\" é \"estudo\" (tarefa com caixa de marcar como feita) ou \"pausa\" (aula, almoço, estágio, compromisso; sem caixa). \"t\" é o horário em texto, como \"08:00–12:00\", \"Manhã\" ou \"Dia\". Em \"estudo\", \"k\" é obrigatório e precisa existir em subjects (ou nas matérias que já tenho), \"l\" é um título curto e \"d\" diz exatamente o que fazer (ex.: \"30 questões de arritmias + revisar erros\"). Em \"pausa\", use só \"t\" e \"d\". Blocos na ordem do dia, sem horários sobrepostos.");
+  return r;
 }
-/* substituir pede confirmação; adicionar importa direto */
-const aiImportBtn=$("ai-import"); let aiArmTm=0;
-function disarmImport(){clearTimeout(aiArmTm);aiImportBtn.classList.remove("armed");$("ai-import-lab").textContent="Importar"}
-aiImportBtn.addEventListener("click",()=>{
-  if($("ai-mode").value==="replace"&&!aiImportBtn.classList.contains("armed")&&hasPlan(doc)){
-    aiImportBtn.classList.add("armed");$("ai-import-lab").textContent="Substituir o planejamento? Clique de novo";
-    aiArmTm=setTimeout(disarmImport,4000);return;
+const AI_TASKS={
+  tudo:{g:"comecar",ic:"spark",title:"Cronograma completo",
+    short:"Monta tudo de uma vez: matérias, rotina de cada fase do ano, semanas de prova, provas, revisões e dicas.",
+    when:"Você está começando a usar o app, mudou de semestre ou quer refazer tudo do zero.",
+    need:["Datas de início e fim do semestre (ou o calendário acadêmico)","Seus horários fixos: aulas, estágio, trabalho, academia","Datas e conteúdos das provas, se já souber"],
+    effect:"Com “Substituir”, troca matérias, rotinas, provas, dias especiais e dicas pelo que a IA gerou. Seu histórico de dias concluídos fica guardado.",
+    keys:["subjects","periods","days","exams","reviews","notes"],modes:["replace","merge"],wipeDays:true,ctx:["subjects","periods","exams"],ctxOn:false,after:"dia",
+    wish:"Ex.: Estou no 5º período de Medicina. Aulas de segunda a sexta das 7h30 às 12h, estágio quinta à tarde. Quero estudar umas 4 horas por dia e folgar no domingo à tarde.",
+    task:"montar o planejamento de estudos do meu ano (ou semestre) inteiro.",
+    ask:["Que período o planejamento deve cobrir (data de início e de fim) e se a rotina muda em partes dele (aulas, férias, internato, semanas de prova).",
+      "Minha rotina fixa em cada dia da semana: aulas, estágio, plantões, trabalho, academia, deslocamento.",
+      "Quais provas tenho: data, matéria, horário e conteúdo de cada uma (inclusive práticas, como OSCE). Posso mandar foto ou PDF do calendário.",
+      "Matérias que estou cursando e quais são meus pontos fracos.",
+      "Que horas começo e termino de estudar, quantas horas por dia consigo estudar com qualidade e quais dias ou turnos são de descanso.",
+      "Métodos que uso ou quero usar: flashcards/Anki, banco de questões, simulados, videoaulas, resumos.",
+      "Atividades recorrentes que precisam entrar (pesquisa, monitoria, liga acadêmica, TCC).",
+      "Duração preferida dos blocos e das pausas, e horário de almoço.",
+      "Temas que já estudei recentemente e quero revisar (opcional), com a data em que estudei."],
+    build:["(a) uma rotina semanal para cada fase do período;","(b) dias especiais só para as datas que fogem da rotina, principalmente a reta final antes de cada prova (simulado com correção alguns dias antes, revisão leve e sono na véspera);","(c) a lista de provas;","(d) os temas já estudados em reviews, se eu informar;","(e) 3 a 5 dicas curtas e práticas em notes."]},
+  rotina:{g:"comecar",ic:"week",title:"Rotina semanal",
+    short:"Cria a rotina que se repete toda semana num período: semestre, férias, internato, preparação para residência.",
+    when:"Começou um semestre novo, mudou o horário das aulas ou entrou de férias.",
+    need:["Datas de início e fim do período","Seus horários fixos em cada dia da semana","Quantas horas por dia quer estudar"],
+    effect:"“Adicionar” cria um período novo (ele passa a valer a partir da data de início dele). “Substituir” apaga as rotinas antigas e deixa só a nova.",
+    keys:["subjects","periods"],modes:["merge","replace"],ctx:["subjects","periods","exams"],ctxOn:true,after:"planejar",
+    wish:"Ex.: Férias de 15/12 a 31/01. Quero estudar de manhã, 3 horas por dia, focando em Clínica Médica, e treinar questões à tarde 2 vezes por semana.",
+    task:"montar a rotina semanal de estudos de um período (fase) do meu ano.",
+    ask:["Nome do período (ex.: \"2º semestre\", \"Férias\", \"Internato de Cirurgia\") e datas de início e fim.",
+      "Minha rotina fixa em cada dia da semana nesse período: aulas, estágio, plantões, trabalho, academia, deslocamento.",
+      "Matérias que vão entrar e quais são prioridade ou ponto fraco.",
+      "Que horas começo e termino de estudar, quantas horas por dia de estudo de qualidade, e quais dias ou turnos são de descanso.",
+      "Métodos que uso (Anki, banco de questões, videoaulas, resumos) e atividades recorrentes (pesquisa, liga, monitoria).",
+      "Duração preferida dos blocos e das pausas, e horário de almoço."],
+    build:["um único período (ou mais de um, se eu disser que a rotina muda no meio) com os blocos de cada dia da semana. Inclua flashcards diários curtos, blocos de questões espalhados na semana, intercalação de matérias e pelo menos um turno de descanso."]},
+  materias:{g:"comecar",ic:"plan",title:"Matérias e cores",
+    short:"Cadastra as matérias do semestre com nomes e cores, para organizar blocos, provas e revisões.",
+    when:"Antes de criar a rotina à mão, ou quando entra uma matéria nova.",
+    need:["A lista de matérias (ou a grade do semestre)"],
+    effect:"Adiciona as matérias novas. Se uma já existir com o mesmo identificador, atualiza o nome e a cor.",
+    keys:["subjects"],modes:["merge"],ctx:["subjects"],ctxOn:true,after:"planejar",
+    wish:"Ex.: Neste semestre tenho Cardiologia, Pneumologia, Nefrologia, Gastro, Semiologia e o internato de Pediatria.",
+    task:"cadastrar as matérias do meu semestre no aplicativo.",
+    ask:["Quais matérias (e atividades fixas, como pesquisa, revisão ou liga acadêmica) quero cadastrar.","Se tenho preferência de cor para alguma delas."],
+    build:["a lista de matérias com identificadores curtos e cores bem diferentes entre si. Se uma matéria já existir nos meus dados, mantenha o mesmo \"k\"."]},
+  provas:{g:"provas",ic:"flag",title:"Provas e avaliações",
+    short:"Transforma o calendário de provas (texto, foto ou PDF) na lista de provas do app, com contagem regressiva.",
+    when:"Saiu o calendário de provas ou uma data mudou.",
+    need:["O calendário de provas: pode ser foto, print, PDF ou texto copiado do site da faculdade"],
+    effect:"“Adicionar” inclui as provas (se já existir uma igual na mesma data, ela é atualizada). “Substituir” apaga a lista de provas antiga.",
+    keys:["subjects","exams"],modes:["merge","replace"],ctx:["subjects","exams"],ctxOn:true,after:"planejar",
+    wish:"Ex.: Vou colar abaixo o calendário de provas do semestre que a coordenação mandou.",
+    task:"cadastrar minhas provas e avaliações no aplicativo a partir do calendário que eu enviar.",
+    ask:["Me peça para enviar o calendário (texto, foto ou PDF), se eu ainda não enviei.","Para cada prova sem conteúdo definido, pergunte se sei o que vai cair (pode ficar em branco).","Se há provas práticas, seminários, trabalhos ou entregas que também devem entrar."],
+    build:["a lista de provas com data, horário, matéria e conteúdo. Leia com atenção datas no formato brasileiro (DD/MM) e converta para AAAA-MM-DD, considerando o ano correto. Crie em subjects só matérias que ainda não existam."]},
+  reta:{g:"provas",ic:"cal",title:"Reta final para uma prova",
+    short:"Monta os dias antes de uma prova: distribui o conteúdo, encaixa questões, simulado e uma véspera leve.",
+    when:"Faltam alguns dias ou semanas para uma prova e você quer um plano dia a dia.",
+    need:["Data e conteúdo da prova","Quantos dias antes quer começar e quanto tempo tem por dia"],
+    effect:"Cria dias especiais nas datas da reta final (eles substituem a rotina só nesses dias) e cadastra a prova, se ainda não existir.",
+    keys:["subjects","days","exams"],modes:["merge"],ctx:["subjects","periods","days","exams"],ctxOn:true,after:"semana",
+    wish:"Ex.: Prova de Cardiologia em 12/11: IC, valvopatias, arritmias e HAS. Quero começar 10 dias antes e tenho as tardes livres.",
+    task:"montar a reta final de estudos para uma ou mais provas, dia a dia.",
+    ask:["Qual prova (ou provas): data, horário e o conteúdo completo cobrado.","A partir de que dia quero começar e quanto tempo tenho em cada dia (pode olhar minha rotina atual nos dados abaixo).","O que já sei bem e o que ainda nem estudei.","Se quero manter aulas e outros compromissos da rotina nesses dias."],
+    build:["um dia especial para cada data da reta final, com TODOS os blocos daquele dia (inclusive aulas e almoço que continuarem), distribuindo o conteúdo do mais difícil/menos estudado para o mais fácil, com questões depois de cada assunto, um simulado cronometrado com correção 2 a 3 dias antes, revisão dos erros, e véspera leve com sono preservado. Coloque a prova em exams. Use \"tag\" como contagem regressiva (ex.: \"5 dias para Cardio\")."]},
+  ajustar:{g:"durante",ic:"edit",title:"Ajustar o que já tenho",
+    short:"Pede qualquer mudança em linguagem normal: “mudou meu horário de estágio”, “a prova foi adiada”, “quero folgar sábado”.",
+    when:"Algo mudou e você não quer editar bloco por bloco.",
+    need:["Só saber explicar o que mudou"],
+    effect:"Troca apenas as partes que a IA devolver (ex.: só a rotina, ou só as provas). Os dias que você já marcou como feitos continuam marcados.",
+    keys:["subjects","periods","days","days_reset","exams","reviews","notes"],modes:["replace"],keepIds:true,ctx:["subjects","periods","days","exams","reviews","notes"],ctxOn:true,ctxLock:true,after:"dia",
+    wish:"Ex.: A partir de 01/11 meu estágio passa a ser terça de manhã em vez de quinta. A prova de Pneumo foi adiada de 18/11 para 25/11.",
+    task:"fazer mudanças no meu cronograma atual, que está nos dados abaixo.",
+    ask:["O que quero mudar, se eu ainda não disse ou se ficou vago (datas exatas, a partir de quando, o que sai e o que entra)."],
+    build:["as alterações pedidas, mexendo no mínimo necessário. Devolva SOMENTE as seções que mudaram, mas cada seção devolvida (subjects, periods, exams, reviews, notes) deve vir COMPLETA, com todos os itens, inclusive os que não mudaram, porque o aplicativo substitui a seção inteira. A exceção é days: devolva só as datas que mudaram (cada data substitui aquele dia) e use days_reset para datas que devem voltar à rotina normal.","Mantenha o mesmo \"id\" de todo item ou bloco que continuar existindo (assim o progresso marcado não se perde). Itens novos vão sem \"id\"."]},
+  atraso:{g:"durante",ic:"rev",title:"Recuperar atraso",
+    short:"Reorganiza os próximos dias para encaixar o que ficou para trás, sem virar madrugada.",
+    when:"Você ficou doente, viajou ou simplesmente não deu conta da última semana.",
+    need:["Nada: o pedido já leva a lista do que ficou pendente nos últimos 14 dias"],
+    effect:"Cria dias especiais a partir de amanhã com o conteúdo redistribuído. Sua rotina semanal não muda.",
+    keys:["days","days_reset"],modes:["merge"],ctx:["subjects","periods","days","exams","pending"],ctxOn:true,ctxLock:true,after:"semana",
+    wish:"Ex.: Fiquei gripada de segunda a quarta. Quero recuperar em até 10 dias, sem estudar depois das 22h.",
+    task:"reorganizar meus próximos dias para recuperar o que ficou pendente.",
+    ask:["Em quantos dias quero recuperar o atraso e se há dias em que não posso estudar a mais.","Se algum item pendente pode ser descartado ou feito de forma mais rápida (ex.: só questões em vez de aula inteira)."],
+    build:["dias especiais a partir de amanhã (AMANHA) encaixando os itens de \"pendentes\" por prioridade: primeiro o que cai na prova mais próxima. Cada dia especial deve conter TODOS os blocos daquele dia (a rotina normal daquela data, que está em periods, mais o que for recuperado), respeitando um limite razoável de horas e preservando sono e refeições. Se algo não couber antes da prova, diga na frase de resumo o que sugere cortar."]},
+  revisoes:{g:"durante",ic:"rev",title:"Revisões espaçadas",
+    short:"Lança os temas que você já estudou para o app agendar as revisões D1, D7, D15, D30 e D60.",
+    when:"Você estudou vários temas e quer que o app lembre quando revisar cada um.",
+    need:["A lista do que estudou e mais ou menos quando (pode ser uma foto do caderno ou do índice da apostila)"],
+    effect:"Adiciona os temas na aba Revisões. Temas com o mesmo nome e matéria são atualizados em vez de duplicados.",
+    keys:["subjects","reviews"],modes:["merge","replace"],ctx:["subjects","reviews","exams"],ctxOn:true,after:"revisoes",
+    wish:"Ex.: Na semana passada estudei IC (segunda), valvopatias (quarta) e arritmias (sexta). De IC já fiz a revisão de D1 com 75% de acerto.",
+    task:"cadastrar temas que já estudei para o aplicativo agendar revisões espaçadas (D1, D7, D15, D30 e D60 depois do primeiro estudo).",
+    ask:["Quais temas estudei e em que data estudei cada um pela primeira vez (aproximada serve).","Se já fiz alguma revisão de algum deles: quando e com quantos % de acerto."],
+    build:["um tema por assunto específico (divida matérias grandes em temas de uma sessão de estudo). Não repita temas que já existam nos meus dados."]},
+  dicas:{g:"durante",ic:"sun",title:"Dicas de como estudar",
+    short:"Gera dicas personalizadas de método para cada matéria ou situação, que aparecem no cartão “Como estudar”.",
+    when:"Você quer orientações práticas sobre como usar cada bloco de estudo.",
+    need:["Suas matérias e suas maiores dificuldades"],
+    effect:"“Adicionar” inclui as dicas novas (uma dica com o mesmo título é atualizada). “Substituir” troca todas.",
+    keys:["notes"],modes:["merge","replace"],ctx:["subjects","notes"],ctxOn:true,after:"planejar",
+    wish:"Ex.: Tenho dificuldade de me concentrar à tarde e esqueço rápido farmacologia.",
+    task:"escrever dicas curtas e práticas de como estudar, personalizadas para mim.",
+    ask:["Minhas principais dificuldades (concentração, memorização, falta de tempo, ansiedade de prova, procrastinação).","Quais métodos já uso e o que não funcionou."],
+    build:["de 4 a 8 dicas curtas e acionáveis (cada uma com título e 2 a 5 itens), explicando em uma linha por que funciona e citando o estudo de origem entre parênteses (autor, ano)."]},
+  colar:{g:"",ic:"up2",title:"Colar uma resposta pronta",
+    short:"Já tem um JSON gerado por uma IA (ou um backup)? Cole aqui.",
+    when:"Você gerou a resposta antes, em outro aparelho, ou a IA mandou em partes.",
+    need:["O bloco de código JSON da IA, ou o arquivo .json"],
+    effect:"Aplica tudo o que estiver no JSON. “Substituir” troca as seções que vierem nele; “Adicionar” junta ao que já existe.",
+    keys:["subjects","periods","days","days_reset","exams","reviews","notes"],modes:["merge","replace"],noPrompt:true,after:"dia"}
+};
+const AI_GROUPS=[["comecar","Para começar"],["provas","Provas"],["durante","Durante o semestre"]];
+const AI_MODE_L={replace:"Substituir",merge:"Adicionar ao que já existe"};
+const aiSt={};
+let aiUndo=null;
+function aiS(id){
+  const t=AI_TASKS[id];
+  return aiSt[id]||(aiSt[id]={wish:"",ctx:!!t.ctxOn,json:"",mode:t.modes[0]});
+}
+/* tarefas de estudo que ficaram por fazer nos últimos dias */
+function pendingBlocks(n){
+  const out=[];
+  for(let i=n;i>=1;i--){
+    const d=addDays(TODAY,-i);
+    dayOf(d).b.forEach(b=>{if(b.type!=="pausa"&&!doc.done[d+"|"+b.id])out.push({date:d,k:b.k,l:b.l,d:b.d,t:b.t})});
   }
-  disarmImport(); doAIImport();
+  return out;
+}
+function aiContext(t){
+  const c=t.ctx||[], o={};
+  const blk=b=>{const x={id:b.id,type:b.type,t:b.t};if(b.type!=="pausa"){x.k=b.k;x.l=b.l}if(b.d)x.d=b.d;return x};
+  if(c.includes("subjects"))o.subjects=doc.subjects.map(s=>({k:s.k,n:s.n,c:s.c}));
+  if(c.includes("periods"))o.periods=doc.periods.map(p=>({id:p.id,name:p.name,start:p.start,end:p.end,week:Object.fromEntries(ORDER.map(i=>[WDK[i],p.week[i].map(blk)]))}));
+  if(c.includes("days")){const from=addDays(TODAY,-7);o.days=Object.keys(doc.days).filter(d=>d>=from).sort().map(d=>{const x=doc.days[d],r={date:d};if(x.tag)r.tag=x.tag;if(Array.isArray(x.b))r.b=x.b.map(blk);return r})}
+  if(c.includes("exams"))o.exams=doc.exams.map(e=>({id:e.id,date:e.date,t:e.t,k:e.k,l:e.l,d:e.d}));
+  if(c.includes("reviews"))o.reviews=doc.reviews.topics.map(x=>({id:x.id,n:x.n,k:x.k,d0:x.d0,log:x.log.map(y=>y.pct==null?{date:y.date}:{date:y.date,pct:y.pct})}));
+  if(c.includes("notes"))o.notes=doc.notes.map(n=>({id:n.id,h:n.h,t:n.t}));
+  if(c.includes("pending"))o.pendentes=pendingBlocks(14);
+  return o;
+}
+function aiPrompt(id){
+  const t=AI_TASKS[id], s=aiS(id), useCtx=t.ctxLock||s.ctx;
+  const L=[];
+  L.push("Você é um(a) planejador(a) de estudos experiente e vai me ajudar a "+t.task+" Sua resposta final será importada num aplicativo de cronograma de estudos, então o formato no final é obrigatório.");
+  L.push("Hoje é "+WDF[wdOf(TODAY)]+", "+TODAY+" (formato AAAA-MM-DD). Fale comigo em português do Brasil, com linguagem simples: posso não entender termos técnicos de tecnologia.");
+  if(s.wish.trim())L.push("","MEU PEDIDO / SOBRE MIM:",s.wish.trim());
+  L.push("","ETAPA 1 — PERGUNTAS. Antes de gerar o resultado, me faça em UMA única mensagem, numeradas e com um exemplo de resposta em cada, só as perguntas abaixo que ainda não foram respondidas"+(s.wish.trim()?" no meu pedido":"")+(useCtx?" ou nos meus dados atuais":"")+". Espere minhas respostas. Se eu disser \"não sei\", proponha um padrão razoável e siga. Se algo essencial continuar vago, pergunte de novo.");
+  t.ask.forEach((q,i)=>L.push((i+1)+". "+q));
+  L.push("","ETAPA 2 — MONTAGEM. Com as respostas, monte "+t.build.join(" "));
+  if(["tudo","rotina","reta","atraso","dicas"].includes(id))L.push(AI_EVID);
+  L.push("","ETAPA 3 — CONFERÊNCIA. Antes de responder, confira: todas as datas existem e estão no formato AAAA-MM-DD; o dia da semana de cada data está certo; não há blocos com horários sobrepostos; todo \"k\" usado existe em subjects ou nas matérias que já tenho; o JSON é válido.");
+  L.push("","FORMATO DA RESPOSTA FINAL (obrigatório). Escreva uma frase curta de resumo e, em seguida, UM ÚNICO bloco de código json com JSON válido (aspas duplas, sem comentários, sem vírgulas sobrando, sem \"...\" nem itens resumidos). Use só estas chaves no nível de cima: "+t.keys.join(", ")+". Exemplo do formato (os valores são só ilustrativos):","",aiExample(t.keys),"","Regras:");
+  aiRules(t.keys).forEach(r=>L.push(r));
+  L.push("- Não invente chaves novas. Se a resposta ficar longa demais para uma mensagem, avise e entregue em partes, cada parte sendo um bloco json completo no mesmo formato (eu colo todas juntas no aplicativo).");
+  if(useCtx){
+    const c=aiContext(t);
+    L.push("","MEUS DADOS ATUAIS (exportados do aplicativo; use os mesmos \"k\" de matérias"+(t.keepIds?" e mantenha os \"id\" dos itens que continuarem":", não repita o que já existe")+(c.pendentes?"; \"pendentes\" são as tarefas de estudo dos últimos 14 dias que não marquei como feitas":"")+"):","```json",JSON.stringify(c),"```");
+  }
+  L.push("","Comece agora pela ETAPA 1.");
+  return L.join("\n").replace("AMANHA",addDays(TODAY,1));
+}
+
+/* ---------- leitura da resposta ---------- */
+/* aceita um ou vários blocos ```json``` (respostas em partes) ou JSON solto */
+function aiParseText(text){
+  const blocks=[...String(text).matchAll(/```(?:json|JSON)?\s*([\s\S]*?)```/g)].map(m=>m[1].trim()).filter(Boolean);
+  if(blocks.length<2)return parseLoose(text);
+  const out={};
+  blocks.forEach(b=>{
+    const o=parseLoose(b);
+    Object.entries(o||{}).forEach(([k,v])=>{
+      if(Array.isArray(v))out[k]=(Array.isArray(out[k])?out[k]:[]).concat(v);
+      else if(k==="reviews"&&v&&Array.isArray(v.topics))out[k]=(Array.isArray(out[k])?out[k]:[]).concat(v.topics);
+      else if(out[k]===undefined)out[k]=v;
+    });
+  });
+  return out;
+}
+function jsonErr(e){
+  const m=String(e&&e.message||"").match(/position (\d+)/);
+  return m?` (o problema está perto do caractere ${m[1]})`:"";
+}
+function aiCheck(text,id){
+  const t=AI_TASKS[id];
+  text=String(text||"").trim();
+  if(!text)return null;
+  let o;
+  try{o=aiParseText(text)}
+  catch(e){
+    const cut=!/[}\]]\s*(```)?\s*$/.test(text);
+    return{err:cut?"A resposta parece cortada no meio: o JSON não termina com } . A IA provavelmente parou antes do fim."
+      :"Não consegui ler o JSON"+jsonErr(e)+". Copie o bloco de código inteiro, do primeiro { ao último }."};
+  }
+  if(!o||typeof o!=="object"||Array.isArray(o))return{err:"O conteúdo colado não é um objeto JSON com as chaves esperadas ("+t.keys.join(", ")+")."};
+  if(o.app==="cronograma"||o.app==="cronograma-provas")return{backup:true,o};
+  const rev=Array.isArray(o.reviews)?o.reviews:o.reviews&&Array.isArray(o.reviews.topics)?o.reviews.topics:null;
+  const d=normDoc({...o,reviews:{topics:rev||[]}},!t.keepIds);
+  const reset=(Array.isArray(o.days_reset)?o.days_reset:[]).filter(validDate);
+  const has={subjects:Array.isArray(o.subjects),periods:Array.isArray(o.periods),days:Array.isArray(o.days)||!!(o.days&&typeof o.days==="object"),
+    days_reset:Array.isArray(o.days_reset),exams:Array.isArray(o.exams)||d.exams.length>0,reviews:!!rev,notes:Array.isArray(o.notes)};
+  const aiK=new Set((Array.isArray(o.subjects)?o.subjects:[]).map(x=>x&&x.k).filter(k=>typeof k==="string"));
+  const n={subjects:d.subjects.filter(x=>aiK.has(x.k)).length,periods:d.periods.length,days:Object.keys(d.days).length,days_reset:reset.length,exams:d.exams.length,reviews:d.reviews.topics.length,notes:d.notes.length};
+  const warn=[];
+  const lost=(k,got)=>{const a=Array.isArray(o[k])?o[k].length:0;if(a>got)warn.push(`${a-got} ${a-got===1?AI_SEC[k].one:AI_SEC[k].many} sem data válida (AAAA-MM-DD) ${a-got===1?"foi ignorado(a)":"foram ignorados(as)"}.`)};
+  lost("periods",n.periods); if(Array.isArray(o.days))lost("days",n.days); lost("reviews",n.reviews);
+  const unk=d.subjects.filter(x=>!aiK.has(x.k)&&!subj(x.k)).map(x=>x.k);
+  if(unk.length)warn.push(`Matéria${unk.length>1?"s":""} sem cadastro: ${unk.join(", ")}. ${unk.length>1?"Serão criadas":"Será criada"} com esse nome; dá para renomear depois em Planejar.`);
+  const extra=Object.keys(o).filter(k=>!AI_ORDER.includes(k));
+  if(extra.length)warn.push("Chaves ignoradas: "+extra.join(", ")+".");
+  const total=AI_ORDER.reduce((a,k)=>a+n[k],0);
+  if(!total)return{err:"Não encontrei nada para importar. O JSON precisa ter pelo menos uma destas chaves preenchidas: "+t.keys.join(", ")+"."};
+  return{o,d,n,has,reset,aiK,warn};
+}
+/* matérias usadas por algum item do planejamento */
+function usedKs(){
+  const u=new Set(), add=b=>{if(b.k)u.add(b.k)};
+  doc.periods.forEach(p=>p.week.forEach(l=>l.forEach(add)));
+  Object.values(doc.days).forEach(x=>(x.b||[]).forEach(add));
+  doc.exams.forEach(add); doc.reviews.topics.forEach(add);
+  return u;
+}
+function aiApply(c,id,mode){
+  const t=AI_TASKS[id], d=c.d, rep=mode==="replace";
+  const R=k=>rep&&t.keys.includes(k)&&c.has[k];
+  const snap=JSON.stringify(doc);
+  const lc=s=>String(s||"").trim().toLowerCase();
+  /* matérias: novas entram; as que a IA mandou atualizam nome e cor */
+  d.subjects.forEach(s=>{const ex=subj(s.k);if(!ex)doc.subjects.push(s);else if(c.aiK.has(s.k)){ex.n=s.n;ex.c=s.c}});
+  if(c.has.periods)doc.periods=R("periods")?d.periods:doc.periods.concat(d.periods);
+  if(c.has.days){
+    if(R("days")&&t.wipeDays)doc.days={};
+    Object.entries(d.days).forEach(([date,x])=>{doc.days[date]=Array.isArray(x.b)?x:{...(doc.days[date]||{}),tag:x.tag}});
+  }
+  c.reset.forEach(date=>{delete doc.days[date]});
+  if(c.has.exams){
+    if(R("exams"))doc.exams=d.exams;
+    else d.exams.forEach(e=>{
+      const i=doc.exams.findIndex(x=>(t.keepIds&&x.id===e.id)||(x.date===e.date&&x.k===e.k&&lc(x.l)===lc(e.l)));
+      if(i>=0)doc.exams[i]={...e,id:doc.exams[i].id};else doc.exams.push(e);
+    });
+    doc.exams.sort(byExam);
+  }
+  if(c.has.reviews){
+    if(R("reviews"))doc.reviews.topics=d.reviews.topics;
+    else d.reviews.topics.forEach(x=>{
+      const i=doc.reviews.topics.findIndex(y=>(t.keepIds&&y.id===x.id)||(lc(y.n)===lc(x.n)&&y.k===x.k));
+      if(i>=0)doc.reviews.topics[i]={...x,id:doc.reviews.topics[i].id};
+      else{if(revTopic(x.id))x.id=uid("r");doc.reviews.topics.push(x)}
+    });
+  }
+  if(c.has.notes){
+    if(R("notes"))doc.notes=d.notes;
+    else d.notes.forEach(x=>{const ex=doc.notes.find(y=>lc(y.h)&&lc(y.h)===lc(x.h));if(ex)ex.t=x.t;else doc.notes.push(x)});
+  }
+  if(R("subjects")){const u=usedKs();doc.subjects=doc.subjects.filter(s=>c.aiK.has(s.k)||u.has(s.k))}
+  aiUndo={snap,title:t.title};
+  planPid=null; dayEditing=null; aiS(id).json="";
+  persist();
+}
+function aiSummary(n){
+  return AI_ORDER.filter(k=>n[k]).map(k=>`${n[k]} ${n[k]===1?AI_SEC[k].one:AI_SEC[k].many}`).join(", ");
+}
+function aiFixMsg(err){
+  return"O aplicativo não conseguiu importar sua última resposta. Problema encontrado: "+err+"\n\nPor favor, reenvie a resposta COMPLETA em UM único bloco de código json válido: aspas duplas, sem comentários, sem vírgulas sobrando, sem \"...\" e sem resumir itens, seguindo exatamente o formato combinado. Se ela for longa demais para uma mensagem, divida em partes, cada uma sendo um bloco json completo no mesmo formato.";
+}
+async function copyText(text,msg){
+  try{await navigator.clipboard.writeText(text);toast(msg);return true}
+  catch(e){
+    const ta=document.createElement("textarea");ta.value=text;ta.setAttribute("readonly","");ta.style.cssText="position:fixed;opacity:0;top:0";
+    document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand("copy")}catch(e2){}ta.remove();
+    toast(ok?msg:"Não deu para copiar sozinho: selecione o texto e copie");return ok;
+  }
+}
+
+/* ---------- vista: IA ---------- */
+function aiUndoHTML(){
+  return aiUndo?`<div class="ai-undo card"><span>Você importou <b>${esc(aiUndo.title)}</b>. Não ficou bom?</span><button class="btn sm" type="button" data-act="ai-undo">${IC.rev}Desfazer importação</button></div>`:"";
+}
+function viewAI(task){
+  if(task&&AI_TASKS[task])return viewAITask(task);
+  const empty=isEmptyPlan();
+  const card=id=>{const t=AI_TASKS[id];return`<a class="ai-tk card" href="#/ia/${id}"><span class="ai-ic">${IC[t.ic]}</span><span class="tx"><b>${esc(t.title)}</b><small>${esc(t.short)}</small></span>${id==="tudo"&&empty?`<span class="badge">Comece aqui</span>`:""}</a>`};
+  const groups=AI_GROUPS.map(([g,l])=>`<section aria-labelledby="aig-${g}"><h2 class="sec-h ai-gh" id="aig-${g}">${l}</h2><div class="ai-grid">${Object.keys(AI_TASKS).filter(k=>AI_TASKS[k].g===g).map(card).join("")}</div></section>`).join("");
+  return`<div class="vnav"><div class="vt"><span class="rel">Assistente</span><h1>Criar com IA</h1><span class="vs">Monte ou mude qualquer parte do cronograma conversando com uma IA.</span></div></div>
+  ${aiUndoHTML()}
+  <section class="card ai-hero" aria-labelledby="ai-how">
+    <h2 class="sec-h" id="ai-how">Como funciona</h2>
+    <p>Você não precisa saber nada de tecnologia. O app escreve um pedido completo; uma IA de conversa (ChatGPT, Claude, Gemini ou outra, inclusive na versão gratuita) faz perguntas simples sobre a sua rotina e devolve tudo num formato que o app entende.</p>
+    <ol class="ai-how">
+      <li><b>1</b><span><strong>Escolha</strong> abaixo o que quer criar.</span></li>
+      <li><b>2</b><span><strong>Copie o pedido</strong> pronto e cole numa conversa nova da IA.</span></li>
+      <li><b>3</b><span><strong>Responda</strong> às perguntas dela. No fim ela entrega um bloco de código.</span></li>
+      <li><b>4</b><span><strong>Cole a resposta</strong> aqui. O app mostra o que vai entrar antes de aplicar.</span></li>
+    </ol>
+  </section>
+  <div class="ai-groups">${groups}</div>
+  <a class="ai-tk card ai-paste" href="#/ia/colar"><span class="ai-ic">${IC.up2}</span><span class="tx"><b>${esc(AI_TASKS.colar.title)}</b><small>${esc(AI_TASKS.colar.short)}</small></span></a>
+  <section class="card pcard ai-faq" aria-labelledby="ai-faq">
+    <h2 class="sec-h" id="ai-faq">Dúvidas frequentes</h2>
+    <details><summary>Qual IA eu uso? Precisa pagar?</summary><p>Qualquer IA de conversa serve: ${AI_LINKS.map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join(", ")} e outras. A versão gratuita funciona. Para o cronograma completo, que gera uma resposta longa, prefira a IA mais avançada disponível para você. Se a IA aceitar anexos, você pode mandar foto ou PDF do calendário.</p></details>
+    <details><summary>Meus dados vão para a internet?</summary><p>O app não envia nada sozinho: seus dados ficam criptografados neste aparelho. Só vai para a empresa da IA o que <b>você</b> colar na conversa. Alguns pedidos levam uma cópia do seu cronograma (horários, matérias, provas) para a IA entender o contexto; dá para desmarcar essa opção. Não coloque dados de pacientes nem documentos pessoais.</p></details>
+    <details><summary>O que é esse “bloco de código JSON”?</summary><p>É só um texto organizado que o app consegue ler. Você não precisa entender: na resposta da IA, o bloco aparece numa caixa separada, geralmente com um botão <b>Copiar</b> no canto. Copie a caixa inteira e cole no app. Se a IA mandou em várias partes, cole todas juntas.</p></details>
+    <details><summary>Deu erro na hora de importar. E agora?</summary><p>O app explica o problema e oferece o botão <b>Copiar mensagem de correção</b>. Cole essa mensagem na mesma conversa com a IA: ela corrige e manda de novo. O mais comum é a resposta vir cortada (longa demais) ou com texto no meio do código.</p></details>
+    <details><summary>E se eu não gostar do resultado?</summary><p>Logo depois de importar aparece o botão <b>Desfazer importação</b> (vale até você sair ou recarregar a página). Você também pode continuar a conversa com a IA pedindo mudanças e importar de novo, ou ajustar à mão em Planejar. Antes de mudanças grandes, vale <button class="lnk" type="button" data-act="export">exportar um backup</button>.</p></details>
+    <details><summary>Isso tem base científica?</summary><p>Os pedidos orientam a IA a usar técnicas com boa evidência: questões e simulados (prática de recuperação), repetição espaçada, intercalação de assuntos e sono preservado, evitando depender de releitura e grifo.</p><ol class="refs">${AI_REFS.map(([r,u])=>`<li>${esc(r)} <a href="${u}" target="_blank" rel="noopener">${esc(u.replace("https://",""))}</a></li>`).join("")}</ol><p>A IA pode errar: confira datas e conteúdos antes de confiar no plano.</p></details>
+  </section>`;
+}
+function aiPreviewHTML(c,id){
+  if(!c)return`<p class="lbl2">Assim que você colar, o app mostra aqui o que encontrou.</p>`;
+  if(c.err)return`<div class="ai-bad" role="alert"><b>Ainda não dá para importar.</b><span>${esc(c.err)}</span>${AI_TASKS[id].noPrompt?"":`<p>Copie a mensagem abaixo e mande na mesma conversa com a IA. Ela corrige e envia de novo.</p><div class="row2"><button class="btn sm" type="button" data-act="ai-fix">${IC.copy}Copiar mensagem de correção</button></div>`}</div>`;
+  if(c.backup)return`<div class="ai-ok"><b>Isto é um backup do app.</b><span>Ele será importado como backup (com progresso e revisões).</span></div>`;
+  const items=[];
+  c.d.periods.forEach(p=>items.push(`Rotina <b>${esc(p.name)}</b>: ${periodRange(p)}`));
+  Object.keys(c.d.days).sort().slice(0,6).forEach(dt=>{const x=c.d.days[dt];items.push(`Dia especial ${esc(shortDate(dt))}${x.tag?" · "+esc(x.tag):""}${Array.isArray(x.b)?((n=>` (${n} bloco${n===1?"":"s"} de estudo)`)(x.b.filter(b=>b.type!=="pausa").length)):""}`)});
+  if(c.n.days>6)items.push(`… e mais ${c.n.days-6} dias especiais`);
+  c.d.exams.slice(0,6).forEach(e=>{const s=(c.aiK.has(e.k)?c.d.subjects.find(x=>x.k===e.k):null)||subj(e.k)||c.d.subjects.find(x=>x.k===e.k);items.push(`Prova ${esc(shortDate(e.date))}/${parseDate(e.date).getFullYear()}: <b>${esc(e.l)}${s?" · "+esc(s.n):""}</b>`)});
+  if(c.n.exams>6)items.push(`… e mais ${c.n.exams-6} provas`);
+  if(c.n.reviews)items.push(`${c.n.reviews} tema${c.n.reviews>1?"s":""} para revisar: ${c.d.reviews.topics.slice(0,4).map(x=>esc(x.n)).join(", ")}${c.n.reviews>4?"…":""}`);
+  if(c.n.notes)items.push(`Dicas: ${c.d.notes.slice(0,4).map(x=>esc(x.h||"sem título")).join(", ")}`);
+  if(c.n.subjects)items.push(`Matérias: ${c.d.subjects.filter(x=>c.aiK.has(x.k)).map(x=>`<span class="ai-sw" style="--k:var(--${x.c})"></span>${esc(x.n)}`).join(", ")}`);
+  if(c.n.days_reset)items.push(`${c.n.days_reset} data${c.n.days_reset>1?"s voltam":" volta"} a seguir a rotina`);
+  return`<div class="ai-ok"><b>Encontrei: ${aiSummary(c.n)}.</b><ul>${items.map(x=>`<li>${x}</li>`).join("")}</ul>${c.warn.length?`<p class="ai-warn">${c.warn.map(esc).join("<br>")}</p>`:""}</div>`;
+}
+function viewAITask(id){
+  const t=AI_TASKS[id], s=aiS(id), c=aiCheck(s.json,id);
+  const modeSel=t.modes.length>1?`<label class="lbl2" for="ai-mode">Ao importar:</label><select id="ai-mode" data-fk="ai-mode">${t.modes.map(m=>`<option value="${m}"${s.mode===m?" selected":""}>${AI_MODE_L[m]}</option>`).join("")}</select>`:"";
+  const ctxBox=t.noPrompt?"":t.ctxLock?`<p class="fine">Este pedido leva uma cópia do seu cronograma atual${t.ctx.includes("pending")?" e a lista do que ficou pendente":""}, para a IA saber o que mudar.</p>`
+    :`<label class="check ai-ctx"><input type="checkbox" id="ai-ctx"${s.ctx?" checked":""}> <span>Mandar meu cronograma atual junto${t.ctxOn?" (recomendado)":""}: a IA usa suas matérias e horários e não repete o que já existe.</span></label>`;
+  const stepN=t.noPrompt?0:2;
+  return`<div class="vnav"><div class="vt"><a class="rel ai-back" href="#/ia">← Criar com IA</a><h1>${esc(t.title)}</h1><span class="vs">${esc(t.short)}</span></div></div>
+  ${aiUndoHTML()}
+  <div class="pgrid ai-page"><div>
+    ${t.noPrompt?"":`<section class="card pcard ai-step" aria-labelledby="ai-s1">
+      <h3 id="ai-s1"><b>1</b>Conte o básico <small>(opcional)</small></h3>
+      <p>Escreva do seu jeito o que você quer. Quanto mais detalhes, menos perguntas a IA vai fazer. Pode deixar em branco: ela pergunta tudo.</p>
+      <textarea id="ai-wish" data-fk="ai-wish" class="plain" rows="3" placeholder="${esc(t.wish)}" aria-label="O que você quer">${esc(s.wish)}</textarea>
+      ${ctxBox}
+    </section>
+    <section class="card pcard ai-step" aria-labelledby="ai-s2">
+      <h3 id="ai-s2"><b>2</b>Copie o pedido e cole na IA</h3>
+      <p>Abra uma conversa <b>nova</b> na IA, cole o pedido e envie. Ela vai fazer algumas perguntas: responda normalmente, como numa conversa.</p>
+      <div class="row2"><button class="btn primary" type="button" data-act="ai-copy" data-fk="ai-copy">${IC.copy}Copiar pedido</button>${AI_LINKS.map(([n,u])=>`<a class="btn sm" href="${u}" target="_blank" rel="noopener">Abrir ${n}</a>`).join("")}</div>
+      <details class="ai-see"><summary>Ver o texto do pedido</summary><textarea id="ai-prompt" rows="10" readonly aria-label="Pedido para a IA">${esc(aiPrompt(id))}</textarea></details>
+      <p class="fine">No fim da conversa, a IA entrega um resumo e um <b>bloco de código</b>. Toque em <b>Copiar</b> no canto do bloco (ou selecione o bloco inteiro) e volte para cá.</p>
+    </section>`}
+    <section class="card pcard ai-step" aria-labelledby="ai-s3">
+      <h3 id="ai-s3"><b>${stepN+1}</b>Cole a resposta da IA</h3>
+      <textarea id="ai-json" data-fk="ai-json" rows="7" placeholder="Cole aqui o bloco de código que a IA gerou. Se veio em partes, cole todas." aria-label="Resposta da IA">${esc(s.json)}</textarea>
+      <div class="row2"><button class="btn sm" type="button" data-act="ai-paste">${IC.up2}Colar da área de transferência</button><button class="btn sm" type="button" data-act="ai-file">Escolher arquivo .json</button>${s.json?`<button class="btn sm" type="button" data-act="ai-clear">Limpar</button>`:""}</div>
+      <div id="ai-prev" aria-live="polite">${aiPreviewHTML(c,id)}</div>
+      <div class="row2">${modeSel}<span class="spacer"></span><button class="btn accent" type="button" id="ai-go" data-act="ai-import" data-fk="ai-import"${c&&!c.err?"":" disabled"}>${IC.check}<span id="ai-go-lab">Importar para o app</span></button></div>
+    </section>
+  </div><div>
+    <section class="card pcard ai-info" aria-labelledby="ai-i">
+      <h2 class="sec-h" id="ai-i">Antes de começar</h2>
+      <div><h3>Quando usar</h3><p>${esc(t.when)}</p></div>
+      <div><h3>Tenha em mãos</h3><ul>${t.need.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+      <div><h3>O que muda no app</h3><p>${esc(t.effect)}</p></div>
+      <p class="fine">Depois de importar, aparece o botão <b>Desfazer importação</b>.</p>
+    </section>
+  </div></div>`;
+}
+/* atualiza pedido e pré-visualização sem redesenhar a página (mantém o cursor) */
+function aiRefresh(id,what){
+  const s=aiS(id);
+  if(what!=="json"){const p=$("ai-prompt");if(p)p.value=aiPrompt(id)}
+  if(what!=="prompt"){
+    const c=aiCheck(s.json,id), pv=$("ai-prev"), go=$("ai-go");
+    if(pv)pv.innerHTML=aiPreviewHTML(c,id);
+    if(go){go.disabled=!(c&&!c.err);aiDisarm()}
+  }
+}
+let aiArmTm=0;
+function aiDisarm(){clearTimeout(aiArmTm);const g=$("ai-go");if(g){g.classList.remove("armed");$("ai-go-lab").textContent="Importar para o app"}}
+function aiImport(id,btn){
+  const t=AI_TASKS[id], s=aiS(id), c=aiCheck(s.json,id);
+  if(!c||c.err)return aiRefresh(id,"json");
+  if(c.backup){
+    const r=importObject(c.o,s.mode); if(r)return toast(r);
+    s.json=""; return;
+  }
+  /* substituir pede um segundo clique quando já há algo planejado */
+  if(s.mode==="replace"&&!isEmptyPlan()&&!btn.classList.contains("armed")){
+    btn.classList.add("armed"); $("ai-go-lab").textContent="Substituir? Toque de novo para confirmar";
+    aiArmTm=setTimeout(aiDisarm,4000); return;
+  }
+  aiApply(c,id,s.mode);
+  toast(`Importado: ${aiSummary(c.n)}`,true);
+  go(t.after||"dia",TODAY);
+}
+function aiUndoNow(){
+  if(!aiUndo)return;
+  try{doc=normDoc(JSON.parse(aiUndo.snap))}catch(e){return toast("Não foi possível desfazer")}
+  aiUndo=null; planPid=null; dayEditing=null; persist(); render(); toast("Importação desfeita");
+}
+viewEl.addEventListener("input",e=>{
+  if(route.v!=="ia"||!route.task)return;
+  const id=route.task, s=aiS(id);
+  if(e.target.id==="ai-wish"){s.wish=e.target.value;aiRefresh(id,"prompt")}
+  else if(e.target.id==="ai-json"){s.json=e.target.value;clearTimeout(aiRefresh.tm);aiRefresh.tm=setTimeout(()=>aiRefresh(id,"json"),250)}
 });
-aiImportBtn.addEventListener("blur",disarmImport);
+viewEl.addEventListener("change",e=>{
+  if(route.v!=="ia"||!route.task)return;
+  const id=route.task, s=aiS(id);
+  if(e.target.id==="ai-ctx"){s.ctx=e.target.checked;aiRefresh(id,"prompt")}
+  else if(e.target.id==="ai-mode"){s.mode=e.target.value;aiDisarm()}
+});
+viewEl.addEventListener("focusout",e=>{if(e.target.id==="ai-go")aiDisarm()});
+$("ai-file").addEventListener("change",async e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f||route.v!=="ia"||!route.task)return;
+  aiS(route.task).json=await f.text(); render(); toast("Arquivo carregado. Confira e importe");
+});
+function aiAct(act,el){
+  const id=route.task, s=id?aiS(id):null;
+  switch(act){
+    case"ai-copy":return copyText(aiPrompt(id),"Pedido copiado. Cole numa conversa nova da IA");
+    case"ai-fix":{const c=aiCheck(s.json,id);return c&&c.err&&copyText(aiFixMsg(c.err),"Mensagem copiada. Cole na conversa com a IA")}
+    case"ai-paste":
+      if(!navigator.clipboard||!navigator.clipboard.readText){$("ai-json").focus();return toast("Toque na caixa e use Colar do teclado")}
+      return navigator.clipboard.readText().then(tx=>{if(!tx)return toast("A área de transferência está vazia");s.json=tx;render();toast("Resposta colada. Confira abaixo")},()=>{$("ai-json").focus();toast("O navegador não deixou: toque na caixa e use Colar")});
+    case"ai-file":return $("ai-file").click();
+    case"ai-clear":s.json="";return render();
+    case"ai-import":return aiImport(id,el);
+    case"ai-undo":return aiUndoNow();
+  }
+}
 
 /* ===================== conta: senha e exclusão ===================== */
 function changePassword(){
@@ -2027,6 +2468,7 @@ document.addEventListener("click",e=>{
   const el=e.target.closest("[data-act]"); if(!el||!doc&&!el.closest("#auth"))return;
   const act=el.dataset.act, id=el.dataset.id;
   const dtg={kind:"day",date:route.date}, rtg={kind:"rot",pid:planPid,wd:planWd};
+  if(act.startsWith("ai-"))return aiAct(act,el);
   switch(act){
     case"nav":return step(+el.dataset.dir);
     case"now-done":{
@@ -2064,7 +2506,7 @@ document.addEventListener("click",e=>{
     case"note-edit":{const n=doc.notes.find(x=>x.id===id);return n&&editNote(n)}
     case"theme":
       theme=el.dataset.theme; theme==="auto"?store.del(THEME_KEY):store.set(THEME_KEY,theme); applyTheme(); return;
-    case"ai":closePop();return openAI();
+    case"ai":closePop();return go("ia");
     case"export":closePop();return exportBackup();
     case"import":closePop();return $("file-import").click();
     case"pw":closePop();return changePassword();
@@ -2160,9 +2602,10 @@ function setAuthMode(m){
   const sel=$("auth-start"); sel.textContent="";
   const legacy=hasLegacy(), done=store.get(LEGACY_FLAG);
   if(legacy)sel.add(new Option("Meu cronograma salvo neste navegador (com o progresso)","legacy"));
+  sel.add(new Option("Criar o meu com ajuda de uma IA (passo a passo)","ai"));
   sel.add(new Option("Cronograma de exemplo (rotina semanal + semana de provas)","sample"));
   sel.add(new Option("Começar em branco","blank"));
-  sel.value=legacy&&!done?"legacy":"sample";
+  sel.value=legacy&&!done?"legacy":"ai";
   const accs=accounts(), box=$("auth-accs");
   box.hidden=m!=="in"||!accs.length; box.textContent="";
   if(accs.length){
