@@ -4,15 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cronograma Semana de Provas</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Cronograma dia a dia da semana de provas, 17 a 29 de outubro de 2026, com blocos marcáveis e progresso salvo no navegador.">
+<meta name="theme-color" content="#f3f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11171d" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cronograma">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='8' width='56' height='52' rx='12' fill='%23c0392b'/%3E%3Crect x='4' y='8' width='56' height='16' rx='8' fill='%238a3f74'/%3E%3Cpath d='M20 40l8 8 16-18' fill='none' stroke='%23fff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<script>
+/* Aplica o tema salvo antes da pintura, para não piscar */
+try{var t=localStorage.getItem("cronograma-provas-tema");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0}
 img{max-width:100%}
-/* Layout: faixa-linha do tempo até as provas, legenda, depois cartões diários em grade com blocos marcáveis */
+[hidden]{display:none!important}
+/* Layout: cabeçalho com resumo, barra fixa (linha do tempo + controles), filtros, dicas recolhíveis, cartões diários */
 :root{
-  --bg:#f3f5f7; --surface:#ffffff; --ink:#18232f; --muted:#5b6876; --line:#d9e0e7;
+  --bg:#f3f5f7; --surface:#ffffff; --surface-2:#f7f9fb; --ink:#18232f; --muted:#5b6876; --line:#d9e0e7;
+  --today:#2f6fdb; --today-bg:#e7efff;
+  --shadow:0 1px 2px rgba(24,35,47,.06),0 4px 14px rgba(24,35,47,.06);
   --onco:#8a3f74; --onco-bg:#f6e9f2;
   --morfo:#1f7a7a; --morfo-bg:#e3f3f2;
   --clin:#b46a12; --clin-bg:#fbefdc;
@@ -22,102 +37,231 @@ img{max-width:100%}
   --font-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
   --font-body:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
   --font-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --bar-h:120px;
+  color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#11171d; --surface:#18212a; --ink:#e6ecf1; --muted:#9aa8b5; --line:#2a3642;
+  --bg:#11171d; --surface:#18212a; --surface-2:#1d2732; --ink:#e6ecf1; --muted:#9aa8b5; --line:#2a3642;
+  --today:#7aa7ff; --today-bg:#1b2a45;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
   --onco:#d58bbf; --onco-bg:#33202d; --morfo:#5cc2c0; --morfo-bg:#16302f;
   --clin:#e7a656; --clin-bg:#352712; --fixo:#a9b6c3; --fixo-bg:#232d37;
   --pesq:#86c983; --pesq-bg:#1c2f1b; --prova:#f0796b; --prova-bg:#3a1e1b; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#11171d; --surface:#18212a; --ink:#e6ecf1; --muted:#9aa8b5; --line:#2a3642;
+  --bg:#11171d; --surface:#18212a; --surface-2:#1d2732; --ink:#e6ecf1; --muted:#9aa8b5; --line:#2a3642;
+  --today:#7aa7ff; --today-bg:#1b2a45;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
   --onco:#d58bbf; --onco-bg:#33202d; --morfo:#5cc2c0; --morfo-bg:#16302f;
   --clin:#e7a656; --clin-bg:#352712; --fixo:#a9b6c3; --fixo-bg:#232d37;
   --pesq:#86c983; --pesq-bg:#1c2f1b; --prova:#f0796b; --prova-bg:#3a1e1b; color-scheme:dark}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5}
-.wrap{max-width:1180px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:24px}
-h1{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,4.4vw,42px);line-height:1.08;margin:0;text-wrap:balance}
-.sub{color:var(--muted);margin:6px 0 0;max-width:70ch}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--today);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-/* linha do tempo */
-.timeline{overflow-x:auto}
-.tl{display:grid;grid-template-columns:repeat(13,minmax(58px,1fr));gap:4px;min-width:720px}
-.tl a{display:grid;gap:2px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 6px;text-align:center;font-variant-numeric:tabular-nums}
-.tl a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* cabeçalho */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 32px;align-items:end;padding-block:32px 20px}
+h1{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,4.4vw,44px);line-height:1.05;margin:4px 0 0;text-wrap:balance;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:8px 0 0;max-width:62ch}
+.stats{display:flex;gap:12px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);min-width:150px;display:flex;align-items:center;gap:12px}
+.stat .k{font-size:12px;color:var(--muted);display:block}
+.stat .v{font-family:var(--font-display);font-weight:700;font-size:20px;line-height:1.15;display:block;font-variant-numeric:tabular-nums}
+.stat .s{font-size:13px;color:var(--muted);display:block}
+.stat.exam .v{color:var(--prova)}
+.stat.late .v{color:var(--clin)}
+.ring{width:48px;height:48px;flex:none;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5}
+.ring .bgc{stroke:var(--line)}
+.ring .fg{stroke:var(--ink);stroke-linecap:round;stroke-dasharray:0 100}
+
+/* barra fixa */
+.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+.bar.stuck{border-bottom-color:var(--line)}
+.bar .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding-block:10px}
+.bar nav{min-width:0}
+.tl{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:thin;padding:10px 3px 6px;margin:-8px -3px 0}
+.tl a{flex:1 0 64px;scroll-snap-align:start;display:grid;gap:2px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 6px 6px;text-align:center;font-variant-numeric:tabular-nums;position:relative;transition:transform .15s,border-color .15s}
+.tl a:hover{border-color:var(--muted)}
 .tl .dw{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-transform:uppercase}
-.tl .dn{font-family:var(--font-display);font-size:20px;font-weight:700}
-.tl .bar{height:5px;border-radius:3px;display:flex;overflow:hidden;gap:1px}
-.tl .bar span{flex:1}
+.tl .dn{font-family:var(--font-display);font-size:19px;font-weight:700;line-height:1.1}
+.tl .kb{height:4px;border-radius:3px;display:flex;overflow:hidden;gap:1px}
+.tl .kb span{flex:1}
+.tl .pc{font-size:11px;color:var(--muted)}
 .tl a.exam{background:var(--prova-bg);border-color:var(--prova)}
 .tl a.exam .dn{color:var(--prova)}
-.tl .pc{font-size:11px;color:var(--muted)}
-/* legenda e notas */
-.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px}
-.legend span{display:inline-flex;align-items:center;gap:6px}
-.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
-.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.note{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
-.note h3{font-family:var(--font-display);font-size:16px;margin:0 0 4px}
+.tl a.today{outline:2px solid var(--today);outline-offset:1px}
+.tl a.today::before{content:"hoje";position:absolute;top:-1px;left:50%;transform:translate(-50%,-60%);background:var(--today);color:var(--bg);font-size:10px;font-weight:700;padding:0 6px;border-radius:6px;line-height:16px;letter-spacing:.03em}
+.tl a.full .pc{color:var(--pesq);font-weight:700}
+.tl a.past:not(.today){opacity:.7}
+.controls{display:flex;flex-wrap:nowrap;gap:8px;align-items:center;overflow-x:auto;scrollbar-width:none;padding:2px 3px;margin:-2px -3px}
+.controls::-webkit-scrollbar{display:none}
+#filters{display:flex;gap:8px;flex:none}
+.controls .actions{flex:none;overflow:visible;margin:0;padding:0}
+.btn{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;line-height:1.3;transition:background .15s,border-color .15s}
+.btn.danger:not(.armed) .lab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.btn:hover{border-color:var(--muted)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn svg{width:14px;height:14px;flex:none}
+.btn.danger.armed{background:var(--prova);border-color:var(--prova);color:#fff}
+.chip{--k:var(--muted)}
+.chip .sw{width:10px;height:10px;border-radius:3px;background:var(--k);display:inline-block}
+.chip[aria-pressed="true"]{background:var(--k);border-color:var(--k);color:var(--bg)}
+.chip[aria-pressed="true"] .sw{background:var(--bg)}
+.spacer{flex:1}
+.filters-label{font-size:12px;color:var(--muted);margin-right:2px;flex:none}
+.sep{flex:none;width:1px;align-self:stretch;background:var(--line);margin:2px 2px}
+
+main.wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;padding-block:20px 48px}
+
+/* dicas */
+details.tips{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+details.tips summary{cursor:pointer;padding:12px 16px;font-family:var(--font-display);font-weight:700;font-size:16px;list-style:none;display:flex;align-items:center;gap:8px}
+details.tips summary::-webkit-details-marker{display:none}
+details.tips summary::before{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg);transition:transform .2s;margin-right:4px}
+details.tips[open] summary::before{transform:rotate(45deg)}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding:0 16px 16px}
+.note{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.note h3{font-family:var(--font-display);font-size:15px;margin:0 0 4px}
 .note p,.note ul{margin:0;color:var(--muted);font-size:14px}
 .note ul{padding-left:18px}
+
 /* dias */
-.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;align-items:start}
 @media (max-width:420px){.days{grid-template-columns:1fr}}
-.day{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0;display:flex;flex-direction:column}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0;display:flex;flex-direction:column;box-shadow:var(--shadow);scroll-margin-top:calc(var(--bar-h) + 12px);transition:border-color .2s}
 .day.examday{border-color:var(--prova)}
-.dh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:14px 16px 10px;border-bottom:1px solid var(--line)}
-.dh h2{font-family:var(--font-display);font-size:20px;margin:0}
+.day.today{border-color:var(--today);box-shadow:0 0 0 2px var(--today),var(--shadow)}
+.day.flash{animation:flash 1s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 6px color-mix(in srgb,var(--today) 45%,transparent),var(--shadow)}}
+.dh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px 12px;border-bottom:1px solid var(--line)}
+.dh h2{font-family:var(--font-display);font-size:20px;margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge{font-family:var(--font-body);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:1px 8px;border-radius:999px;background:var(--today);color:var(--bg)}
+.badge.ok{background:var(--pesq-bg);color:var(--pesq)}
 .dh .tag{font-family:var(--font-mono);font-size:11px;color:var(--muted);white-space:nowrap}
 .day.examday .dh{background:var(--prova-bg)}
 .day.examday .dh .tag{color:var(--prova)}
+.day.today:not(.examday) .dh{background:var(--today-bg)}
 ul.blocks{list-style:none;margin:0;padding:6px 0}
-.blk{display:grid;grid-template-columns:22px 92px 1fr;gap:8px;align-items:start;padding:7px 16px}
-.blk input{margin:3px 0 0;width:16px;height:16px;accent-color:var(--ink)}
+.blk{padding:0}
+.blk .row{display:grid;grid-template-columns:22px 92px minmax(0,1fr);gap:8px;align-items:start;padding:8px 16px;cursor:pointer;transition:background .12s;-webkit-tap-highlight-color:transparent}
+.blk .row:hover{background:var(--surface-2)}
+.blk input{margin:3px 0 0;width:17px;height:17px;accent-color:var(--k);cursor:pointer}
 .blk .t{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding-top:2px;font-variant-numeric:tabular-nums}
 .blk .c{min-width:0;border-left:3px solid var(--k);padding-left:10px}
-.blk .lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--k)}
-.blk .d{font-size:14px}
-.blk.done .d{text-decoration:line-through;color:var(--muted)}
-.blk.pause{grid-template-columns:22px 92px 1fr;opacity:.75}
+.blk .lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--k);display:block}
+.blk .d{font-size:14px;display:block}
+.blk.done .d,.blk.done .lbl{text-decoration:line-through;text-decoration-thickness:1px}
+.blk.done .c{opacity:.6}
+.blk.pause .row{cursor:default;opacity:.75}
+.blk.pause .row:hover{background:none}
 .blk.pause .c{border-left-color:transparent;color:var(--muted);font-size:13px}
 .k-onco{--k:var(--onco)} .k-morfo{--k:var(--morfo)} .k-clin{--k:var(--clin)} .k-fixo{--k:var(--fixo)} .k-pesq{--k:var(--pesq)} .k-prova{--k:var(--prova)}
-.progress{margin-top:auto;padding:10px 16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;gap:10px;align-items:center}
-.progress .track{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
-.progress .fill{display:block;height:100%;background:var(--ink);width:0}
-.refs{font-size:13px;color:var(--muted)}
+.hide-done .blk.done,.filtered .blk.off{display:none}
+.alldone{display:none;padding:14px 16px;color:var(--muted);font-size:14px}
+.hide-done .day.complete .alldone{display:block}
+.filtered .day.nomatch{display:none}
+.progress{margin-top:auto;padding:10px 16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;gap:10px;align-items:center;font-variant-numeric:tabular-nums}
+.progress .track{flex:1;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress .fill{display:block;height:100%;background:var(--ink);width:0;border-radius:3px}
+.day.complete .progress .fill{background:var(--pesq)}
+.empty{display:none;text-align:center;color:var(--muted);padding:32px 16px;border:1px dashed var(--line);border-radius:14px}
+.filtered.none .empty{display:block}
+.refs{font-size:13px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.refs h3{font-family:var(--font-display);font-size:15px;margin:0 0 4px;color:var(--ink)}
+.refs p{margin:0}
 .refs ol{padding-left:18px;margin:6px 0 0}
-@media (prefers-reduced-motion:no-preference){.progress .fill{transition:width .25s}}
+footer{color:var(--muted);font-size:12px;text-align:center;padding-bottom:32px}
+.toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:var(--shadow);z-index:10;transition:opacity .2s,transform .2s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;padding-top:24px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat{min-width:0;padding:10px 12px;gap:10px}
+  .stat .v{font-size:18px}
+  .stat.late{grid-column:1/-1}
+  .ring{width:40px;height:40px}
+  .filters-label{display:none}
+}
+@media (max-width:420px){
+  .blk .row{grid-template-columns:20px 82px minmax(0,1fr);gap:6px;padding-inline:12px}
+  .blk .t{font-size:11.5px}
+  .dh{padding-inline:12px}
+  .actions .btn:not(.armed) .lab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .actions .btn{padding:6px 10px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .progress .fill{transition:width .3s ease}
+  .ring .fg{transition:stroke-dasharray .4s ease}
+  html{scroll-behavior:smooth}
+}
+@media (prefers-reduced-motion:reduce){.day.flash{animation:none}}
+@media print{
+  .bar,.controls,.toast,footer{display:none}
+  body{background:#fff;color:#000}
+  .day,.stat,details.tips,.refs{box-shadow:none;break-inside:avoid}
+  .days{grid-template-columns:1fr 1fr}
+  .hide-done .blk.done,.filtered .blk.off,.filtered .day.nomatch{display:revert}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
+<header class="wrap hero">
+  <div>
     <div class="eyebrow">17 a 29 de outubro de 2026</div>
     <h1>Cronograma da semana de provas</h1>
     <p class="sub">Manhã e tarde com almoço, flashcards e questões todos os dias, simulados antes de cada prova e a noite reservada para a pesquisa. Marque cada bloco quando concluir; o progresso fica salvo neste navegador.</p>
-  </header>
+  </div>
+  <div class="stats" aria-live="polite">
+    <div class="stat">
+      <svg class="ring" viewBox="0 0 48 48" aria-hidden="true"><circle class="bgc" cx="24" cy="24" r="20"/><circle class="fg" id="ring" cx="24" cy="24" r="20" pathLength="100"/></svg>
+      <div><span class="k">Progresso geral</span><span class="v" id="st-pct">0%</span><span class="s" id="st-count">0 de 0 blocos</span></div>
+    </div>
+    <div class="stat exam"><div><span class="k">Próxima prova</span><span class="v" id="st-next">–</span><span class="s" id="st-next-s"></span></div></div>
+    <div class="stat late" id="st-late-box" hidden><div><span class="k">Pendentes de dias anteriores</span><span class="v" id="st-late">0</span><span class="s">blocos não marcados</span></div></div>
+  </div>
+</header>
 
-  <nav class="timeline" aria-label="Linha do tempo"><div class="tl" id="tl"></div></nav>
+<div class="bar" id="bar">
+  <div class="wrap">
+    <nav aria-label="Linha do tempo"><div class="tl" id="tl"></div></nav>
+    <div class="controls">
+      <span class="actions controls">
+      <button class="btn" id="btn-today" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 7h12M5.5 1.5v3M10.5 1.5v3"/></svg><span class="lab">Ir para hoje</span></button>
+      <button class="btn" id="btn-hide" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg><span class="lab">Ocultar concluídos</span></button>
+      <button class="btn" id="btn-theme" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="M8 2.5v11" /><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg><span class="lab" id="theme-lab">Tema: automático</span></button>
+      <button class="btn danger" id="btn-reset" type="button" title="Zerar progresso"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.6-3.9M2.5 2.5v3h3"/></svg><span class="lab" id="reset-lab">Zerar progresso</span></button>
+      </span>
+      <span class="sep" aria-hidden="true"></span>
+      <span class="filters-label" id="flabel">Filtrar:</span>
+      <div id="filters" role="group" aria-labelledby="flabel"></div>
+    </div>
+  </div>
+</div>
 
-  <div class="legend">
-    <span><i class="sw" style="background:var(--onco)"></i>Oncologia (prova 26/10)</span>
-    <span><i class="sw" style="background:var(--morfo)"></i>Anatomia · Histologia · Laboratórios (27/10)</span>
-    <span><i class="sw" style="background:var(--clin)"></i>Urologia · Ginecologia · OSCE (29/10)</span>
-    <span><i class="sw" style="background:var(--fixo)"></i>Flashcards e questões</span>
-    <span><i class="sw" style="background:var(--pesq)"></i>Pesquisa e artigos</span>
+<main class="wrap">
+  <details class="tips">
+    <summary>Como estudar cada dia</summary>
+    <section class="notes">
+      <div class="note"><h3>Estrutura de um dia cheio</h3>
+        <ul><li>08:00–08:40 flashcards (revisões do Anki)</li><li>08:40–12:00 bloco da manhã</li><li>12:00–13:30 almoço</li><li>13:30–16:30 bloco da tarde</li><li>16:45–18:00 questões das matérias do dia</li><li>19:30–21:00 pesquisa + artigo</li></ul></div>
+      <div class="note"><h3>Como usar cada bloco de conteúdo</h3>
+        <p>Videoaula em 1,5× → resumo próprio → 10 a 15 flashcards novos do que errou ou achou difícil. Nos tipos de câncer, padronize o resumo: epidemiologia, fatores de risco, rastreamento, histologia, estadiamento e tratamento.</p></div>
+      <div class="note"><h3>Sinergias</h3>
+        <p>Próstata, rim, bexiga e testículo (21/10) já adiantam Urologia; colo do útero, endométrio, ovário e mama já adiantam Ginecologia. Guarde esses resumos para revisar no dia 28.</p></div>
+    </section>
+  </details>
+
+  <div id="board">
+    <section class="days" id="days"></section>
+    <p class="empty">Nenhum bloco corresponde aos filtros selecionados.</p>
   </div>
 
-  <section class="notes">
-    <div class="note"><h3>Estrutura de um dia cheio</h3>
-      <ul><li>08:00–08:40 flashcards (revisões do Anki)</li><li>08:40–12:00 bloco da manhã</li><li>12:00–13:30 almoço</li><li>13:30–16:30 bloco da tarde</li><li>16:45–18:00 questões das matérias do dia</li><li>19:30–21:00 pesquisa + artigo</li></ul></div>
-    <div class="note"><h3>Como usar cada bloco de conteúdo</h3>
-      <p>Videoaula em 1,5× → resumo próprio → 10 a 15 flashcards novos do que errou ou achou difícil. Nos tipos de câncer, padronize o resumo: epidemiologia, fatores de risco, rastreamento, histologia, estadiamento e tratamento.</p></div>
-    <div class="note"><h3>Sinergias</h3>
-      <p>Próstata, rim, bexiga e testículo (21/10) já adiantam Urologia; colo do útero, endométrio, ovário e mama já adiantam Ginecologia. Guarde esses resumos para revisar no dia 28.</p></div>
-  </section>
-
-  <section class="days" id="days"></section>
-
-  <section class="note refs">
+  <section class="refs">
     <h3>Por que questões, flashcards e simulados todo dia</h3>
     <p>O cronograma combina prática de recuperação (questões e simulados) com repetição espaçada (flashcards diários) e intercalação de matérias, as estratégias com maior utilidade demonstrada na literatura de aprendizagem.</p>
     <ol>
@@ -127,7 +271,9 @@ ul.blocks{list-style:none;margin:0;padding:6px 0}
       <li>Larsen DP, Butler AC, Roediger HL. Test-enhanced learning in medical education. Med Educ. 2008;42(10):959-66.</li>
     </ol>
   </section>
-</div>
+</main>
+<footer class="wrap">O progresso é salvo apenas neste navegador e neste aparelho.</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 const F = (t,d)=>({t,k:"fixo",l:"Flashcards",d});
@@ -219,42 +365,244 @@ const DAYS = [
  {id:"d29",dw:"Qui",dn:29,exam:true,tag:"Prova final",b:[
   {t:"Dia",k:"prova",l:"Provas",d:"Urologia, Ginecologia e OSCE"}]}
 ];
-const KEY="cronograma-provas-2026";
-let state={}; try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}};
-const colors={onco:"var(--onco)",morfo:"var(--morfo)",clin:"var(--clin)",fixo:"var(--fixo)",pesq:"var(--pesq)",prova:"var(--prova)"};
-const daysEl=document.getElementById("days"), tlEl=document.getElementById("tl");
-function render(){
-  daysEl.innerHTML=""; tlEl.innerHTML="";
-  DAYS.forEach(day=>{
-    const tasks=day.b.filter(b=>!b.pause);
-    const done=tasks.filter((b,i)=>state[day.id+"-"+day.b.indexOf(b)]).length;
-    const pct=tasks.length?Math.round(done/tasks.length*100):0;
-    const a=document.createElement("a"); a.href="#"+day.id; if(day.exam)a.className="exam";
-    const kinds=[...new Set(tasks.map(b=>b.k).filter(k=>k!=="fixo"&&k!=="pesq"))];
-    a.innerHTML=`<span class="dw">${day.dw}</span><span class="dn">${day.dn}</span><span class="bar">${kinds.map(k=>`<span style="background:${colors[k]}"></span>`).join("")}</span><span class="pc">${pct}%</span>`;
-    tlEl.appendChild(a);
-    const card=document.createElement("article"); card.className="day"+(day.exam?" examday":""); card.id=day.id;
-    card.innerHTML=`<div class="dh"><h2>${day.dw} ${day.dn}/10</h2><span class="tag">${day.tag}</span></div>`;
-    const ul=document.createElement("ul"); ul.className="blocks";
-    day.b.forEach((b,i)=>{
-      const li=document.createElement("li"); const id=day.id+"-"+i;
-      if(b.pause){li.className="blk pause";li.innerHTML=`<span></span><span class="t">${b.t}</span><span class="c">${b.d}</span>`;}
-      else{
-        li.className="blk k-"+b.k+(state[id]?" done":"");
-        li.innerHTML=`<input type="checkbox" id="${id}" ${state[id]?"checked":""} aria-label="${b.l}, ${b.t}"><label class="t" for="${id}">${b.t}</label><span class="c"><span class="lbl">${b.l}</span><div class="d">${b.d}</div></span>`;
-        li.querySelector("input").addEventListener("change",e=>{state[id]=e.target.checked;save();render();});
-      }
-      ul.appendChild(li);
-    });
-    card.appendChild(ul);
-    const pr=document.createElement("div"); pr.className="progress";
-    pr.innerHTML=`<span>${done}/${tasks.length} blocos</span><span class="track"><span class="fill" style="width:${pct}%"></span></span>`;
-    card.appendChild(pr);
-    daysEl.appendChild(card);
-  });
+
+/* ---------- configuração e armazenamento ---------- */
+const YEAR=2026, MONTH=9; // outubro (0 = janeiro)
+const KEY="cronograma-provas-2026", THEME_KEY="cronograma-provas-tema", UI_KEY="cronograma-provas-ui";
+const store={
+  get(k){try{return localStorage.getItem(k)}catch(e){return null}},
+  set(k,v){try{localStorage.setItem(k,v)}catch(e){}},
+  del(k){try{localStorage.removeItem(k)}catch(e){}}
+};
+const readJSON=k=>{try{const v=JSON.parse(store.get(k)||"{}");return v&&typeof v==="object"&&!Array.isArray(v)?v:{}}catch(e){return{}}};
+let state=readJSON(KEY);
+const save=()=>store.set(KEY,JSON.stringify(state));
+const ui=Object.assign({hideDone:false,filters:[]},readJSON(UI_KEY));
+const saveUI=()=>store.set(UI_KEY,JSON.stringify(ui));
+
+const SUBJECTS=[
+  {k:"onco",n:"Oncologia"},{k:"morfo",n:"Anat · Histo · Lab"},{k:"clin",n:"Uro · Gine · OSCE"},
+  {k:"fixo",n:"Flashcards e questões"},{k:"pesq",n:"Pesquisa"}
+];
+/* matéria de cada dia de prova, usada pelos filtros */
+const EXAM_SUBJECT={d26:"onco",d27:"morfo",d29:"clin"};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $=id=>document.getElementById(id);
+
+/* "Hoje" pode ser simulado com ?hoje=AAAA-MM-DD (útil para conferir o visual) */
+function getToday(){
+  const q=new URLSearchParams(location.search).get("hoje");
+  if(q&&/^\d{4}-\d{2}-\d{2}$/.test(q)){const[y,m,d]=q.split("-").map(Number);return new Date(y,m-1,d)}
+  const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate());
 }
-render();
+let today=getToday();
+const dateOf=day=>new Date(YEAR,MONTH,day.dn);
+const sameDay=(a,b)=>a.getTime()===b.getTime();
+const DAY_MS=864e5;
+
+/* ---------- construção do DOM (uma vez) ---------- */
+const daysEl=$("days"), tlEl=$("tl"), boardEl=$("board");
+DAYS.forEach(day=>{
+  day.tasks=[];
+  const kinds=[...new Set(day.b.filter(b=>!b.pause).map(b=>b.k).filter(k=>k!=="fixo"&&k!=="pesq"))];
+  const a=document.createElement("a");
+  a.href="#"+day.id; a.className=day.exam?"exam":"";
+  a.innerHTML=`<span class="dw">${esc(day.dw)}</span><span class="dn">${day.dn}</span><span class="kb">${kinds.map(k=>`<span style="background:var(--${k})"></span>`).join("")}</span><span class="pc">0%</span>`;
+  a.addEventListener("click",e=>{e.preventDefault();goTo(day)});
+  tlEl.appendChild(a); day.tl=a; day.tlPct=a.querySelector(".pc");
+
+  const card=document.createElement("article");
+  card.className="day"+(day.exam?" examday":""); card.id=day.id;
+  card.setAttribute("aria-labelledby",day.id+"-h");
+  card.innerHTML=`<div class="dh"><h2 id="${day.id}-h">${esc(day.dw)} ${day.dn}/10</h2><span class="tag">${esc(day.tag)}</span></div>`;
+  const ul=document.createElement("ul"); ul.className="blocks";
+  day.b.forEach((b,i)=>{
+    const li=document.createElement("li"); const id=day.id+"-"+i;
+    if(b.pause){
+      li.className="blk pause";
+      li.innerHTML=`<div class="row"><span></span><span class="t">${esc(b.t)}</span><span class="c">${esc(b.d)}</span></div>`;
+    }else{
+      li.className="blk k-"+b.k;
+      li.innerHTML=`<label class="row"><input type="checkbox" id="${id}"><span class="t">${esc(b.t)}</span><span class="c"><span class="lbl">${esc(b.l)}</span><span class="d">${esc(b.d)}</span></span></label>`;
+      const input=li.querySelector("input");
+      input.addEventListener("change",()=>{
+        if(input.checked)state[id]=true;else delete state[id];
+        save(); paint();
+      });
+      day.tasks.push({id,b,li,input});
+    }
+    b.li=li; ul.appendChild(li);
+  });
+  card.appendChild(ul);
+  const msg=document.createElement("p"); msg.className="alldone"; msg.textContent="Todos os blocos deste dia foram concluídos.";
+  card.appendChild(msg);
+  const pr=document.createElement("div"); pr.className="progress";
+  pr.innerHTML=`<span class="cnt"></span><span class="track" aria-hidden="true"><span class="fill"></span></span><span class="pp"></span>`;
+  card.appendChild(pr);
+  day.card=card; day.cnt=pr.querySelector(".cnt"); day.fill=pr.querySelector(".fill"); day.pp=pr.querySelector(".pp");
+  day.h2=card.querySelector("h2");
+  daysEl.appendChild(card);
+});
+
+/* filtros por matéria */
+const filterSet=new Set((ui.filters||[]).filter(k=>SUBJECTS.some(s=>s.k===k)));
+SUBJECTS.forEach(s=>{
+  const btn=document.createElement("button");
+  btn.type="button"; btn.className="btn chip k-"+s.k; btn.dataset.k=s.k;
+  btn.innerHTML=`<i class="sw" aria-hidden="true"></i>${esc(s.n)}`;
+  btn.addEventListener("click",()=>{
+    filterSet.has(s.k)?filterSet.delete(s.k):filterSet.add(s.k);
+    ui.filters=[...filterSet]; saveUI(); applyFilters();
+  });
+  $("filters").appendChild(btn); s.btn=btn;
+});
+function applyFilters(){
+  const on=filterSet.size>0;
+  boardEl.classList.toggle("filtered",on);
+  SUBJECTS.forEach(s=>s.btn.setAttribute("aria-pressed",String(filterSet.has(s.k))));
+  let any=false;
+  DAYS.forEach(day=>{
+    let match=0;
+    day.b.forEach(b=>{
+      // a prova aparece junto com a matéria dela; pausas somem quando há filtro
+      const k=b.k==="prova"?EXAM_SUBJECT[day.id]:b.k;
+      const off=on&&(b.pause||!filterSet.has(k));
+      b.li.classList.toggle("off",off);
+      if(!off&&!b.pause)match++;
+    });
+    const nomatch=on&&match===0;
+    day.card.classList.toggle("nomatch",nomatch);
+    if(!nomatch)any=true;
+  });
+  boardEl.classList.toggle("none",on&&!any);
+}
+
+/* ---------- atualização visual ---------- */
+function paint(){
+  let total=0, done=0, late=0;
+  DAYS.forEach(day=>{
+    const d=dateOf(day), isToday=sameDay(d,today), isPast=d<today;
+    let dd=0;
+    day.tasks.forEach(t=>{
+      const on=!!state[t.id];
+      t.input.checked=on; t.li.classList.toggle("done",on);
+      if(on)dd++; else if(isPast)late++;
+    });
+    const n=day.tasks.length, pct=n?Math.round(dd/n*100):0;
+    total+=n; done+=dd;
+    const complete=n>0&&dd===n;
+    day.cnt.textContent=`${dd}/${n} blocos`;
+    day.pp.textContent=`${pct}%`;
+    day.fill.style.width=pct+"%";
+    day.tlPct.textContent=complete?"✓ 100%":pct+"%";
+    day.tl.classList.toggle("full",complete);
+    day.tl.classList.toggle("today",isToday);
+    day.tl.classList.toggle("past",isPast);
+    day.tl.setAttribute("aria-label",`${day.dw} ${day.dn}/10, ${day.tag}, ${pct}% concluído${isToday?", hoje":""}`);
+    if(isToday)day.tl.setAttribute("aria-current","date");else day.tl.removeAttribute("aria-current");
+    day.card.classList.toggle("today",isToday);
+    day.card.classList.toggle("complete",complete);
+    let badges=`${esc(day.dw)} ${day.dn}/10`;
+    if(isToday)badges+=` <span class="badge">Hoje</span>`;
+    if(complete)badges+=` <span class="badge ok">Concluído</span>`;
+    if(day.h2.innerHTML!==badges)day.h2.innerHTML=badges;
+  });
+  const pct=total?Math.round(done/total*100):0;
+  $("st-pct").textContent=pct+"%";
+  $("st-count").textContent=`${done} de ${total} blocos`;
+  $("ring").style.strokeDasharray=`${pct} 100`;
+  $("st-late").textContent=late;
+  $("st-late-box").hidden=late===0;
+  paintNextExam();
+}
+function paintNextExam(){
+  const next=DAYS.find(d=>d.exam&&dateOf(d)>=today);
+  if(!next){$("st-next").textContent="Concluídas";$("st-next-s").textContent="Boa! Semana de provas encerrada";return}
+  const diff=Math.round((dateOf(next)-today)/DAY_MS);
+  const what=next.b.find(b=>b.k==="prova");
+  $("st-next").textContent=diff===0?"Hoje":diff===1?"Amanhã":`Em ${diff} dias`;
+  $("st-next-s").textContent=`${what?what.d:next.tag} · ${next.dw} ${next.dn}/10`;
+}
+
+/* ---------- navegação ---------- */
+function targetDay(){
+  return DAYS.find(d=>sameDay(dateOf(d),today))||DAYS.find(d=>dateOf(d)>today)||DAYS[DAYS.length-1];
+}
+function goTo(day){
+  if(day.card.classList.contains("nomatch")){filterSet.clear();ui.filters=[];saveUI();applyFilters()}
+  day.card.scrollIntoView({block:"start"});
+  history.replaceState(null,"","#"+day.id);
+  day.card.classList.remove("flash"); void day.card.offsetWidth; day.card.classList.add("flash");
+  centerChip(day);
+}
+function centerChip(day){
+  const a=day.tl; tlEl.scrollLeft=a.offsetLeft-tlEl.offsetLeft-(tlEl.clientWidth-a.offsetWidth)/2;
+}
+$("btn-today").addEventListener("click",()=>goTo(targetDay()));
+
+/* ocultar concluídos */
+function applyHide(){
+  boardEl.classList.toggle("hide-done",!!ui.hideDone);
+  $("btn-hide").setAttribute("aria-pressed",String(!!ui.hideDone));
+}
+$("btn-hide").addEventListener("click",()=>{ui.hideDone=!ui.hideDone;saveUI();applyHide()});
+
+/* tema: automático → claro → escuro */
+const THEMES=["auto","light","dark"], THEME_NAMES={auto:"automático",light:"claro",dark:"escuro"};
+let theme=document.documentElement.dataset.theme||"auto";
+function applyTheme(){
+  if(theme==="auto")delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=theme;
+  $("theme-lab").textContent="Tema: "+THEME_NAMES[theme];
+  $("btn-theme").setAttribute("aria-label","Tema: "+THEME_NAMES[theme]+". Clique para trocar");
+}
+$("btn-theme").addEventListener("click",()=>{
+  theme=THEMES[(THEMES.indexOf(theme)+1)%THEMES.length];
+  theme==="auto"?store.del(THEME_KEY):store.set(THEME_KEY,theme);
+  applyTheme(); toast("Tema "+THEME_NAMES[theme]);
+});
+
+/* zerar progresso com confirmação em dois cliques (sem diálogo do navegador) */
+let armTimer=0;
+const resetBtn=$("btn-reset");
+function disarm(){clearTimeout(armTimer);resetBtn.classList.remove("armed");$("reset-lab").textContent="Zerar progresso";resetBtn.removeAttribute("aria-label")}
+resetBtn.addEventListener("click",()=>{
+  if(!resetBtn.classList.contains("armed")){
+    resetBtn.classList.add("armed");$("reset-lab").textContent="Confirmar? Clique de novo";
+    resetBtn.setAttribute("aria-label","Confirmar: apagar todo o progresso");
+    armTimer=setTimeout(disarm,4000);return;
+  }
+  disarm(); state={}; save(); paint(); toast("Progresso zerado");
+});
+resetBtn.addEventListener("blur",disarm);
+
+/* aviso curto */
+let toastTimer=0;
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
+
+/* altura da barra fixa, para a rolagem não esconder o topo do cartão */
+const bar=$("bar");
+const setBarH=()=>document.documentElement.style.setProperty("--bar-h",bar.offsetHeight+"px");
+if("ResizeObserver"in window)new ResizeObserver(setBarH).observe(bar);
+setBarH();
+if("IntersectionObserver"in window){
+  const sentinel=document.createElement("div");bar.before(sentinel);
+  new IntersectionObserver(([e])=>bar.classList.toggle("stuck",!e.isIntersecting)).observe(sentinel);
+}
+
+/* sincroniza entre abas abertas */
+window.addEventListener("storage",e=>{
+  if(e.key===KEY||e.key===null){state=readJSON(KEY);paint()}
+});
+/* se a página ficar aberta de um dia para o outro, atualiza "hoje" */
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState!=="visible")return;
+  const t=getToday(); if(!sameDay(t,today)){today=t;paint()}
+});
+
+/* início */
+applyTheme(); applyHide(); applyFilters(); paint();
+centerChip(targetDay());
+if(location.hash){const d=DAYS.find(x=>"#"+x.id===location.hash);if(d)requestAnimationFrame(()=>d.card.scrollIntoView({block:"start"}))}
 </script>
 </body>
 </html>
