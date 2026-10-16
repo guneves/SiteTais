@@ -1,4 +1,4 @@
-# Handoff: deploy the exam-week schedule to GitHub Pages
+# Handoff: deploy the year-round study schedule to GitHub Pages
 
 You are receiving a finished static website. Your job is to publish it on GitHub Pages for the user. Do not redesign or rewrite it.
 
@@ -13,13 +13,14 @@ You are receiving a finished static website. Your job is to publish it on GitHub
 
 ## What the site is
 
-A day-by-day study schedule (17 to 29 Oct 2026) for a medical student's exam week, written in Brazilian Portuguese. Each study block has a checkbox; ticks are saved in `localStorage` under the key `cronograma-provas-2026`. There is no backend, build step or dependency to install.
+A year-round study planner for a medical student, in Brazilian Portuguese. One static page, no backend, build step or dependency.
 
-A "now" card at the top shows the current (or next) block of today, based on the block times; `?hoje=AAAA-MM-DD&hora=HH:MM` simulates a date and time for checking the layout.
-
-The schedule is editable in the page itself ("Mais" menu → "Editar cronograma"): days, blocks, exams, subjects and notes. Edits are saved in `localStorage` under `cronograma-provas-dados`; the `DAYS` array is only the default schedule used when nothing is saved. "Criar com IA" shows a prompt for an LLM and imports the JSON it returns (schema in `aiPrompt()`); "Exportar/Importar backup" moves data between devices.
-
-The "Revisões espaçadas" section schedules reviews per topic: D0 class → D1 questions → D7 questions → D15 make flashcards → D30 questions → D60 questions or flashcards depending on how the student rates their performance (`STEPS` in the script). Each step falls due counting from the day the previous one was actually done, so a late review shifts the next ones. Due reviews also appear as chips on the matching day card (overdue ones on today). Topics and their log (date, % correct) are saved in `localStorage` under `cronograma-provas-revisoes` and included in the backup.
+- **Accounts (local).** Login with username + password. Each account's data is encrypted in `localStorage` (PBKDF2-SHA-256, 600k iterations → AES-GCM 256). Registry: `cronograma:contas`; data: `cronograma:dados:<id>`; session key: `cronograma:sessao` (sessionStorage, plus localStorage when "Manter conectado" is ticked). There is no password recovery and no cross-device sync; the "Exportar/Importar backup" menu moves data between devices. Requires a secure context (https or localhost).
+- **Data model.** `periods` (date range + weekly routine: blocks per weekday) cover the year; `days` (map by date) override the routine on specific dates (e.g. the exam week); `exams` are separate events with countdown; progress is `done["AAAA-MM-DD|blockId"]`. A period that starts later wins when periods overlap.
+- **Views.** Hoje (default: current day, ‹ › navigation, week strip, "Agora" card, next exams, last 7 days), Semana, Mês (calendar with progress), Revisões (spaced reviews D1→D7→D15→D30→D60, `STEPS` in the script), Planejar (routine editor, exams, subjects, custom days, notes, AI/backup). Routes are hash-based (`#/dia/2026-10-21`, `#/semana`, `#/mes/2026-10`, `#/revisoes`, `#/planejar`). ← → keys and horizontal swipe move between days/weeks/months.
+- `?hoje=AAAA-MM-DD&hora=HH:MM` simulates a date and time for checking the layout.
+- `DAYS` (exam week, Oct 2026) and `ROUTINE` (weekly routine) are only the **sample** used when a new account picks "Cronograma de exemplo". Data saved by the old single-user version (`cronograma-provas-2026`, `cronograma-provas-dados`, `cronograma-provas-revisoes`) can be imported when creating an account ("Meu cronograma salvo neste navegador").
+- "Criar com IA" shows a prompt for an LLM and imports the JSON it returns (schema in `aiPrompt()`: subjects, periods, days, exams, notes).
 
 ## Deployment task
 
@@ -34,12 +35,12 @@ The "Revisões espaçadas" section schedules reviews per topic: D0 class → D1 
    git add -A && git commit -m "Add exam week schedule" && git push -u origin main
    gh api -X POST repos/<user>/<repo>/pages -f "source[branch]=main" -f "source[path]=/"
    ```
-4. Wait for the "pages build and deployment" run in the Actions tab to finish, then open `https://<user>.github.io/<repo>/` and check that the day cards render and a checkbox stays ticked after reload.
+4. Wait for the "pages build and deployment" run in the Actions tab to finish, then open `https://<user>.github.io/<repo>/` and create an account, check that today's card renders and a checkbox stays ticked after reload.
 5. Give the user the live URL.
 
 ## Rules
 
-- Do not change the content of `index.html` unless the user asks. If they ask to change the default schedule, change only the `DAYS` array inside the `<script>` block (visitors who already edited their schedule keep their saved version).
+- Do not change the content of `index.html` unless the user asks. If they ask to change the sample schedule, change only `DAYS` / `ROUTINE` inside the `<script>` block (existing accounts keep their saved data).
 - Do not add a framework, bundler or GitHub Actions workflow; none is needed.
 - Never ask the user to paste a GitHub password or token into chat. If authentication is required, have them run `gh auth login` themselves or do the steps in the GitHub web interface.
 - The user prefers replies in Brazilian Portuguese.
