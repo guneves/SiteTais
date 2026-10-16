@@ -239,6 +239,45 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding-bottom:32px}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast.yay{background:var(--ok);color:#fff}
 
+/* revisões espaçadas */
+.stat.revs .ico{background:var(--accent-bg);color:var(--accent-ink)}
+.stat.revs .v{color:var(--accent-ink)}
+button.stat.revs:hover{border-color:var(--accent)}
+.rev{padding:16px 18px;display:grid;gap:14px;scroll-margin-top:calc(var(--bar-h) + 12px)}
+.rev-hd{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.rev-hd>div{flex:1 1 300px;min-width:0}
+.rev-hd h2{font-family:var(--font-display);font-weight:800;font-size:20px;margin:0}
+.rev-flow{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0;list-style:none}
+.rev-flow li{font-size:12px;font-weight:700;color:var(--muted);background:var(--surface-2);border-radius:999px;padding:3px 10px}
+.rev-flow li b{color:var(--accent-ink)}
+.rev-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:3px;margin:-3px}
+.rev-tabs::-webkit-scrollbar{display:none}
+.rev-tabs .chip{--k:var(--accent)}
+.rev-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.rev-list h3{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:6px 2px 0}
+.ri{--k:var(--fixo);display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:10px 12px;border-radius:var(--r-md);background:var(--surface-2);border-left:4px solid var(--k)}
+.ri .txt{flex:1 1 220px;min-width:0}
+.ri .nm{font-weight:800;display:block;overflow-wrap:anywhere}
+.ri .meta{font-size:13px;color:var(--muted);display:block}
+.ri .meta .late{color:var(--warn);font-weight:800}
+.ri .meta .warn{color:var(--prova);font-weight:700}
+.ri .acts{display:flex;gap:6px;align-items:center;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.ri.done{opacity:.75}
+.dots{display:flex;gap:3px;flex-wrap:wrap}
+.dots span{font-size:10.5px;font-weight:800;min-width:30px;text-align:center;border-radius:6px;padding:1px 4px;border:1.5px solid var(--line);color:var(--muted);font-variant-numeric:tabular-nums}
+.dots span.ok{background:var(--k);border-color:var(--k);color:var(--surface)}
+.dots span.cur{border-color:var(--accent);color:var(--accent-ink)}
+.rev-empty{margin:0;color:var(--muted);font-size:14px;padding:18px 12px;text-align:center;border:2px dashed var(--line);border-radius:var(--r-md)}
+.rev-why{font-size:13.5px;color:var(--muted)}
+.rev-why summary{cursor:pointer;font-weight:800;color:var(--ink);min-height:32px;display:flex;align-items:center}
+.rev-why ul,.rev-why ol{padding-left:18px;margin:6px 0 0}
+.rev-why li+li{margin-top:4px}
+.rev-why p{margin:6px 0 0}
+.revday{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:4px 18px 12px}
+.revday .lbl2{flex:none}
+.revday .chip{min-height:32px;font-size:12.5px}
+@media print{.rev .acts,.rev-tabs,.revday{display:none!important}}
+
 /* edição */
 body:not(.editing) .edit-only{display:none!important}
 .btn.del{color:var(--prova)}
@@ -350,6 +389,7 @@ dialog.dlg::backdrop{background:rgba(18,20,28,.55)}
   </div>
   <div class="stat card exam"><span class="ico" id="st-next-ico" aria-hidden="true"></span><div><span class="k">Próxima prova</span><span class="v" id="st-next">–</span><span class="s" id="st-next-s"></span></div></div>
   <button class="stat card late" id="st-late-box" type="button" hidden><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><span class="k">Pendentes de dias anteriores</span><span class="v"><span id="st-late">0</span> <span id="st-late-u">blocos</span></span><span class="s">Toque para ver o primeiro</span></div></button>
+  <button class="stat card revs" id="st-rev-box" type="button"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg></span><div><span class="k">Revisões para hoje</span><span class="v" id="st-rev">0</span><span class="s" id="st-rev-s">Nenhum tema cadastrado</span></div></button>
 </section>
 
 <div class="bar" id="bar">
@@ -399,6 +439,38 @@ dialog.dlg::backdrop{background:rgba(18,20,28,.55)}
     <section class="notes" id="notes"></section>
   </details>
 
+  <section class="rev card" id="rev" aria-labelledby="rev-h">
+    <div class="rev-hd">
+      <div><h2 id="rev-h">Revisões espaçadas</h2>
+        <ol class="rev-flow" aria-label="Esquema de revisão"><li><b>D0</b> aula</li><li><b>D1</b> questões</li><li><b>D7</b> questões</li><li><b>D15</b> montar flashcards</li><li><b>D30</b> questões</li><li><b>D60</b> conforme desempenho</li></ol></div>
+      <button class="btn primary" id="rev-add" type="button">+ Novo tema</button>
+    </div>
+    <div class="rev-tabs" id="rev-tabs" role="group" aria-label="Mostrar">
+      <button class="btn chip" type="button" data-tab="hoje">Para hoje <span id="rev-n-hoje"></span></button>
+      <button class="btn chip" type="button" data-tab="prox">Próximas</button>
+      <button class="btn chip" type="button" data-tab="temas">Todos os temas <span id="rev-n-temas"></span></button>
+    </div>
+    <ul class="rev-list" id="rev-list"></ul>
+    <details class="rev-why">
+      <summary>Como funciona e por que esses intervalos</summary>
+      <ul>
+        <li><b>Cadastre o tema no dia da aula (D0).</b> O app agenda D1, D7, D15, D30 e D60 e mostra cada revisão no dia certo, aqui e no cartão do dia.</li>
+        <li><b>Atrasou? Faça quando puder.</b> O próximo intervalo passa a contar do dia em que você fez a revisão: espaçar um pouco mais prejudica menos a retenção do que espaçar de menos (Cepeda et al., 2008).</li>
+        <li><b>Questões e flashcards, não releitura.</b> Recuperar a informação (testar-se) consolida mais do que reestudar o mesmo material (Roediger &amp; Karpicke, 2006; Karpicke &amp; Roediger, 2008), inclusive em estudantes de medicina (Larsen et al., 2009).</li>
+        <li><b>Anote o % de acertos</b> nos blocos de questões. No D60 ele ajuda a decidir: achou que está mal, faça questões; achou que está bem, revise com flashcards do tema.</li>
+        <li><b>Prova chegando antes da próxima revisão?</b> O app avisa. O intervalo ideal entre revisões é menor quando a prova está próxima, por volta de 10 a 20% do tempo até ela (Cepeda et al., 2008); antecipe uma rodada de questões.</li>
+      </ul>
+      <p>Esquema D0–D60 adaptado de vídeo de @rodrigohorta18 (TikTok). Referências:</p>
+      <ol>
+        <li>Cepeda NJ, Pashler H, Vul E, Wixted JT, Rohrer D. Distributed practice in verbal recall tasks: a review and quantitative synthesis. Psychol Bull. 2006;132(3):354-80.</li>
+        <li>Cepeda NJ, Vul E, Rohrer D, Wixted JT, Pashler H. Spacing effects in learning: a temporal ridgeline of optimal retention. Psychol Sci. 2008;19(11):1095-102.</li>
+        <li>Roediger HL, Karpicke JD. Test-enhanced learning: taking memory tests improves long-term retention. Psychol Sci. 2006;17(3):249-55.</li>
+        <li>Karpicke JD, Roediger HL. The critical importance of retrieval for learning. Science. 2008;319(5865):966-8.</li>
+        <li>Larsen DP, Butler AC, Roediger HL. Repeated testing improves long-term retention relative to repeated study: a randomised controlled trial. Med Educ. 2009;43(12):1174-81.</li>
+        <li>Deng F, Gluckstein JA, Larsen DP. Student-directed retrieval practice is a predictor of medical licensing examination performance. Perspect Med Educ. 2015;4(6):308-13.</li>
+      </ol>
+    </details>
+  </section>
   <div id="board">
     <section class="days" id="days"></section>
     <p class="empty">Nenhum bloco corresponde aos filtros selecionados.</p>
@@ -703,7 +775,7 @@ function render(){
   add.type="button"; add.className="addday edit-only"; add.dataset.act="addday"; add.textContent="+ Adicionar dia";
   daysEl.appendChild(add);
   $("nodays").hidden=data.days.length>0;
-  applyFilters(); paint();
+  applyFilters(); paint(); renderReviews();
 }
 const tools=(i,n)=>`<span class="tools edit-only"><button type="button" class="ib" data-act="up" aria-label="Mover para cima"${i===0?" disabled":""}>${IC.up}</button><button type="button" class="ib" data-act="down" aria-label="Mover para baixo"${i===n-1?" disabled":""}>${IC.down}</button><button type="button" class="ib" data-act="blk" aria-label="Editar bloco">${IC.edit}</button></span>`;
 function renderDay(day){
@@ -750,6 +822,8 @@ function renderDay(day){
   card.appendChild(add);
   const msg=document.createElement("p"); msg.className="alldone"; msg.textContent="Todos os blocos deste dia foram concluídos.";
   card.appendChild(msg);
+  const rv=document.createElement("div"); rv.className="revday"; rv.hidden=true; rt.rev=rv;
+  card.appendChild(rv);
   const pr=document.createElement("div"); pr.className="progress";
   pr.innerHTML=`<span class="cnt"></span><span class="track" aria-hidden="true"><span class="fill"></span></span><span class="pp"></span>`;
   card.appendChild(pr);
@@ -1191,6 +1265,7 @@ daysEl.addEventListener("click",e=>{
   const btn=e.target.closest("[data-act]"); if(!btn)return;
   const act=btn.dataset.act;
   if(act==="addday")return editDay(null);
+  if(act==="rev"){const t=revTopic(btn.dataset.id);if(t)reviewDone(t);return}
   const day=findDay(btn.closest(".day").id); if(!day)return;
   if(act==="day")return editDay(day);
   if(act==="addblk")return editBlock(day,null);
@@ -1256,6 +1331,198 @@ $("btn-head").addEventListener("click",()=>openForm({
   onSave(v){if(!v.title.trim())return"O título não pode ficar vazio.";data.title=v.title.trim();data.sub=v.sub.trim()}
 }));
 
+/* ---------- revisões espaçadas: D0 aula → D1 → D7 → D15 → D30 → D60 ---------- */
+/* Cada etapa vence (d da etapa − d da anterior) dias depois do dia em que a anterior foi feita,
+   então uma revisão atrasada empurra as seguintes em vez de amontoá-las. */
+const REV_KEY="cronograma-provas-revisoes";
+const STEPS=[
+  {d:1,kind:"q",l:"Bloco de questões"},
+  {d:7,kind:"q",l:"Bloco de questões"},
+  {d:15,kind:"f",l:"Montar flashcards"},
+  {d:30,kind:"q",l:"Bloco de questões"},
+  {d:60,kind:"perf",l:"Revisão conforme desempenho"}
+];
+const DID_LABEL={q:"Questões",f:"Flashcards"};
+function normRev(o){
+  const topics=[];
+  (o&&Array.isArray(o.topics)?o.topics:[]).forEach(t=>{
+    if(!t||typeof t.n!=="string"||!t.n.trim()||!validDate(t.d0))return;
+    const log=(Array.isArray(t.log)?t.log:[]).filter(x=>x&&validDate(x.date)).slice(0,STEPS.length).map(x=>({
+      date:x.date,
+      pct:typeof x.pct==="number"&&x.pct>=0&&x.pct<=100?x.pct:null,
+      did:x.did==="q"||x.did==="f"?x.did:null
+    }));
+    topics.push({id:typeof t.id==="string"&&ID_RE.test(t.id)?t.id:uid("r"),n:t.n.trim(),k:typeof t.k==="string"?t.k:"",d0:t.d0,log});
+  });
+  return{v:1,topics};
+}
+let rev=normRev(readJSON(REV_KEY));
+const saveRev=()=>store.set(REV_KEY,JSON.stringify(rev));
+const revTopic=id=>rev.topics.find(t=>t.id===id);
+const addDays=(s,n)=>{const d=parseDate(s);d.setDate(d.getDate()+n);return iso(d)};
+const diffDays=(a,b)=>Math.round((parseDate(a)-parseDate(b))/DAY_MS);
+const shortDate=s=>{const d=parseDate(s);return`${WD[d.getDay()]} ${d.getDate()}/${pad(d.getMonth()+1)}`};
+/* data de vencimento da próxima etapa; null quando o ciclo terminou */
+function revDue(t){
+  const i=t.log.length; if(i>=STEPS.length)return null;
+  const prev=i?t.log[i-1].date:t.d0, prevD=i?STEPS[i-1].d:0;
+  return addDays(prev,STEPS[i].d-prevD);
+}
+const stepName=i=>`D${STEPS[i].d} · ${STEPS[i].l}`;
+function revAvg(t){const v=t.log.map(x=>x.pct).filter(x=>x!=null);return v.length?Math.round(v.reduce((a,b)=>a+b,0)/v.length):null}
+/* próxima prova da matéria do tema, se houver uma antes da revisão */
+function examBefore(t,due){
+  if(!t.k)return null;
+  const tIso=iso(today);
+  return data.days.find(d=>d.date>=tIso&&d.date<due&&d.b.some(b=>b.type==="prova"&&b.k===t.k))||null;
+}
+function dueText(due){
+  const n=diffDays(due,iso(today));
+  if(n<0)return`<span class="late">atrasada ${-n} dia${n===-1?"":"s"}</span>`;
+  if(n===0)return"hoje";
+  if(n===1)return"amanhã · "+shortDate(due);
+  return`em ${n} dias · ${shortDate(due)}`;
+}
+function dotsHTML(t){
+  return`<span class="dots" aria-hidden="true">${STEPS.map((s,i)=>`<span class="${i<t.log.length?"ok":i===t.log.length?"cur":""}">D${s.d}</span>`).join("")}</span>`;
+}
+let revTab=["hoje","prox","temas"].includes(ui.revTab)?ui.revTab:"hoje";
+function revItem(t,mode){
+  const due=revDue(t), i=t.log.length, avg=revAvg(t);
+  const li=document.createElement("li"); li.className="ri"+(due?"":" done");
+  li.style.setProperty("--k",`var(--${colorOf(t.k)})`);
+  const s=subj(t.k), meta=[];
+  if(s)meta.push(esc(s.n));
+  if(due){
+    meta.push(`${esc(stepName(i))} · ${dueText(due)}`);
+    const ex=examBefore(t,due);
+    if(ex)meta.push(`<span class="warn">prova ${esc(shortDate(ex.date))} antes desta revisão: antecipe questões</span>`);
+  }else meta.push("Ciclo concluído");
+  if(avg!=null)meta.push(`média ${avg}% de acertos`);
+  const late=due&&due<=iso(today);
+  li.innerHTML=`<span class="txt"><span class="nm">${esc(t.n)}</span><span class="meta">${meta.join(" · ")}</span></span>`+
+    `<span class="acts">${mode==="temas"?dotsHTML(t):""}`+
+    (due&&(late||mode!=="temas")?`<button type="button" class="btn${late?" accent":""}" data-rv="done" aria-label="Registrar ${esc(stepName(i))} de ${esc(t.n)}">Feito</button>`:"")+
+    `<button type="button" class="ib" data-rv="edit" aria-label="Editar tema ${esc(t.n)}">${IC.edit}</button></span>`;
+  li.dataset.id=t.id;
+  return li;
+}
+function renderReviews(){
+  const tIso=iso(today), list=$("rev-list"); list.textContent="";
+  const pending=rev.topics.map(t=>({t,due:revDue(t)})).filter(x=>x.due).sort((a,b)=>a.due<b.due?-1:a.due>b.due?1:a.t.n.localeCompare(b.t.n));
+  const now=pending.filter(x=>x.due<=tIso), later=pending.filter(x=>x.due>tIso);
+  $("rev-n-hoje").textContent=now.length?`(${now.length})`:"";
+  $("rev-n-temas").textContent=rev.topics.length?`(${rev.topics.length})`:"";
+  document.querySelectorAll("#rev-tabs [data-tab]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.tab===revTab)));
+  const empty=msg=>{const p=document.createElement("p");p.className="rev-empty";p.textContent=msg;list.appendChild(p)};
+  if(!rev.topics.length)empty("Nenhum tema ainda. No dia da aula, toque em “+ Novo tema”: as revisões de D1, D7, D15, D30 e D60 são agendadas sozinhas.");
+  else if(revTab==="hoje"){
+    if(now.length)now.forEach(x=>list.appendChild(revItem(x.t,"hoje")));
+    else empty(later.length?`Nenhuma revisão para hoje. A próxima é ${later[0].t.n}, ${shortDate(later[0].due)}.`:"Nenhuma revisão pendente.");
+  }else if(revTab==="prox"){
+    if(!later.length)empty("Nenhuma revisão agendada para os próximos dias.");
+    let last="";
+    later.forEach(x=>{
+      if(x.due!==last){last=x.due;const h=document.createElement("h3");const n=diffDays(x.due,tIso);h.textContent=(n===1?"Amanhã · ":"")+shortDate(x.due);list.appendChild(h)}
+      list.appendChild(revItem(x.t,"prox"));
+    });
+  }else{
+    [...rev.topics].sort((a,b)=>{const da=revDue(a)||"9",db=revDue(b)||"9";return da<db?-1:da>db?1:a.n.localeCompare(b.n)}).forEach(t=>list.appendChild(revItem(t,"temas")));
+  }
+  /* resumo */
+  $("st-rev").textContent=now.length;
+  $("st-rev-s").textContent=!rev.topics.length?"Toque para cadastrar um tema":now.length?(now.some(x=>x.due<tIso)?"Inclui atrasadas · toque para ver":"Toque para ver"):later.length?"Em dia · próxima "+shortDate(later[0].due):"Em dia";
+  /* revisões no cartão de cada dia (as atrasadas aparecem em hoje) */
+  const byDate=new Map();
+  pending.forEach(x=>{const d=x.due<tIso?tIso:x.due;if(!byDate.has(d))byDate.set(d,[]);byDate.get(d).push(x)});
+  data.days.forEach(day=>{
+    const rt=RT.get(day.id); if(!rt||!rt.rev)return;
+    const items=day.date<tIso?[]:byDate.get(day.date)||[];
+    rt.rev.hidden=!items.length; rt.rev.textContent="";
+    if(!items.length)return;
+    const lab=document.createElement("span"); lab.className="lbl2"; lab.textContent="Revisões:"; rt.rev.appendChild(lab);
+    items.forEach(({t})=>{
+      const b=document.createElement("button");
+      b.type="button"; b.className="btn chip"; b.dataset.act="rev"; b.dataset.id=t.id;
+      b.style.setProperty("--k",`var(--${colorOf(t.k)})`);
+      b.innerHTML=`<i class="sw" aria-hidden="true"></i>${esc(t.n)} · D${STEPS[t.log.length].d}`;
+      b.setAttribute("aria-label",`Registrar ${stepName(t.log.length)} de ${t.n}`);
+      rt.rev.appendChild(b);
+    });
+  });
+}
+function afterRev(msg){saveRev();renderReviews();if(msg)toast(msg)}
+function editTopic(t){
+  const tIso=iso(today);
+  const main=(data.days.find(d=>d.date===tIso)||{b:[]}).b.find(b=>b.type==="estudo"&&b.k!=="fixo"&&b.k!=="pesq");
+  openForm({
+    title:t?"Editar tema":"Novo tema para revisar",
+    saved:t?"Tema atualizado":"Tema adicionado", deleted:"Tema excluído",
+    fields:[
+      {name:"n",label:"Tema",value:t?t.n:"",required:true,placeholder:"ex.: Câncer de próstata"},
+      {name:"k",label:"Matéria",type:"select",half:true,value:t?t.k:main?main.k:"",options:[["","Sem matéria"],...data.subjects.map(s=>[s.k,s.n])]},
+      {name:"d0",label:"Dia da aula (D0)",type:"date",half:true,value:t?t.d0:tIso,required:true,
+        hint:t&&t.log.length?"As revisões já feitas continuam registradas; a próxima conta a partir da última.":"D1, D7, D15, D30 e D60 são contados a partir desta data."}
+    ],
+    onSave(v){
+      const n=v.n.trim(); if(!n)return"Dê um nome ao tema.";
+      if(!validDate(v.d0))return"Escolha uma data válida.";
+      if(t&&t.log.length&&v.d0>t.log[0].date)return"O D0 não pode ser depois da primeira revisão já registrada.";
+      if(t){t.n=n;t.k=v.k;t.d0=v.d0}
+      else rev.topics.push({id:uid("r"),n,k:v.k,d0:v.d0,log:[]});
+      saveRev();
+      if(!t){const d=addDays(v.d0,STEPS[0].d);this.saved=`Tema adicionado · D1 ${d===tIso?"hoje":shortDate(d)}`}
+    },
+    onDelete:t?()=>{rev.topics.splice(rev.topics.indexOf(t),1);saveRev()}:null,
+    extra:t&&t.log.length?{label:"Desfazer última revisão",fn(){const x=t.log.pop();afterRev(`D${STEPS[t.log.length].d} desfeita (${shortDate(x.date)})`)}}:null
+  });
+}
+function reviewDone(t){
+  const i=t.log.length, st=STEPS[i]; if(!st)return;
+  const tIso=iso(today), prev=i?t.log[i-1].date:t.d0, avg=revAvg(t);
+  const fields=[];
+  if(st.kind==="perf")fields.push({name:"did",label:"Como você acha que está neste tema?",type:"select",value:"q",
+    options:[["q","Acho que estou mal → fiz um bloco de questões"],["f","Acho que estou bem → revisei com flashcards"]],
+    hint:avg!=null?`Sua média de acertos neste tema: ${avg}% (${t.log.filter(x=>x.pct!=null).map(x=>x.pct+"%").join(", ")}).`:"Nenhum % de acertos registrado nas revisões anteriores."});
+  fields.push({name:"pct",label:"Acertos (%)",type:"number",half:true,placeholder:"opcional",showIf:v=>st.kind==="q"||(st.kind==="perf"&&v.did==="q")});
+  fields.push({name:"date",label:"Feita em",type:"date",half:true,value:tIso<prev?prev:tIso,required:true});
+  openForm({
+    title:`${t.n} · ${stepName(i)}`,
+    saved:"Revisão registrada",
+    fields,
+    onSave(v){
+      if(!validDate(v.date))return"Escolha uma data válida.";
+      if(v.date<prev)return`A data não pode ser antes de ${shortDate(prev)} (${i?"revisão anterior":"dia da aula"}).`;
+      if(v.date>tIso)return"A data não pode estar no futuro.";
+      let pct=null;
+      if(v.pct!=null&&String(v.pct).trim()!==""){
+        pct=Number(String(v.pct).replace(",","."));
+        if(!isFinite(pct)||pct<0||pct>100)return"O % de acertos vai de 0 a 100.";
+        pct=Math.round(pct);
+      }
+      t.log.push({date:v.date,pct,did:st.kind==="perf"?v.did:st.kind});
+      saveRev();
+      const nd=revDue(t);
+      this.saved=nd?`D${st.d} feita · D${STEPS[i+1].d} ${nd===tIso?"hoje":shortDate(nd)}`:`Ciclo de ${t.n} concluído!`;
+    }
+  });
+}
+$("rev-add").addEventListener("click",()=>editTopic(null));
+$("st-rev-box").addEventListener("click",()=>{
+  if(!rev.topics.length)return editTopic(null);
+  revTab="hoje"; ui.revTab=revTab; saveUI(); renderReviews();
+  $("rev").scrollIntoView({block:"start"});
+});
+$("rev-tabs").addEventListener("click",e=>{
+  const b=e.target.closest("[data-tab]"); if(!b)return;
+  revTab=b.dataset.tab; ui.revTab=revTab; saveUI(); renderReviews();
+});
+$("rev-list").addEventListener("click",e=>{
+  const b=e.target.closest("[data-rv]"); if(!b)return;
+  const t=revTopic(b.closest(".ri").dataset.id); if(!t)return;
+  b.dataset.rv==="done"?reviewDone(t):editTopic(t);
+});
+
 /* ---------- backup e importação ---------- */
 function download(name,text){
   const a=document.createElement("a");
@@ -1264,7 +1531,7 @@ function download(name,text){
   setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
 $("btn-export").addEventListener("click",()=>{
-  download(`cronograma-backup-${iso(new Date())}.json`,JSON.stringify({app:"cronograma-provas",v:1,exportado:new Date().toISOString(),data,progress:state},null,2));
+  download(`cronograma-backup-${iso(new Date())}.json`,JSON.stringify({app:"cronograma-provas",v:1,exportado:new Date().toISOString(),data,progress:state,reviews:rev},null,2));
   toast("Backup exportado");
 });
 /* aceita JSON puro, dentro de ```json ... ``` ou com texto em volta */
@@ -1291,6 +1558,7 @@ function importObject(o,mode){
   }else{
     data=d;
     if(backup&&o.progress&&typeof o.progress==="object"&&!Array.isArray(o.progress)){state=o.progress;save()}
+    if(backup&&o.reviews){rev=normRev(o.reviews);saveRev()}
   }
   const nb=d.days.reduce((a,x)=>a+x.b.length,0);
   commit(`${mode==="merge"?"Adicionados":"Importados"}: ${d.days.length} dias, ${nb} blocos`);
@@ -1417,13 +1685,14 @@ if("IntersectionObserver"in window){
 window.addEventListener("storage",e=>{
   if(e.key===KEY||e.key===null){state=readJSON(KEY);paint()}
   if(e.key===DATA_KEY||e.key===null){data=loadData();render()}
+  if(e.key===REV_KEY||e.key===null){rev=normRev(readJSON(REV_KEY));renderReviews()}
 });
 /* se a página ficar aberta de um dia para o outro, atualiza "hoje" */
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState!=="visible")return;
-  const t=getToday(); if(!sameDay(t,today)){today=t;paint()}else paintNow();
+  const t=getToday(); if(!sameDay(t,today)){today=t;paint();renderReviews()}else paintNow();
 });
-setInterval(()=>{const t=getToday();if(!sameDay(t,today)){today=t;paint()}else paintNow()},60000);
+setInterval(()=>{const t=getToday();if(!sameDay(t,today)){today=t;paint();renderReviews()}else paintNow()},60000);
 
 /* menu "Mais opções": fecha ao clicar fora, com Esc e depois de escolher uma ação */
 const menu=$("menu");
