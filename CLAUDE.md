@@ -15,6 +15,8 @@ You are receiving a finished static website. Your job is to publish it on GitHub
 
 A day-by-day study schedule (17 to 29 Oct 2026) for a medical student's exam week, written in Brazilian Portuguese. Each study block has a checkbox; ticks are saved in `localStorage` under the key `cronograma-provas-2026`. There is no backend, build step or dependency to install.
 
+The schedule is editable in the page itself ("Editar" button): days, blocks, exams, subjects and notes. Edits are saved in `localStorage` under `cronograma-provas-dados`; the `DAYS` array is only the default schedule used when nothing is saved. "Criar com IA" shows a prompt for an LLM and imports the JSON it returns (schema in `aiPrompt()`); "Exportar/Importar backup" moves data between devices.
+
 ## Deployment task
 
 1. Ask the user for their GitHub username and the repository name they want (suggest `cronograma-provas`). The repository must be **public** if they are on a free GitHub plan.
@@ -33,7 +35,7 @@ A day-by-day study schedule (17 to 29 Oct 2026) for a medical student's exam wee
 
 ## Rules
 
-- Do not change the content of `index.html` unless the user asks. If they ask to edit the schedule, change only the `DAYS` array inside the `<script>` block.
+- Do not change the content of `index.html` unless the user asks. If they ask to change the default schedule, change only the `DAYS` array inside the `<script>` block (visitors who already edited their schedule keep their saved version).
 - Do not add a framework, bundler or GitHub Actions workflow; none is needed.
 - Never ask the user to paste a GitHub password or token into chat. If authentication is required, have them run `gh auth login` themselves or do the steps in the GitHub web interface.
 - The user prefers replies in Brazilian Portuguese.

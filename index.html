@@ -34,6 +34,7 @@ img{max-width:100%}
   --fixo:#4a5a6b; --fixo-bg:#e9edf2;
   --pesq:#3c7a3a; --pesq-bg:#e6f2e4;
   --prova:#c0392b; --prova-bg:#fbe5e2;
+  --azul:#2f5fbf; --roxo:#6b4fbf; --rosa:#c23a74; --ciano:#0e7490; --oliva:#6a7419; --marrom:#8a5530;
   --font-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
   --font-body:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
   --font-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
@@ -46,14 +47,16 @@ img{max-width:100%}
   --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
   --onco:#d58bbf; --onco-bg:#33202d; --morfo:#5cc2c0; --morfo-bg:#16302f;
   --clin:#e7a656; --clin-bg:#352712; --fixo:#a9b6c3; --fixo-bg:#232d37;
-  --pesq:#86c983; --pesq-bg:#1c2f1b; --prova:#f0796b; --prova-bg:#3a1e1b; color-scheme:dark}}
+  --pesq:#86c983; --pesq-bg:#1c2f1b; --prova:#f0796b; --prova-bg:#3a1e1b;
+  --azul:#7fa6f5; --roxo:#b19ef0; --rosa:#ee8ab3; --ciano:#5ccbe6; --oliva:#c3cc6e; --marrom:#d9a57f; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#11171d; --surface:#18212a; --surface-2:#1d2732; --ink:#e6ecf1; --muted:#9aa8b5; --line:#2a3642;
   --today:#7aa7ff; --today-bg:#1b2a45;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
   --onco:#d58bbf; --onco-bg:#33202d; --morfo:#5cc2c0; --morfo-bg:#16302f;
   --clin:#e7a656; --clin-bg:#352712; --fixo:#a9b6c3; --fixo-bg:#232d37;
-  --pesq:#86c983; --pesq-bg:#1c2f1b; --prova:#f0796b; --prova-bg:#3a1e1b; color-scheme:dark}
+  --pesq:#86c983; --pesq-bg:#1c2f1b; --prova:#f0796b; --prova-bg:#3a1e1b;
+  --azul:#7fa6f5; --roxo:#b19ef0; --rosa:#ee8ab3; --ciano:#5ccbe6; --oliva:#c3cc6e; --marrom:#d9a57f; color-scheme:dark}
 html{-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit}
@@ -106,7 +109,7 @@ h1{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,4.4vw,44
 .btn:hover{border-color:var(--muted)}
 .btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .btn svg{width:14px;height:14px;flex:none}
-.btn.danger.armed{background:var(--prova);border-color:var(--prova);color:#fff}
+.btn.danger.armed,.btn.del.armed{background:var(--prova);border-color:var(--prova);color:#fff}
 .chip{--k:var(--muted)}
 .chip .sw{width:10px;height:10px;border-radius:3px;background:var(--k);display:inline-block}
 .chip[aria-pressed="true"]{background:var(--k);border-color:var(--k);color:var(--bg)}
@@ -137,11 +140,11 @@ details.tips[open] summary::before{transform:rotate(45deg)}
 .day.today{border-color:var(--today);box-shadow:0 0 0 2px var(--today),var(--shadow)}
 .day.flash{animation:flash 1s ease-out}
 @keyframes flash{0%{box-shadow:0 0 0 6px color-mix(in srgb,var(--today) 45%,transparent),var(--shadow)}}
-.dh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px 12px;border-bottom:1px solid var(--line)}
+.dh{display:flex;align-items:center;justify-content:flex-start;gap:8px;padding:14px 16px 12px;border-bottom:1px solid var(--line)}
 .dh h2{font-family:var(--font-display);font-size:20px;margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .badge{font-family:var(--font-body);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:1px 8px;border-radius:999px;background:var(--today);color:var(--bg)}
 .badge.ok{background:var(--pesq-bg);color:var(--pesq)}
-.dh .tag{font-family:var(--font-mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.dh .tag{font-family:var(--font-mono);font-size:11px;color:var(--muted);white-space:nowrap;margin-left:auto}
 .day.examday .dh{background:var(--prova-bg)}
 .day.examday .dh .tag{color:var(--prova)}
 .day.today:not(.examday) .dh{background:var(--today-bg)}
@@ -178,6 +181,61 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding-bottom:32px}
 .toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:var(--shadow);z-index:10;transition:opacity .2s,transform .2s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
+/* edição */
+body:not(.editing) .edit-only{display:none!important}
+.btn.del{color:var(--prova)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.ib{flex:none;width:28px;height:28px;display:inline-grid;place-items:center;border:1px solid var(--line);background:var(--surface);border-radius:8px;cursor:pointer;color:var(--muted);padding:0}
+.ib:hover{color:var(--ink);border-color:var(--muted)}
+.ib:disabled{opacity:.35;cursor:default}
+.ib svg{width:14px;height:14px}
+.dh .ib{margin-left:4px}
+.blk{position:relative}
+.blk .tools{position:absolute;top:6px;right:10px;display:flex;gap:3px}
+.blk .tools .ib{width:24px;height:24px}
+.editing .blk .lbl{padding-right:84px;min-height:24px}
+.editing .blk.pause .c{padding-right:84px}
+.addblk{display:block;width:calc(100% - 32px);margin:2px 16px 12px;border:1px dashed var(--line);background:none;border-radius:10px;padding:8px;color:var(--muted);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.addblk:hover,.addday:hover{border-color:var(--today);color:var(--today)}
+.addday{min-height:140px;border:2px dashed var(--line);background:none;border-radius:14px;color:var(--muted);font-family:var(--font-display);font-size:18px;font-weight:700;cursor:pointer}
+.noblk{margin:0;padding:14px 16px;color:var(--muted);font-size:14px}
+.note{position:relative}
+.note .ib{position:absolute;top:8px;right:8px}
+.editing .note h3{padding-right:34px}
+.note p+p,.note p+ul,.note ul+p{margin-top:6px}
+.notes .addblk{width:auto;margin:0;min-height:60px}
+body:not(.editing) .tips.nonotes{display:none}
+.editbar{background:var(--today-bg);border:1px solid var(--today);border-radius:14px;padding:14px 16px;display:grid;gap:12px}
+.editbar h3{font-family:var(--font-display);font-size:17px;margin:0 0 2px}
+.editbar p{margin:0;font-size:14px;color:var(--muted);max-width:80ch}
+.row2{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.lbl2{font-size:12px;color:var(--muted);font-weight:600}
+.nodays{text-align:center;color:var(--muted);padding:32px 16px;border:1px dashed var(--line);border-radius:14px;margin:0}
+/* janelas de edição */
+dialog.dlg{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);padding:0;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog.dlg::backdrop{background:rgba(10,15,20,.5)}
+.dlg form,.dlg .dlg-in{display:flex;flex-direction:column;max-height:calc(100dvh - 26px)}
+.dlg h2{font-family:var(--font-display);font-size:20px;margin:0;padding:16px 18px 6px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:8px 18px 4px;overflow:auto}
+.fld{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--muted);grid-column:1/-1;align-content:start;min-width:0}
+.fld.half{grid-column:auto}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:16px;font-weight:400;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;min-width:0}
+.fld textarea{resize:vertical}
+.fld small{font-weight:400}
+.selrow{display:flex;gap:8px;align-items:center}
+.selrow .sw{width:22px;height:22px;border-radius:6px;flex:none}
+.dlg-err{color:var(--prova);font-size:14px;font-weight:600;margin:6px 18px 0}
+.dlg-act{display:flex;gap:8px;padding:12px 18px 16px;border-top:1px solid var(--line);margin-top:10px;flex-wrap:wrap;align-items:center}
+.ai-body{padding:4px 18px 4px;overflow:auto;display:grid;gap:14px}
+.ai-step{display:grid;gap:8px}
+.ai-step h3{font-family:var(--font-display);font-size:15px;margin:0;display:flex;gap:8px;align-items:center}
+.ai-step h3 b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:12px;flex:none}
+.ai-step p{margin:0;font-size:14px;color:var(--muted)}
+.ai-step textarea,.ai-step select{font:inherit;font-size:14px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;min-width:0;resize:vertical}
+.ai-step select{width:auto;padding:5px 8px}
+.ai-step textarea{font-family:var(--font-mono);font-size:12px;line-height:1.45}
+@media (max-width:420px){.fld.half{grid-column:1/-1}}
+
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;padding-top:24px}
   .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -201,7 +259,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding-bottom:32px}
 }
 @media (prefers-reduced-motion:reduce){.day.flash{animation:none}}
 @media print{
-  .bar,.controls,.toast,footer{display:none}
+  .bar,.controls,.toast,footer,.edit-only,.editbar{display:none!important}
   body{background:#fff;color:#000}
   .day,.stat,details.tips,.refs{box-shadow:none;break-inside:avoid}
   .days{grid-template-columns:1fr 1fr}
@@ -212,9 +270,9 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding-bottom:32px}
 <body>
 <header class="wrap hero">
   <div>
-    <div class="eyebrow">17 a 29 de outubro de 2026</div>
-    <h1>Cronograma da semana de provas</h1>
-    <p class="sub">Manhã e tarde com almoço, flashcards e questões todos os dias, simulados antes de cada prova e a noite reservada para a pesquisa. Marque cada bloco quando concluir; o progresso fica salvo neste navegador.</p>
+    <div class="eyebrow" id="h-range">17 a 29 de outubro de 2026</div>
+    <h1 id="h-title">Cronograma da semana de provas</h1>
+    <p class="sub" id="h-sub">Manhã e tarde com almoço, flashcards e questões todos os dias, simulados antes de cada prova e a noite reservada para a pesquisa. Marque cada bloco quando concluir; o progresso fica salvo neste navegador.</p>
   </div>
   <div class="stats" aria-live="polite">
     <div class="stat">
@@ -232,6 +290,8 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding-bottom:32px}
     <div class="controls">
       <span class="actions controls">
       <button class="btn" id="btn-today" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 7h12M5.5 1.5v3M10.5 1.5v3"/></svg><span class="lab">Ir para hoje</span></button>
+      <button class="btn" id="btn-edit" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10.5 2.5l3 3L6 13H3v-3z"/></svg><span class="lab" id="edit-lab">Editar</span></button>
+      <button class="btn" id="btn-ai" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 1.5l1.4 3.6 3.6 1.4-3.6 1.4L8 11.5 6.6 7.9 3 6.5l3.6-1.4zM12.5 10.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z" stroke-linejoin="round"/></svg><span class="lab">Criar com IA</span></button>
       <button class="btn" id="btn-hide" type="button" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg><span class="lab">Ocultar concluídos</span></button>
       <button class="btn" id="btn-theme" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="M8 2.5v11" /><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg><span class="lab" id="theme-lab">Tema: automático</span></button>
       <button class="btn danger" id="btn-reset" type="button" title="Zerar progresso"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.6-3.9M2.5 2.5v3h3"/></svg><span class="lab" id="reset-lab">Zerar progresso</span></button>
@@ -244,21 +304,31 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding-bottom:32px}
 </div>
 
 <main class="wrap">
-  <details class="tips">
+  <section class="editbar edit-only" aria-labelledby="eb-h">
+    <div><h3 id="eb-h">Modo de edição</h3>
+      <p>Use o ✎ para alterar dias, blocos, provas e anotações; os botões tracejados criam itens novos. Tudo fica salvo neste navegador. Para levar a outro aparelho, exporte um backup e importe lá.</p></div>
+    <div class="row2">
+      <button class="btn" id="btn-head" type="button">Título e descrição</button>
+      <button class="btn" id="btn-ai2" type="button">Criar com IA</button>
+      <button class="btn" id="btn-export" type="button">Exportar backup</button>
+      <button class="btn" id="btn-import" type="button">Importar backup</button>
+      <input type="file" id="file-import" accept="application/json,.json,.txt" hidden>
+      <button class="btn del" id="btn-restore" type="button"><span class="lab" id="restore-lab">Restaurar cronograma original</span></button>
+      <span class="spacer"></span>
+      <button class="btn primary" id="btn-done" type="button">Concluir edição</button>
+    </div>
+    <div class="row2"><span class="lbl2">Matérias:</span><span class="row2" id="subj-list"></span><button class="btn" id="btn-addsubj" type="button">+ Nova matéria</button></div>
+  </section>
+
+  <details class="tips" id="tips">
     <summary>Como estudar cada dia</summary>
-    <section class="notes">
-      <div class="note"><h3>Estrutura de um dia cheio</h3>
-        <ul><li>08:00–08:40 flashcards (revisões do Anki)</li><li>08:40–12:00 bloco da manhã</li><li>12:00–13:30 almoço</li><li>13:30–16:30 bloco da tarde</li><li>16:45–18:00 questões das matérias do dia</li><li>19:30–21:00 pesquisa + artigo</li></ul></div>
-      <div class="note"><h3>Como usar cada bloco de conteúdo</h3>
-        <p>Videoaula em 1,5× → resumo próprio → 10 a 15 flashcards novos do que errou ou achou difícil. Nos tipos de câncer, padronize o resumo: epidemiologia, fatores de risco, rastreamento, histologia, estadiamento e tratamento.</p></div>
-      <div class="note"><h3>Sinergias</h3>
-        <p>Próstata, rim, bexiga e testículo (21/10) já adiantam Urologia; colo do útero, endométrio, ovário e mama já adiantam Ginecologia. Guarde esses resumos para revisar no dia 28.</p></div>
-    </section>
+    <section class="notes" id="notes"></section>
   </details>
 
   <div id="board">
     <section class="days" id="days"></section>
     <p class="empty">Nenhum bloco corresponde aos filtros selecionados.</p>
+    <p class="nodays" id="nodays" hidden>Nenhum dia no cronograma. Toque em <b>Editar</b> para adicionar dias ou em <b>Criar com IA</b> para gerar um cronograma.</p>
   </div>
 
   <section class="refs">
@@ -273,6 +343,44 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding-bottom:32px}
   </section>
 </main>
 <footer class="wrap">O progresso é salvo apenas neste navegador e neste aparelho.</footer>
+<dialog class="dlg" id="dlg" aria-labelledby="dlg-title">
+  <form id="dlg-form">
+    <h2 id="dlg-title"></h2>
+    <div class="fields" id="dlg-fields"></div>
+    <p class="dlg-err" id="dlg-err" role="alert" hidden></p>
+    <div class="dlg-act">
+      <button type="button" class="btn del" id="dlg-del"><span class="lab" id="dlg-del-lab">Excluir</span></button>
+      <button type="button" class="btn" id="dlg-extra"></button>
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="dlg-cancel">Cancelar</button>
+      <button type="submit" class="btn primary">Salvar</button>
+    </div>
+  </form>
+</dialog>
+<dialog class="dlg" id="dlg-ai" aria-labelledby="ai-title">
+  <div class="dlg-in">
+    <h2 id="ai-title">Criar cronograma com IA</h2>
+    <div class="ai-body">
+      <div class="ai-step"><h3><b>1</b>Copie o prompt</h3>
+        <p>Cole no ChatGPT, Claude, Gemini ou outra IA. Ela vai perguntar datas das provas, matérias, horários e preferências antes de montar o cronograma.</p>
+        <textarea id="ai-prompt" rows="6" readonly aria-label="Prompt para a IA"></textarea>
+        <div class="row2"><button class="btn primary" id="ai-copy" type="button">Copiar prompt</button></div></div>
+      <div class="ai-step"><h3><b>2</b>Responda às perguntas da IA</h3>
+        <p>No final ela entrega um bloco de código JSON. Copie esse bloco inteiro ou baixe o arquivo <code>.json</code>.</p></div>
+      <div class="ai-step"><h3><b>3</b>Cole a resposta ou envie o arquivo</h3>
+        <textarea id="ai-json" rows="6" placeholder="Cole aqui o JSON que a IA gerou" aria-label="Resposta da IA (JSON)"></textarea>
+        <div class="row2"><button class="btn" id="ai-file-btn" type="button">Escolher arquivo .json</button><input type="file" id="ai-file" accept="application/json,.json,.txt" hidden>
+          <label class="lbl2" for="ai-mode">Ao importar:</label>
+          <select id="ai-mode"><option value="replace">Substituir o cronograma atual</option><option value="merge">Adicionar ao cronograma atual</option></select></div>
+        <p class="dlg-err" id="ai-err" role="alert" hidden style="margin:0"></p></div>
+    </div>
+    <div class="dlg-act">
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="ai-close">Fechar</button>
+      <button type="button" class="btn primary" id="ai-import"><span class="lab" id="ai-import-lab">Importar cronograma</span></button>
+    </div>
+  </div>
+</dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -367,8 +475,8 @@ const DAYS = [
 ];
 
 /* ---------- configuração e armazenamento ---------- */
-const YEAR=2026, MONTH=9; // outubro (0 = janeiro)
-const KEY="cronograma-provas-2026", THEME_KEY="cronograma-provas-tema", UI_KEY="cronograma-provas-ui";
+const YEAR=2026, MONTH=9; // outubro (0 = janeiro): mês dos dias do DAYS acima
+const KEY="cronograma-provas-2026", THEME_KEY="cronograma-provas-tema", UI_KEY="cronograma-provas-ui", DATA_KEY="cronograma-provas-dados";
 const store={
   get(k){try{return localStorage.getItem(k)}catch(e){return null}},
   set(k,v){try{localStorage.setItem(k,v)}catch(e){}},
@@ -380,14 +488,104 @@ const save=()=>store.set(KEY,JSON.stringify(state));
 const ui=Object.assign({hideDone:false,filters:[]},readJSON(UI_KEY));
 const saveUI=()=>store.set(UI_KEY,JSON.stringify(ui));
 
-const SUBJECTS=[
-  {k:"onco",n:"Oncologia"},{k:"morfo",n:"Anat · Histo · Lab"},{k:"clin",n:"Uro · Gine · OSCE"},
-  {k:"fixo",n:"Flashcards e questões"},{k:"pesq",n:"Pesquisa"}
-];
-/* matéria de cada dia de prova, usada pelos filtros */
-const EXAM_SUBJECT={d26:"onco",d27:"morfo",d29:"clin"};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,"0");
+const iso=dt=>`${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}`;
+const parseDate=s=>{const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const validDate=s=>typeof s==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&iso(parseDate(s))===s;
+const WD=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+const MONTHS=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+const dayName=day=>{const dt=parseDate(day.date);return`${WD[dt.getDay()]} ${dt.getDate()}/${pad(dt.getMonth()+1)}`};
+
+/* cores disponíveis para as matérias (variáveis CSS do :root) */
+const COLORS=[["onco","Vinho"],["morfo","Verde-azulado"],["clin","Âmbar"],["pesq","Verde"],["fixo","Cinza"],["azul","Azul"],["roxo","Roxo"],["rosa","Rosa"],["ciano","Ciano"],["oliva","Oliva"],["marrom","Marrom"],["prova","Vermelho"]];
+const COLOR_KEYS=new Set(COLORS.map(c=>c[0]));
+const TYPES=["estudo","prova","pausa"];
+
+/* ---------- cronograma padrão (gerado a partir do DAYS) ---------- */
+const DEFAULT_TITLE="Cronograma da semana de provas";
+const DEFAULT_SUB="Manhã e tarde com almoço, flashcards e questões todos os dias, simulados antes de cada prova e a noite reservada para a pesquisa. Marque cada bloco quando concluir; o progresso fica salvo neste navegador.";
+const DEFAULT_SUBJECTS=[
+  {k:"onco",n:"Oncologia",c:"onco"},{k:"morfo",n:"Anat · Histo · Lab",c:"morfo"},{k:"clin",n:"Uro · Gine · OSCE",c:"clin"},
+  {k:"fixo",n:"Flashcards e questões",c:"fixo"},{k:"pesq",n:"Pesquisa",c:"pesq"}
+];
+const DEFAULT_NOTES=[
+  {h:"Estrutura de um dia cheio",t:"- 08:00–08:40 flashcards (revisões do Anki)\n- 08:40–12:00 bloco da manhã\n- 12:00–13:30 almoço\n- 13:30–16:30 bloco da tarde\n- 16:45–18:00 questões das matérias do dia\n- 19:30–21:00 pesquisa + artigo"},
+  {h:"Como usar cada bloco de conteúdo",t:"Videoaula em 1,5× → resumo próprio → 10 a 15 flashcards novos do que errou ou achou difícil. Nos tipos de câncer, padronize o resumo: epidemiologia, fatores de risco, rastreamento, histologia, estadiamento e tratamento."},
+  {h:"Sinergias",t:"Próstata, rim, bexiga e testículo (21/10) já adiantam Urologia; colo do útero, endométrio, ovário e mama já adiantam Ginecologia. Guarde esses resumos para revisar no dia 28."}
+];
+/* matéria de cada dia de prova do DAYS, usada pelos filtros */
+const EXAM_SUBJECT={d26:"onco",d27:"morfo",d29:"clin"};
+function defaultData(){
+  return{v:1,title:DEFAULT_TITLE,sub:DEFAULT_SUB,
+    subjects:DEFAULT_SUBJECTS.map(s=>({...s})),
+    notes:DEFAULT_NOTES.map((n,i)=>({id:"n"+i,...n})),
+    days:DAYS.map(day=>({id:day.id,date:iso(new Date(YEAR,MONTH,day.dn)),tag:day.tag,b:day.b.map((b,i)=>{
+      const id=day.id+"-"+i; // mesmo id de antes: o progresso já salvo continua valendo
+      if(b.pause)return{id,type:"pausa",k:"",t:b.t,l:"",d:b.d};
+      if(b.k==="prova")return{id,type:"prova",k:EXAM_SUBJECT[day.id]||"",t:b.t,l:b.l,d:b.d};
+      return{id,type:"estudo",k:b.k,t:b.t,l:b.l,d:b.d};
+    })}))};
+}
+
+let uidN=0;
+const uid=p=>p+Date.now().toString(36)+(uidN++).toString(36)+Math.random().toString(36).slice(2,5);
+const ID_RE=/^[A-Za-z0-9_-]{1,64}$/;
+
+/* Valida e completa um cronograma vindo do armazenamento, de um backup ou de uma IA.
+   fresh=true gera ids novos para dias, blocos e anotações. Devolve null se não houver dias válidos. */
+function normalize(o,fresh){
+  if(!o||typeof o!=="object"||!Array.isArray(o.days))return null;
+  const str=v=>typeof v==="string"?v.trim():typeof v==="number"?String(v):"";
+  const id=(v,p)=>!fresh&&typeof v==="string"&&ID_RE.test(v)?v:uid(p);
+  const subjects=[], seenK=new Set();
+  const addSubject=(k,n,c)=>{
+    if(seenK.has(k))return;
+    seenK.add(k);
+    subjects.push({k,n:n||k,c:COLOR_KEYS.has(c)?c:COLORS[subjects.length%(COLORS.length-1)][0]});
+  };
+  (Array.isArray(o.subjects)?o.subjects:[]).forEach(s=>{
+    if(s&&typeof s.k==="string"&&ID_RE.test(s.k))addSubject(s.k,str(s.n),s.c);
+  });
+  const byDate=new Map(), days=[], used=new Set();
+  o.days.forEach(d=>{
+    if(!d||!validDate(d.date))return;
+    let day=byDate.get(d.date);
+    if(!day){
+      let did=id(d.id,"d"); if(used.has(did))did=uid("d"); used.add(did);
+      day={id:did,date:d.date,tag:str(d.tag),b:[]}; byDate.set(d.date,day); days.push(day);
+    }
+    (Array.isArray(d.b)?d.b:Array.isArray(d.blocks)?d.blocks:[]).forEach(b=>{
+      if(!b||typeof b!=="object")return;
+      const type=TYPES.includes(b.type)?b.type:"estudo";
+      let k=type==="pausa"?"":str(b.k);
+      if(type!=="pausa"){
+        if(!ID_RE.test(k))k="geral";
+        if(!seenK.has(k))addSubject(k,k==="geral"?"Geral":k);
+      }
+      let bid=id(b.id,"b"); if(used.has(bid))bid=uid("b"); used.add(bid);
+      const nb={id:bid,type,k,t:str(b.t),l:type==="pausa"?"":str(b.l),d:str(b.d)};
+      if(type==="pausa"&&!nb.d)nb.d="Pausa";
+      if(type!=="pausa"&&!nb.l)nb.l=type==="prova"?"Prova":(subjects.find(s=>s.k===k)||{n:"Estudo"}).n;
+      day.b.push(nb);
+    });
+  });
+  if(!days.length)return null;
+  const notes=(Array.isArray(o.notes)?o.notes:[]).filter(n=>n&&(str(n.h)||str(n.t))).map(n=>({id:id(n.id,"n"),h:str(n.h),t:str(n.t)}));
+  return{v:1,title:str(o.title)||DEFAULT_TITLE,sub:str(o.sub),subjects,notes,days};
+}
+function loadData(){
+  try{const raw=store.get(DATA_KEY);if(raw){const d=normalize(JSON.parse(raw));if(d)return d}}catch(e){}
+  return defaultData();
+}
+let data=loadData();
+const saveData=()=>store.set(DATA_KEY,JSON.stringify(data));
+const subj=k=>data.subjects.find(s=>s.k===k);
+const colorOf=k=>(subj(k)||{c:"fixo"}).c;
+const findDay=id=>data.days.find(d=>d.id===id);
+const isExamDay=day=>day.b.some(b=>b.type==="prova");
+const sortDays=()=>data.days.sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0);
 
 /* "Hoje" pode ser simulado com ?hoje=AAAA-MM-DD (útil para conferir o visual) */
 function getToday(){
@@ -396,82 +594,156 @@ function getToday(){
   const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate());
 }
 let today=getToday();
-const dateOf=day=>new Date(YEAR,MONTH,day.dn);
 const sameDay=(a,b)=>a.getTime()===b.getTime();
 const DAY_MS=864e5;
 
-/* ---------- construção do DOM (uma vez) ---------- */
-const daysEl=$("days"), tlEl=$("tl"), boardEl=$("board");
-DAYS.forEach(day=>{
-  day.tasks=[];
-  const kinds=[...new Set(day.b.filter(b=>!b.pause).map(b=>b.k).filter(k=>k!=="fixo"&&k!=="pesq"))];
+const IC={
+  edit:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10.5 2.5l3 3L6 13H3v-3z"/></svg>',
+  up:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10l4-4 4 4"/></svg>',
+  down:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>'
+};
+
+/* ---------- construção do DOM (refeita a cada alteração do cronograma) ---------- */
+const daysEl=$("days"), tlEl=$("tl"), boardEl=$("board"), notesEl=$("notes");
+const RT=new Map(); // elementos de cada dia, por id
+const filterSet=new Set(ui.filters||[]);
+
+function rangeText(){
+  const n=data.days.length; if(!n)return"Sem dias cadastrados";
+  const a=parseDate(data.days[0].date), b=parseDate(data.days[n-1].date);
+  const dm=d=>`${d.getDate()} de ${MONTHS[d.getMonth()]}`;
+  if(sameDay(a,b))return`${dm(a)} de ${a.getFullYear()}`;
+  if(a.getFullYear()!==b.getFullYear())return`${dm(a)} de ${a.getFullYear()} a ${dm(b)} de ${b.getFullYear()}`;
+  if(a.getMonth()===b.getMonth())return`${a.getDate()} a ${dm(b)} de ${b.getFullYear()}`;
+  return`${dm(a)} a ${dm(b)} de ${b.getFullYear()}`;
+}
+function render(){
+  sortDays();
+  $("h-title").textContent=data.title;
+  $("h-sub").textContent=data.sub; $("h-sub").hidden=!data.sub;
+  $("h-range").textContent=rangeText();
+  renderNotes(); renderSubjects();
+  RT.clear(); daysEl.textContent=""; tlEl.textContent="";
+  data.days.forEach(renderDay);
+  const add=document.createElement("button");
+  add.type="button"; add.className="addday edit-only"; add.dataset.act="addday"; add.textContent="+ Adicionar dia";
+  daysEl.appendChild(add);
+  $("nodays").hidden=data.days.length>0;
+  applyFilters(); paint();
+}
+const tools=(i,n)=>`<span class="tools edit-only"><button type="button" class="ib" data-act="up" aria-label="Mover para cima"${i===0?" disabled":""}>${IC.up}</button><button type="button" class="ib" data-act="down" aria-label="Mover para baixo"${i===n-1?" disabled":""}>${IC.down}</button><button type="button" class="ib" data-act="blk" aria-label="Editar bloco">${IC.edit}</button></span>`;
+function renderDay(day){
+  const dt=parseDate(day.date), name=dayName(day), exam=isExamDay(day);
+  const rt={tasks:[],lis:[],name}; RT.set(day.id,rt);
+  const kinds=[...new Set(day.b.filter(b=>b.type!=="pausa"&&b.k!=="fixo"&&b.k!=="pesq").map(b=>colorOf(b.k)))];
   const a=document.createElement("a");
-  a.href="#"+day.id; a.className=day.exam?"exam":"";
-  a.innerHTML=`<span class="dw">${esc(day.dw)}</span><span class="dn">${day.dn}</span><span class="kb">${kinds.map(k=>`<span style="background:var(--${k})"></span>`).join("")}</span><span class="pc">0%</span>`;
-  a.addEventListener("click",e=>{e.preventDefault();goTo(day)});
-  tlEl.appendChild(a); day.tl=a; day.tlPct=a.querySelector(".pc");
+  a.href="#"+day.id; a.className=exam?"exam":"";
+  a.innerHTML=`<span class="dw">${WD[dt.getDay()]}</span><span class="dn">${dt.getDate()}</span><span class="kb">${kinds.map(c=>`<span style="background:var(--${c})"></span>`).join("")}</span><span class="pc">0%</span>`;
+  a.addEventListener("click",e=>{e.preventDefault();goTo(day.id)});
+  tlEl.appendChild(a); rt.tl=a; rt.tlPct=a.querySelector(".pc");
 
   const card=document.createElement("article");
-  card.className="day"+(day.exam?" examday":""); card.id=day.id;
+  card.className="day"+(exam?" examday":""); card.id=day.id;
   card.setAttribute("aria-labelledby",day.id+"-h");
-  card.innerHTML=`<div class="dh"><h2 id="${day.id}-h">${esc(day.dw)} ${day.dn}/10</h2><span class="tag">${esc(day.tag)}</span></div>`;
-  const ul=document.createElement("ul"); ul.className="blocks";
-  day.b.forEach((b,i)=>{
-    const li=document.createElement("li"); const id=day.id+"-"+i;
-    if(b.pause){
-      li.className="blk pause";
-      li.innerHTML=`<div class="row"><span></span><span class="t">${esc(b.t)}</span><span class="c">${esc(b.d)}</span></div>`;
-    }else{
-      li.className="blk k-"+b.k;
-      li.innerHTML=`<label class="row"><input type="checkbox" id="${id}"><span class="t">${esc(b.t)}</span><span class="c"><span class="lbl">${esc(b.l)}</span><span class="d">${esc(b.d)}</span></span></label>`;
-      const input=li.querySelector("input");
-      input.addEventListener("change",()=>{
-        if(input.checked)state[id]=true;else delete state[id];
-        save(); paint();
-      });
-      day.tasks.push({id,b,li,input});
-    }
-    b.li=li; ul.appendChild(li);
-  });
-  card.appendChild(ul);
+  card.innerHTML=`<div class="dh"><h2 id="${day.id}-h"></h2><span class="tag">${esc(day.tag)}</span><button type="button" class="ib edit-only" data-act="day" aria-label="Editar ${esc(name)}">${IC.edit}</button></div>`;
+  if(day.b.length){
+    const ul=document.createElement("ul"); ul.className="blocks";
+    day.b.forEach((b,i)=>{
+      const li=document.createElement("li"); li.dataset.blk=b.id;
+      li.style.setProperty("--k",`var(--${b.type==="prova"?"prova":colorOf(b.k)})`);
+      if(b.type==="pausa"){
+        li.className="blk pause";
+        li.innerHTML=`<div class="row"><span></span><span class="t">${esc(b.t)}</span><span class="c">${esc(b.d)}</span></div>`+tools(i,day.b.length);
+      }else{
+        li.className="blk";
+        li.innerHTML=`<label class="row"><input type="checkbox" id="${b.id}"><span class="t">${esc(b.t)}</span><span class="c"><span class="lbl">${esc(b.l)}</span>${b.d?`<span class="d">${esc(b.d)}</span>`:""}</span></label>`+tools(i,day.b.length);
+        const input=li.querySelector("input");
+        input.addEventListener("change",()=>{
+          if(input.checked)state[b.id]=true;else delete state[b.id];
+          save(); paint();
+        });
+        rt.tasks.push({id:b.id,li,input});
+      }
+      rt.lis.push({b,li}); ul.appendChild(li);
+    });
+    card.appendChild(ul);
+  }else{
+    const p=document.createElement("p"); p.className="noblk"; p.textContent="Nenhum bloco neste dia ainda.";
+    card.appendChild(p);
+  }
+  const add=document.createElement("button");
+  add.type="button"; add.className="addblk edit-only"; add.dataset.act="addblk"; add.textContent="+ Adicionar bloco ou prova";
+  card.appendChild(add);
   const msg=document.createElement("p"); msg.className="alldone"; msg.textContent="Todos os blocos deste dia foram concluídos.";
   card.appendChild(msg);
   const pr=document.createElement("div"); pr.className="progress";
   pr.innerHTML=`<span class="cnt"></span><span class="track" aria-hidden="true"><span class="fill"></span></span><span class="pp"></span>`;
   card.appendChild(pr);
-  day.card=card; day.cnt=pr.querySelector(".cnt"); day.fill=pr.querySelector(".fill"); day.pp=pr.querySelector(".pp");
-  day.h2=card.querySelector("h2");
+  rt.card=card; rt.cnt=pr.querySelector(".cnt"); rt.fill=pr.querySelector(".fill"); rt.pp=pr.querySelector(".pp");
+  rt.h2=card.querySelector("h2");
   daysEl.appendChild(card);
-});
+}
 
-/* filtros por matéria */
-const filterSet=new Set((ui.filters||[]).filter(k=>SUBJECTS.some(s=>s.k===k)));
-SUBJECTS.forEach(s=>{
-  const btn=document.createElement("button");
-  btn.type="button"; btn.className="btn chip k-"+s.k; btn.dataset.k=s.k;
-  btn.innerHTML=`<i class="sw" aria-hidden="true"></i>${esc(s.n)}`;
-  btn.addEventListener("click",()=>{
-    filterSet.has(s.k)?filterSet.delete(s.k):filterSet.add(s.k);
-    ui.filters=[...filterSet]; saveUI(); applyFilters();
+/* anotações ("Como estudar cada dia"): linhas começando com "- " viram lista */
+function noteBody(t){
+  let html="", list=[];
+  const flush=()=>{if(list.length){html+="<ul>"+list.map(x=>`<li>${esc(x)}</li>`).join("")+"</ul>";list=[]}};
+  t.split("\n").forEach(line=>{
+    const s=line.trim(); if(!s){flush();return}
+    const m=s.match(/^[-•*]\s+(.*)/);
+    if(m)list.push(m[1]);else{flush();html+=`<p>${esc(s)}</p>`}
   });
-  $("filters").appendChild(btn); s.btn=btn;
-});
+  flush(); return html;
+}
+function renderNotes(){
+  notesEl.textContent="";
+  data.notes.forEach(n=>{
+    const div=document.createElement("div"); div.className="note"; div.dataset.note=n.id;
+    div.innerHTML=`<h3>${esc(n.h)}</h3>${noteBody(n.t)}<button type="button" class="ib edit-only" data-act="note" aria-label="Editar anotação">${IC.edit}</button>`;
+    notesEl.appendChild(div);
+  });
+  const add=document.createElement("button");
+  add.type="button"; add.className="addblk edit-only"; add.dataset.act="addnote"; add.textContent="+ Nova anotação";
+  notesEl.appendChild(add);
+  $("tips").classList.toggle("nonotes",!data.notes.length);
+}
+
+/* filtros por matéria e lista de matérias do modo de edição */
+function renderSubjects(){
+  [...filterSet].forEach(k=>{if(!subj(k))filterSet.delete(k)});
+  const fl=$("filters"), sl=$("subj-list"); fl.textContent=""; sl.textContent="";
+  data.subjects.forEach(s=>{
+    const btn=document.createElement("button");
+    btn.type="button"; btn.className="btn chip"; btn.dataset.k=s.k; btn.style.setProperty("--k",`var(--${s.c})`);
+    btn.innerHTML=`<i class="sw" aria-hidden="true"></i>${esc(s.n)}`;
+    btn.addEventListener("click",()=>{
+      filterSet.has(s.k)?filterSet.delete(s.k):filterSet.add(s.k);
+      ui.filters=[...filterSet]; saveUI(); applyFilters();
+    });
+    fl.appendChild(btn);
+    const eb=document.createElement("button");
+    eb.type="button"; eb.className="btn chip"; eb.style.setProperty("--k",`var(--${s.c})`);
+    eb.innerHTML=`<i class="sw" aria-hidden="true"></i>${esc(s.n)}${IC.edit}`;
+    eb.setAttribute("aria-label","Editar matéria "+s.n);
+    eb.addEventListener("click",()=>editSubject(s));
+    sl.appendChild(eb);
+  });
+}
 function applyFilters(){
   const on=filterSet.size>0;
   boardEl.classList.toggle("filtered",on);
-  SUBJECTS.forEach(s=>s.btn.setAttribute("aria-pressed",String(filterSet.has(s.k))));
+  $("filters").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(filterSet.has(b.dataset.k))));
   let any=false;
-  DAYS.forEach(day=>{
-    let match=0;
-    day.b.forEach(b=>{
+  data.days.forEach(day=>{
+    const rt=RT.get(day.id); let match=0;
+    rt.lis.forEach(({b,li})=>{
       // a prova aparece junto com a matéria dela; pausas somem quando há filtro
-      const k=b.k==="prova"?EXAM_SUBJECT[day.id]:b.k;
-      const off=on&&(b.pause||!filterSet.has(k));
-      b.li.classList.toggle("off",off);
-      if(!off&&!b.pause)match++;
+      const off=on&&(b.type==="pausa"||!filterSet.has(b.k));
+      li.classList.toggle("off",off);
+      if(!off&&b.type!=="pausa")match++;
     });
     const nomatch=on&&match===0;
-    day.card.classList.toggle("nomatch",nomatch);
+    rt.card.classList.toggle("nomatch",nomatch);
     if(!nomatch)any=true;
   });
   boardEl.classList.toggle("none",on&&!any);
@@ -480,32 +752,32 @@ function applyFilters(){
 /* ---------- atualização visual ---------- */
 function paint(){
   let total=0, done=0, late=0;
-  DAYS.forEach(day=>{
-    const d=dateOf(day), isToday=sameDay(d,today), isPast=d<today;
+  data.days.forEach(day=>{
+    const rt=RT.get(day.id), d=parseDate(day.date), isToday=sameDay(d,today), isPast=d<today;
     let dd=0;
-    day.tasks.forEach(t=>{
+    rt.tasks.forEach(t=>{
       const on=!!state[t.id];
       t.input.checked=on; t.li.classList.toggle("done",on);
       if(on)dd++; else if(isPast)late++;
     });
-    const n=day.tasks.length, pct=n?Math.round(dd/n*100):0;
+    const n=rt.tasks.length, pct=n?Math.round(dd/n*100):0;
     total+=n; done+=dd;
     const complete=n>0&&dd===n;
-    day.cnt.textContent=`${dd}/${n} blocos`;
-    day.pp.textContent=`${pct}%`;
-    day.fill.style.width=pct+"%";
-    day.tlPct.textContent=complete?"✓ 100%":pct+"%";
-    day.tl.classList.toggle("full",complete);
-    day.tl.classList.toggle("today",isToday);
-    day.tl.classList.toggle("past",isPast);
-    day.tl.setAttribute("aria-label",`${day.dw} ${day.dn}/10, ${day.tag}, ${pct}% concluído${isToday?", hoje":""}`);
-    if(isToday)day.tl.setAttribute("aria-current","date");else day.tl.removeAttribute("aria-current");
-    day.card.classList.toggle("today",isToday);
-    day.card.classList.toggle("complete",complete);
-    let badges=`${esc(day.dw)} ${day.dn}/10`;
+    rt.cnt.textContent=`${dd}/${n} blocos`;
+    rt.pp.textContent=`${pct}%`;
+    rt.fill.style.width=pct+"%";
+    rt.tlPct.textContent=complete?"✓ 100%":pct+"%";
+    rt.tl.classList.toggle("full",complete);
+    rt.tl.classList.toggle("today",isToday);
+    rt.tl.classList.toggle("past",isPast);
+    rt.tl.setAttribute("aria-label",`${rt.name}${day.tag?", "+day.tag:""}, ${pct}% concluído${isToday?", hoje":""}`);
+    if(isToday)rt.tl.setAttribute("aria-current","date");else rt.tl.removeAttribute("aria-current");
+    rt.card.classList.toggle("today",isToday);
+    rt.card.classList.toggle("complete",complete);
+    let badges=esc(rt.name);
     if(isToday)badges+=` <span class="badge">Hoje</span>`;
     if(complete)badges+=` <span class="badge ok">Concluído</span>`;
-    if(day.h2.innerHTML!==badges)day.h2.innerHTML=badges;
+    if(rt.h2.innerHTML!==badges)rt.h2.innerHTML=badges;
   });
   const pct=total?Math.round(done/total*100):0;
   $("st-pct").textContent=pct+"%";
@@ -516,29 +788,35 @@ function paint(){
   paintNextExam();
 }
 function paintNextExam(){
-  const next=DAYS.find(d=>d.exam&&dateOf(d)>=today);
-  if(!next){$("st-next").textContent="Concluídas";$("st-next-s").textContent="Boa! Semana de provas encerrada";return}
-  const diff=Math.round((dateOf(next)-today)/DAY_MS);
-  const what=next.b.find(b=>b.k==="prova");
+  const next=data.days.find(d=>isExamDay(d)&&parseDate(d.date)>=today);
+  if(!next){
+    const any=data.days.some(isExamDay);
+    $("st-next").textContent=any?"Concluídas":"Nenhuma";
+    $("st-next-s").textContent=any?"Boa! Semana de provas encerrada":"Adicione um bloco do tipo Prova";
+    return;
+  }
+  const diff=Math.round((parseDate(next.date)-today)/DAY_MS);
+  const what=next.b.find(b=>b.type==="prova");
   $("st-next").textContent=diff===0?"Hoje":diff===1?"Amanhã":`Em ${diff} dias`;
-  $("st-next-s").textContent=`${what?what.d:next.tag} · ${next.dw} ${next.dn}/10`;
+  $("st-next-s").textContent=`${what.d||what.l||next.tag} · ${dayName(next)}`;
 }
 
 /* ---------- navegação ---------- */
 function targetDay(){
-  return DAYS.find(d=>sameDay(dateOf(d),today))||DAYS.find(d=>dateOf(d)>today)||DAYS[DAYS.length-1];
+  return data.days.find(d=>sameDay(parseDate(d.date),today))||data.days.find(d=>parseDate(d.date)>today)||data.days[data.days.length-1];
 }
-function goTo(day){
-  if(day.card.classList.contains("nomatch")){filterSet.clear();ui.filters=[];saveUI();applyFilters()}
-  day.card.scrollIntoView({block:"start"});
-  history.replaceState(null,"","#"+day.id);
-  day.card.classList.remove("flash"); void day.card.offsetWidth; day.card.classList.add("flash");
-  centerChip(day);
+function goTo(id){
+  const rt=RT.get(id); if(!rt)return;
+  if(rt.card.classList.contains("nomatch")){filterSet.clear();ui.filters=[];saveUI();applyFilters()}
+  rt.card.scrollIntoView({block:"start"});
+  history.replaceState(null,"","#"+id);
+  rt.card.classList.remove("flash"); void rt.card.offsetWidth; rt.card.classList.add("flash");
+  centerChip(rt);
 }
-function centerChip(day){
-  const a=day.tl; tlEl.scrollLeft=a.offsetLeft-tlEl.offsetLeft-(tlEl.clientWidth-a.offsetWidth)/2;
+function centerChip(rt){
+  const a=rt.tl; tlEl.scrollLeft=a.offsetLeft-tlEl.offsetLeft-(tlEl.clientWidth-a.offsetWidth)/2;
 }
-$("btn-today").addEventListener("click",()=>goTo(targetDay()));
+$("btn-today").addEventListener("click",()=>{const d=targetDay();if(d)goTo(d.id)});
 
 /* ocultar concluídos */
 function applyHide(){
@@ -561,23 +839,391 @@ $("btn-theme").addEventListener("click",()=>{
   applyTheme(); toast("Tema "+THEME_NAMES[theme]);
 });
 
-/* zerar progresso com confirmação em dois cliques (sem diálogo do navegador) */
-let armTimer=0;
-const resetBtn=$("btn-reset");
-function disarm(){clearTimeout(armTimer);resetBtn.classList.remove("armed");$("reset-lab").textContent="Zerar progresso";resetBtn.removeAttribute("aria-label")}
-resetBtn.addEventListener("click",()=>{
-  if(!resetBtn.classList.contains("armed")){
-    resetBtn.classList.add("armed");$("reset-lab").textContent="Confirmar? Clique de novo";
-    resetBtn.setAttribute("aria-label","Confirmar: apagar todo o progresso");
-    armTimer=setTimeout(disarm,4000);return;
-  }
-  disarm(); state={}; save(); paint(); toast("Progresso zerado");
-});
-resetBtn.addEventListener("blur",disarm);
+/* confirmação em dois cliques (sem diálogo do navegador) */
+function twoStep(btn,lab,idle,ask,fn){
+  let tm=0;
+  const off=()=>{clearTimeout(tm);btn.classList.remove("armed");lab.textContent=idle};
+  btn.addEventListener("click",()=>{
+    if(!btn.classList.contains("armed")){btn.classList.add("armed");lab.textContent=ask;tm=setTimeout(off,4000);return}
+    off(); fn();
+  });
+  btn.addEventListener("blur",off);
+  return off;
+}
+twoStep($("btn-reset"),$("reset-lab"),"Zerar progresso","Confirmar? Clique de novo",()=>{state={};save();paint();toast("Progresso zerado")});
 
 /* aviso curto */
 let toastTimer=0;
-function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),1800)}
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),2200)}
+
+/* ---------- modo de edição ---------- */
+let editing=false;
+function applyEdit(){
+  document.body.classList.toggle("editing",editing);
+  $("btn-edit").setAttribute("aria-pressed",String(editing));
+  $("edit-lab").textContent=editing?"Concluir edição":"Editar";
+  if(editing)$("tips").open=true;
+}
+function setEditing(on){editing=on;applyEdit();toast(on?"Modo de edição: use ✎ e os botões tracejados":"Edição concluída")}
+$("btn-edit").addEventListener("click",()=>setEditing(!editing));
+$("btn-done").addEventListener("click",()=>setEditing(false));
+
+function commit(msg){saveData();render();if(msg)toast(msg)}
+
+/* janela de formulário genérica */
+const dlg=$("dlg"), form=$("dlg-form");
+let formCfg=null, formWraps=[];
+function readForm(){const v={};formWraps.forEach(w=>{v[w._f.name]=w._c.value});return v}
+function updateVis(){
+  const v=readForm();
+  formWraps.forEach(w=>{const show=!w._f.showIf||w._f.showIf(v);w.hidden=!show;w._c.disabled=!show});
+}
+function showErr(id,msg){const e=$(id);e.textContent=msg;e.hidden=!msg}
+function openForm(cfg){
+  formCfg=cfg; disarmDel();
+  $("dlg-title").textContent=cfg.title; showErr("dlg-err","");
+  const box=$("dlg-fields"); box.textContent=""; formWraps=[];
+  cfg.fields.forEach(f=>{
+    const w=document.createElement("label"); w.className="fld"+(f.half?" half":"");
+    const cap=document.createElement("span"); cap.textContent=f.label; w.appendChild(cap);
+    let c;
+    if(f.type==="select"){c=document.createElement("select");f.options.forEach(([v,t])=>c.add(new Option(t,v)))}
+    else if(f.type==="textarea"){c=document.createElement("textarea");c.rows=f.rows||3}
+    else{c=document.createElement("input");c.type=f.type||"text";c.autocomplete="off"}
+    c.name=f.name; c.value=f.value==null?"":f.value; c.required=!!f.required;
+    if(f.placeholder)c.placeholder=f.placeholder;
+    if(f.swatch){
+      const row=document.createElement("span"); row.className="selrow";
+      const sw=document.createElement("i"); sw.className="sw"; sw.setAttribute("aria-hidden","true");
+      const upd=()=>{sw.style.background=`var(--${c.value})`};
+      c.addEventListener("change",upd); upd(); row.append(c,sw); w.appendChild(row);
+    }else w.appendChild(c);
+    if(f.hint){const h=document.createElement("small");h.textContent=f.hint;w.appendChild(h)}
+    w._f=f; w._c=c; box.appendChild(w); formWraps.push(w);
+  });
+  $("dlg-del").hidden=!cfg.onDelete;
+  $("dlg-extra").hidden=!cfg.extra; if(cfg.extra)$("dlg-extra").textContent=cfg.extra.label;
+  updateVis();
+  dlg.showModal();
+}
+form.addEventListener("change",updateVis);
+form.addEventListener("submit",e=>{
+  e.preventDefault(); if(!formCfg)return;
+  const r=formCfg.onSave(readForm());
+  if(typeof r==="string"){showErr("dlg-err",r);return}
+  dlg.close(); commit(formCfg.saved);
+  if(typeof r==="function")r();
+});
+$("dlg-cancel").addEventListener("click",()=>dlg.close());
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+const disarmDel=twoStep($("dlg-del"),$("dlg-del-lab"),"Excluir","Confirmar exclusão",()=>{
+  const r=formCfg.onDelete();
+  if(typeof r==="string"){showErr("dlg-err",r);return}
+  dlg.close(); commit(formCfg.deleted);
+});
+$("dlg-extra").addEventListener("click",()=>{const fn=formCfg.extra.fn;dlg.close();fn()});
+
+/* dias */
+function nextFreeDate(from){
+  const used=new Set(data.days.map(d=>d.date));
+  const last=data.days.length?data.days[data.days.length-1].date:null;
+  const dt=from?parseDate(from):last?parseDate(last):new Date(today);
+  if(from||last)dt.setDate(dt.getDate()+1);
+  while(used.has(iso(dt)))dt.setDate(dt.getDate()+1);
+  return iso(dt);
+}
+function templateBlocks(){
+  const has=k=>data.subjects.some(s=>s.k===k);
+  const main=(data.subjects.find(s=>s.k!=="fixo"&&s.k!=="pesq")||data.subjects[0]||{k:""}).k;
+  const fx=has("fixo")?"fixo":main;
+  const B=(type,k,t,l,d)=>({id:uid("b"),type,k,t,l,d});
+  const out=[
+    B("estudo",fx,"08:00–08:40","Flashcards","Revisões do Anki"),
+    B("estudo",main,"08:40–12:00","Bloco da manhã",""),
+    B("pausa","","12:00–13:30","","Almoço"),
+    B("estudo",main,"13:30–16:30","Bloco da tarde",""),
+    B("estudo",fx,"16:45–18:00","Questões","Questões das matérias do dia")
+  ];
+  if(has("pesq"))out.push(B("estudo","pesq","19:30–21:00","Pesquisa","Tarefas do curso de pesquisa + leitura diária de artigo"));
+  return main?out:out.filter(b=>b.type==="pausa");
+}
+function editDay(day){
+  const isNew=!day;
+  const fields=[
+    {name:"date",label:"Data",type:"date",value:day?day.date:nextFreeDate(),required:true,half:true},
+    {name:"tag",label:"Legenda",value:day?day.tag:"",placeholder:"ex.: 3 dias para a prova",half:true}
+  ];
+  if(isNew)fields.push({name:"tpl",label:"Começar com",type:"select",value:"cheio",options:[["cheio","Dia cheio: flashcards, manhã, almoço, tarde e questões"],["vazio","Dia vazio"]]});
+  openForm({
+    title:isNew?"Novo dia":"Editar "+dayName(day),fields,
+    saved:isNew?"Dia criado":"Dia atualizado", deleted:"Dia excluído",
+    onSave(v){
+      if(!validDate(v.date))return"Escolha uma data válida.";
+      if(data.days.some(d=>d!==day&&d.date===v.date))return"Já existe um dia nessa data.";
+      if(day){day.date=v.date;day.tag=v.tag.trim();const id=day.id;return()=>goTo(id)}
+      const nd={id:uid("d"),date:v.date,tag:v.tag.trim(),b:v.tpl==="cheio"?templateBlocks():[]};
+      data.days.push(nd);
+      return()=>goTo(nd.id);
+    },
+    onDelete:isNew?null:()=>{day.b.forEach(b=>delete state[b.id]);save();data.days.splice(data.days.indexOf(day),1)},
+    extra:isNew?null:{label:"Duplicar dia",fn(){
+      const nd={id:uid("d"),date:nextFreeDate(day.date),tag:day.tag,b:day.b.map(b=>({...b,id:uid("b")}))};
+      data.days.push(nd); commit("Dia duplicado em "+dayName(nd)); goTo(nd.id);
+    }}
+  });
+}
+
+/* blocos e provas */
+let lastSubject="";
+function editBlock(day,b){
+  const isNew=!b, notP=v=>v.type!=="pausa";
+  if(!data.subjects.length&&isNew)toast("Dica: crie uma matéria no modo de edição");
+  openForm({
+    title:isNew?"Novo bloco em "+dayName(day):"Editar bloco",
+    saved:isNew?"Bloco adicionado":"Bloco atualizado", deleted:"Bloco excluído",
+    fields:[
+      {name:"type",label:"Tipo",type:"select",value:b?b.type:"estudo",options:[["estudo","Estudo (com caixa de marcar)"],["prova","Prova"],["pausa","Pausa ou compromisso (sem caixa)"]]},
+      {name:"day",label:"Dia",type:"select",value:day.id,options:data.days.map(d=>[d.id,dayName(d)+(d.tag?" · "+d.tag:"")])},
+      {name:"t",label:"Horário",value:b?b.t:"",required:true,half:true,placeholder:"08:00–12:00 ou Manhã"},
+      {name:"k",label:"Matéria",type:"select",half:true,showIf:notP,required:true,
+        value:b&&b.k?b.k:(subj(lastSubject)?lastSubject:(data.subjects[0]||{}).k),options:data.subjects.map(s=>[s.k,s.n])},
+      {name:"l",label:"Título",value:b?b.l:"",required:true,showIf:notP,placeholder:"ex.: Anatomia I ou Prova"},
+      {name:"d",label:"Descrição",type:"textarea",value:b?b.d:"",placeholder:"O que fazer neste bloco (ex.: Almoço, conteúdo, matérias da prova)"}
+    ],
+    onSave(v){
+      if(notP(v)&&!subj(v.k))return"Escolha uma matéria (crie uma em “+ Nova matéria” se precisar).";
+      const nb={id:b?b.id:uid("b"),type:v.type,k:notP(v)?v.k:"",t:v.t.trim(),l:notP(v)?v.l.trim():"",d:v.d.trim()};
+      if(nb.type==="pausa"){if(!nb.d)nb.d="Pausa";delete state[nb.id];save()}
+      else lastSubject=nb.k;
+      const target=findDay(v.day)||day;
+      if(b){const i=day.b.indexOf(b);if(target===day)day.b[i]=nb;else{day.b.splice(i,1);target.b.push(nb)}}
+      else target.b.push(nb);
+    },
+    onDelete:isNew?null:()=>{day.b.splice(day.b.indexOf(b),1);delete state[b.id];save()}
+  });
+}
+function moveBlock(day,i,dir){
+  const j=i+dir; if(j<0||j>=day.b.length)return;
+  [day.b[i],day.b[j]]=[day.b[j],day.b[i]];
+  const id=day.b[j].id; commit();
+  const li=daysEl.querySelector(`[data-blk="${id}"]`);
+  if(li){const btn=li.querySelector(`[data-act="${dir<0?"up":"down"}"]`);(btn&&!btn.disabled?btn:li.querySelector('[data-act="blk"]')).focus()}
+}
+daysEl.addEventListener("click",e=>{
+  const btn=e.target.closest("[data-act]"); if(!btn)return;
+  const act=btn.dataset.act;
+  if(act==="addday")return editDay(null);
+  const day=findDay(btn.closest(".day").id); if(!day)return;
+  if(act==="day")return editDay(day);
+  if(act==="addblk")return editBlock(day,null);
+  const i=day.b.findIndex(b=>b.id===btn.closest(".blk").dataset.blk); if(i<0)return;
+  if(act==="blk")editBlock(day,day.b[i]);
+  else if(act==="up")moveBlock(day,i,-1);
+  else if(act==="down")moveBlock(day,i,1);
+});
+
+/* matérias */
+function editSubject(s){
+  const usedC=new Set(data.subjects.map(x=>x.c));
+  openForm({
+    title:s?"Editar matéria":"Nova matéria",
+    saved:s?"Matéria atualizada":"Matéria criada", deleted:"Matéria excluída",
+    fields:[
+      {name:"n",label:"Nome",value:s?s.n:"",required:true,placeholder:"ex.: Cardiologia"},
+      {name:"c",label:"Cor",type:"select",swatch:true,options:COLORS,value:s?s.c:(COLORS.find(c=>!usedC.has(c[0]))||COLORS[0])[0]}
+    ],
+    onSave(v){
+      const n=v.n.trim(); if(!n)return"Dê um nome à matéria.";
+      if(s){s.n=n;s.c=v.c}else data.subjects.push({k:uid("m"),n,c:v.c});
+    },
+    onDelete:s?()=>{
+      const n=data.days.reduce((a,d)=>a+d.b.filter(b=>b.type!=="pausa"&&b.k===s.k).length,0);
+      if(n)return`Esta matéria está em ${n} bloco${n>1?"s":""}. Mude a matéria desses blocos antes de excluir.`;
+      data.subjects.splice(data.subjects.indexOf(s),1);
+      filterSet.delete(s.k); ui.filters=[...filterSet]; saveUI();
+    }:null
+  });
+}
+$("btn-addsubj").addEventListener("click",()=>editSubject(null));
+
+/* anotações */
+function editNote(n){
+  openForm({
+    title:n?"Editar anotação":"Nova anotação",
+    saved:n?"Anotação atualizada":"Anotação criada", deleted:"Anotação excluída",
+    fields:[
+      {name:"h",label:"Título",value:n?n.h:"",required:true,placeholder:"ex.: Metas da semana"},
+      {name:"t",label:"Texto",type:"textarea",rows:6,value:n?n.t:"",hint:"Para fazer uma lista, comece cada linha com “- ”."}
+    ],
+    onSave(v){
+      if(!v.h.trim())return"Dê um título à anotação.";
+      if(n){n.h=v.h.trim();n.t=v.t.trim()}else data.notes.push({id:uid("n"),h:v.h.trim(),t:v.t.trim()});
+    },
+    onDelete:n?()=>{data.notes.splice(data.notes.indexOf(n),1)}:null
+  });
+}
+notesEl.addEventListener("click",e=>{
+  const btn=e.target.closest("[data-act]"); if(!btn)return;
+  if(btn.dataset.act==="addnote")return editNote(null);
+  const n=data.notes.find(x=>x.id===btn.closest(".note").dataset.note); if(n)editNote(n);
+});
+
+/* título e descrição */
+$("btn-head").addEventListener("click",()=>openForm({
+  title:"Título e descrição", saved:"Cabeçalho atualizado",
+  fields:[
+    {name:"title",label:"Título",value:data.title,required:true},
+    {name:"sub",label:"Descrição",type:"textarea",rows:4,value:data.sub}
+  ],
+  onSave(v){if(!v.title.trim())return"O título não pode ficar vazio.";data.title=v.title.trim();data.sub=v.sub.trim()}
+}));
+
+/* ---------- backup e importação ---------- */
+function download(name,text){
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([text],{type:"application/json"}));
+  a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+$("btn-export").addEventListener("click",()=>{
+  download(`cronograma-backup-${iso(new Date())}.json`,JSON.stringify({app:"cronograma-provas",v:1,exportado:new Date().toISOString(),data,progress:state},null,2));
+  toast("Backup exportado");
+});
+/* aceita JSON puro, dentro de ```json ... ``` ou com texto em volta */
+function parseLoose(text){
+  let t=String(text).trim();
+  const fence=t.match(/```(?:json)?\s*([\s\S]*?)```/i); if(fence)t=fence[1].trim();
+  try{return JSON.parse(t)}catch(e){}
+  const a=t.indexOf("{"), b=t.lastIndexOf("}");
+  if(a>=0&&b>a)return JSON.parse(t.slice(a,b+1));
+  throw new Error("json");
+}
+/* backup do próprio site (mantém ids e progresso) ou cronograma de IA (ids novos) */
+function importObject(o,mode){
+  const backup=o&&o.app==="cronograma-provas"&&o.data;
+  const d=normalize(backup?o.data:o,!backup);
+  if(!d)return"Não encontrei dias válidos. Confira se o JSON tem \"days\" com datas no formato AAAA-MM-DD.";
+  if(mode==="merge"){
+    d.subjects.forEach(s=>{if(!subj(s.k))data.subjects.push(s)});
+    d.days.forEach(nd=>{
+      const ex=data.days.find(x=>x.date===nd.date);
+      if(ex){ex.b.push(...nd.b);if(!ex.tag)ex.tag=nd.tag}else data.days.push(nd);
+    });
+    d.notes.forEach(n=>data.notes.push(n));
+  }else{
+    data=d;
+    if(backup&&o.progress&&typeof o.progress==="object"&&!Array.isArray(o.progress)){state=o.progress;save()}
+  }
+  const nb=d.days.reduce((a,x)=>a+x.b.length,0);
+  commit(`${mode==="merge"?"Adicionados":"Importados"}: ${d.days.length} dias, ${nb} blocos`);
+  const t=targetDay(); if(t)goTo(t.id);
+}
+$("btn-import").addEventListener("click",()=>$("file-import").click());
+$("file-import").addEventListener("change",async e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f)return;
+  try{const r=importObject(parseLoose(await f.text()),"replace");if(r)toast(r)}catch(err){toast("Arquivo inválido: não é um JSON do cronograma")}
+});
+const disarmRestore=twoStep($("btn-restore"),$("restore-lab"),"Restaurar cronograma original","Confirmar? Isso apaga suas edições",()=>{
+  data=defaultData(); store.del(DATA_KEY); render(); toast("Cronograma original restaurado");
+});
+
+/* ---------- criar com IA ---------- */
+function aiPrompt(){
+  const colors=COLORS.map(c=>`"${c[0]}" (${c[1].toLowerCase()})`).join(", ");
+  return [
+"Você vai me ajudar a montar um cronograma de estudos que será importado em um aplicativo. Hoje é "+iso(today)+".",
+"",
+"ETAPA 1 — PERGUNTAS. Antes de gerar qualquer cronograma, me faça as perguntas abaixo em uma única mensagem, numeradas, e espere minhas respostas. Se algo ficar vago, pergunte de novo antes de gerar.",
+"1. Data de início e data de fim do cronograma.",
+"2. Quais provas tenho: data, matéria e se há mais de uma prova no mesmo dia (inclusive provas práticas, como OSCE).",
+"3. O conteúdo de cada prova: tópicos ou capítulos, e quais são meus pontos fracos.",
+"4. Meus horários: que horas começo e termino de estudar, e compromissos fixos por dia da semana (aulas, estágio, plantão, trabalho, academia).",
+"5. Dias ou períodos de descanso, e quantas horas por dia consigo estudar com qualidade.",
+"6. Métodos que uso ou quero usar: flashcards/Anki, banco de questões, simulados, videoaulas, resumos, leitura.",
+"7. Atividades recorrentes que precisam entrar no cronograma (pesquisa, monitoria, TCC, leitura de artigos).",
+"8. Duração preferida dos blocos e das pausas, e horário de almoço.",
+"9. Qualquer outra preferência (ex.: matérias mais pesadas de manhã, véspera de prova mais leve, título do cronograma).",
+"",
+"ETAPA 2 — CRONOGRAMA. Depois das minhas respostas, monte o cronograma aplicando boas práticas de estudo: prática de recuperação (questões e simulados cronometrados), repetição espaçada (flashcards diários), intercalação de matérias, simulado com correção antes de cada prova, revisão leve na véspera e sono adequado. Distribua o conteúdo de forma que tudo seja visto antes da respectiva prova.",
+"",
+"FORMATO DE SAÍDA (obrigatório). Responda com uma frase curta de resumo e, em seguida, UM ÚNICO bloco de código json com JSON válido (aspas duplas, sem comentários, sem vírgulas sobrando), seguindo exatamente este esquema:",
+"",
+"{",
+"  \"title\": \"Título curto do cronograma\",",
+"  \"sub\": \"Uma ou duas frases explicando a estratégia\",",
+"  \"subjects\": [",
+"    { \"k\": \"cardio\", \"n\": \"Cardiologia\", \"c\": \"azul\" },",
+"    { \"k\": \"revisao\", \"n\": \"Flashcards e questões\", \"c\": \"fixo\" }",
+"  ],",
+"  \"notes\": [",
+"    { \"h\": \"Como usar cada bloco\", \"t\": \"- Videoaula em 1,5×\\n- Resumo próprio\\n- Flashcards do que errar\" }",
+"  ],",
+"  \"days\": [",
+"    { \"date\": \"2026-11-03\", \"tag\": \"5 dias para Cardio\", \"b\": [",
+"      { \"type\": \"estudo\", \"k\": \"revisao\", \"t\": \"08:00–08:40\", \"l\": \"Flashcards\", \"d\": \"Revisões do Anki\" },",
+"      { \"type\": \"estudo\", \"k\": \"cardio\", \"t\": \"08:40–12:00\", \"l\": \"Cardiologia I\", \"d\": \"Insuficiência cardíaca: videoaula + resumo\" },",
+"      { \"type\": \"pausa\", \"t\": \"12:00–13:30\", \"d\": \"Almoço\" }",
+"    ]},",
+"    { \"date\": \"2026-11-08\", \"tag\": \"Prova de Cardiologia\", \"b\": [",
+"      { \"type\": \"prova\", \"k\": \"cardio\", \"t\": \"08:00\", \"l\": \"Prova\", \"d\": \"Cardiologia\" }",
+"    ]}",
+"  ]",
+"}",
+"",
+"Regras do esquema:",
+"- subjects: as matérias (e categorias como revisão ou pesquisa). \"k\" é um identificador curto em minúsculas, sem espaços nem acentos (letras, números, - ou _). \"n\" é o nome exibido. \"c\" é a cor e deve ser exatamente um destes valores: "+colors+". Use cores diferentes para matérias diferentes e reserve \"prova\" para nada além de destaque.",
+"- days: um objeto por data, em ordem cronológica, sem datas repetidas. \"date\" no formato AAAA-MM-DD. \"tag\" é uma legenda curta (ex.: \"3 dias para Onco\", \"Véspera\", \"Prova de Anatomia\"); pode ser \"\".",
+"- b: os blocos do dia, na ordem em que acontecem. \"type\" é \"estudo\" (tarefa com caixa de marcar), \"prova\" (a prova em si) ou \"pausa\" (almoço, aula, compromisso; sem caixa de marcar).",
+"- \"t\" é o horário em texto, como \"08:00–12:00\", \"Manhã\" ou \"Dia\".",
+"- Em \"estudo\" e \"prova\", \"k\" é obrigatório e precisa ser um \"k\" que existe em subjects; \"l\" é o título curto do bloco; \"d\" detalha o que fazer. Em \"pausa\", use só \"t\" e \"d\".",
+"- Em \"prova\", \"k\" é a matéria da prova, \"l\" é \"Prova\" (ou \"Provas\") e \"d\" diz quais matérias caem.",
+"- notes é opcional: anotações com dicas gerais; em \"t\", linhas começando com \"- \" viram lista (use \\n para quebrar linha).",
+"- Não invente campos novos e não deixe nenhuma data do período sem objeto, a não ser dias de descanso combinados (nesse caso inclua o dia com um bloco \"pausa\" de descanso).",
+"- Se o JSON ficar grande demais para uma resposta, avise e entregue em partes, cada parte sendo um JSON completo no mesmo esquema com dias diferentes.",
+"",
+"Depois de gerar, eu vou colar o JSON no aplicativo (opção \"Criar com IA\")."
+  ].join("\n");
+}
+const aiDlg=$("dlg-ai");
+function openAI(){
+  $("ai-prompt").value=aiPrompt(); showErr("ai-err",""); disarmImport();
+  aiDlg.showModal();
+}
+$("btn-ai").addEventListener("click",openAI);
+$("btn-ai2").addEventListener("click",openAI);
+$("ai-close").addEventListener("click",()=>aiDlg.close());
+aiDlg.addEventListener("click",e=>{if(e.target===aiDlg)aiDlg.close()});
+$("ai-copy").addEventListener("click",async()=>{
+  const ta=$("ai-prompt");
+  try{await navigator.clipboard.writeText(ta.value)}
+  catch(e){ta.focus();ta.select();try{document.execCommand("copy")}catch(e2){}}
+  toast("Prompt copiado. Cole na IA");
+});
+$("ai-file-btn").addEventListener("click",()=>$("ai-file").click());
+$("ai-file").addEventListener("change",async e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f)return;
+  $("ai-json").value=await f.text(); showErr("ai-err",""); toast("Arquivo carregado. Clique em Importar");
+});
+function doAIImport(){
+  const text=$("ai-json").value.trim();
+  if(!text)return showErr("ai-err","Cole a resposta da IA ou escolha um arquivo .json.");
+  let o; try{o=parseLoose(text)}catch(e){return showErr("ai-err","Não consegui ler o JSON. Copie o bloco de código inteiro, do primeiro { ao último }.")}
+  const r=importObject(o,$("ai-mode").value);
+  if(r)return showErr("ai-err",r);
+  $("ai-json").value=""; aiDlg.close();
+}
+/* substituir pede confirmação; adicionar importa direto */
+const aiImportBtn=$("ai-import");
+let aiArmTm=0;
+function disarmImport(){clearTimeout(aiArmTm);aiImportBtn.classList.remove("armed");$("ai-import-lab").textContent="Importar cronograma"}
+aiImportBtn.addEventListener("click",()=>{
+  if($("ai-mode").value==="replace"&&!aiImportBtn.classList.contains("armed")&&data.days.length){
+    aiImportBtn.classList.add("armed","del"); $("ai-import-lab").textContent="Substituir tudo? Clique de novo";
+    aiArmTm=setTimeout(()=>{disarmImport();aiImportBtn.classList.remove("del")},4000); return;
+  }
+  disarmImport(); aiImportBtn.classList.remove("del"); doAIImport();
+});
+aiImportBtn.addEventListener("blur",()=>{disarmImport();aiImportBtn.classList.remove("del")});
 
 /* altura da barra fixa, para a rolagem não esconder o topo do cartão */
 const bar=$("bar");
@@ -592,6 +1238,7 @@ if("IntersectionObserver"in window){
 /* sincroniza entre abas abertas */
 window.addEventListener("storage",e=>{
   if(e.key===KEY||e.key===null){state=readJSON(KEY);paint()}
+  if(e.key===DATA_KEY||e.key===null){data=loadData();render()}
 });
 /* se a página ficar aberta de um dia para o outro, atualiza "hoje" */
 document.addEventListener("visibilitychange",()=>{
@@ -600,9 +1247,9 @@ document.addEventListener("visibilitychange",()=>{
 });
 
 /* início */
-applyTheme(); applyHide(); applyFilters(); paint();
-centerChip(targetDay());
-if(location.hash){const d=DAYS.find(x=>"#"+x.id===location.hash);if(d)requestAnimationFrame(()=>d.card.scrollIntoView({block:"start"}))}
+applyTheme(); applyHide(); applyEdit(); render();
+{const t=targetDay(); if(t)centerChip(RT.get(t.id))}
+if(location.hash){const rt=RT.get(location.hash.slice(1));if(rt)requestAnimationFrame(()=>rt.card.scrollIntoView({block:"start"}))}
 </script>
 </body>
 </html>
